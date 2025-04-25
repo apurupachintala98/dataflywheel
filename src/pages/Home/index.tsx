@@ -145,9 +145,9 @@ function Home() {
                   <ChatItem className="active">
                     <ChatLeftItem>
                       <ChatTitle className="active">
-                        Lorem ipsum dolor sit amet, consectetur adipis...
+                        What is the FMC denominator based on in HEDIS?
                       </ChatTitle>
-                      <ChatDateTime>01/04/2025, 14:30</ChatDateTime>
+                      <ChatDateTime>25/04/2025, 14:30</ChatDateTime>
                     </ChatLeftItem>
                     <ChatRightItem>
                       <DeleteOutlineIcon />
@@ -155,8 +155,10 @@ function Home() {
                   </ChatItem>
                   <ChatItem className="notActive">
                     <ChatLeftItem className="notActive">
-                      <ChatTitle>Lorem ipsum dolor sit amet, consectetur adipis...</ChatTitle>
-                      <ChatDateTime>01/04/2025, 14:30</ChatDateTime>
+                      <ChatTitle>
+                        What is considered continuous enrollment for FMC in HEDIS?
+                      </ChatTitle>
+                      <ChatDateTime>25/04/2025, 16:30</ChatDateTime>
                     </ChatLeftItem>
                     <ChatRightItem>
                       <DeleteOutlineIcon />
@@ -164,8 +166,8 @@ function Home() {
                   </ChatItem>
                   <ChatItem className="notActive">
                     <ChatLeftItem className="notActive">
-                      <ChatTitle>Lorem ipsum dolor sit amet, consectetur adipis...</ChatTitle>
-                      <ChatDateTime>01/04/2025, 14:30</ChatDateTime>
+                      <ChatTitle>How should I handle direct transfers for PCR in HEDIS?</ChatTitle>
+                      <ChatDateTime>24/04/2025, 08:30</ChatDateTime>
                     </ChatLeftItem>
                     <ChatRightItem>
                       <DeleteOutlineIcon />
