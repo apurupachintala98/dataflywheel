@@ -1,0 +1,51 @@
+{
+  "login": {
+    "headingText": "Hi, Welcome to Elevance Health Data Intelligence Platform",
+    "subHeadingText": "Let’s sign in to your account and get started.",
+    "bottomText": "Unable to sign in? Please ask the Admin.",
+    "usernameLabelText": "Username/ Email Address",
+    "passwordLabelText": "Password",
+    "usernamePlaceHolderText": "abcd/ abcd@comapnyname.com",
+    "passwordPlaceHolderText": "••••••••",
+    "loginButtonText": "Sign in",
+    "usernameError": "Username/Email Address is required",
+    "passwordError": "Password is required",
+    "errorMessage": "You have entered invalid credentials! Please try again.",
+    "loadingText": "Signing in...",
+    "logoutText": "Successfully signed out!"
+  },
+  "home": {
+    "title": "Home",
+    "createButtonText": "Applications",
+    "helpButtonText": "Dashboard",
+    "BreadcrumbHomeText": "Home",
+    "JobStatusHeaderText": "Job Status",
+    "KPIHeaderText": "KPIHeaderText",
+    "jobCompletionHeaderText" : "Overall Job Completion Status"
+ },
+ "dashboard": {
+  "title": "Dashboard",
+  "createButtonText": "Applications",
+  "helpButtonText": "Dashboard",
+  "BreadcrumbHomeText": "Dashboard",
+  "JobStatusHeaderText": "Job Status",
+  "KPIHeaderText": "KPIHeaderText",
+  "jobCompletionHeaderText" : "Overall Job Completion Status"
+},
+  "create": {
+    "title": "Create"
+  },
+  "uploadMetaData": {
+    "title": "Meta Data Page"
+  },
+  "header":{
+    "welcomeText": "Welcome",
+    "searchPlaceholder": "Search your input",
+    "logoutText": "Sign out"
+  },
+  "footer": {
+    "copyRightText": "IBM Corporation. All rights reserved.",
+    "privacyText" : "Privacy",
+    "LegalText" : "Legal"
+  }
+}

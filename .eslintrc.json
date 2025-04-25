@@ -1,0 +1,65 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "rules": {
+      "prettier/prettier": "warn"
+    }
+  },
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["prettier", "@typescript-eslint", "react", "simple-import-sort"],
+  "ignorePatterns": ["**/_tests_/**"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/display-name": "off",
+    "object-shorthand": ["error", "always"],
+    "prefer-template": "error",
+    "simple-import-sort/exports": "error",
+    "no-duplicate-imports": ["error", { "includeExports": true }],
+    "simple-import-sort/imports": [
+      "warn",
+      {
+        "groups": [
+          [".*(react|redux|axios).*"],
+          [".*(assets).*"],
+          [".*(components).*"],
+          [".*(data|actions|services).*"],
+          [".*(utils|models).*"],
+          [".*(hooks).*"],
+          [".*(shared).*"]
+        ]
+      }
+    ],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "rules": {
+        "no-console": "off" // ["error", { "allow": ["warn", "error"] }]
+      }
+    }
+  ]
+}
