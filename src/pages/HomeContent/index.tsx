@@ -110,8 +110,8 @@ const HomeContent = () => {
 
     const payload = {
       query: {
-        aplctn_cd: "aedldocai",
-        app_id: "docai",
+        aplctn_cd: "aedl",
+        app_id: "aedl",
         api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
         model: "llama3.1-70b",
         semantic_model: selectedModels.yaml,
@@ -179,8 +179,8 @@ const HomeContent = () => {
       setIsLoading(true);
       const payload = {
         "query": {
-          "aplctn_cd": "aedldocai",
-          "app_id": "docai",
+          "aplctn_cd": "aedl",
+          "app_id": "aedl",
           "api_key": "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
           "prompt": {
             "messages": [
