@@ -5,6 +5,9 @@ import ApiService from "../../services/index";
 import MainContent from "../MainContent"; // Adjust path if needed
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import BarChartIcon from '@mui/icons-material/BarChart';
+import { Button } from '@mui/material';
+
 
 const HomeContent = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,7 +44,9 @@ const HomeContent = () => {
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>, type: keyof typeof anchorEls) => {
     setAnchorEls((prev) => ({ ...prev, [type]: event.currentTarget }));
   };
-  
+  const handleGraphClick = () => {
+    setIsModalVisible(true);
+  };
 
   const handleMenuClose = () => {
     setAnchorEls({ account: null, chat: null, search: null, upload: null });
@@ -114,7 +119,10 @@ const HomeContent = () => {
         search_limit: 0,
         prompt: { messages: [{ role: "user", content: inputValue }] },
         app_lvl_prefix: "",
-        session_id: "ec2aebd4-0a7e-415f-a26b-5b663fc9356c"
+        session_id: "ec2aebd4-0a7e-415f-a26b-5b663fc9356c",
+        database_nm: "POC_SPC_SNOWPARK_DB",
+        schema_nm: "HEDIS_SCHEMA",
+        stage_nm: ""
       }
     };
 
@@ -165,14 +173,249 @@ const HomeContent = () => {
     }
   };
 
+
   const executeSQL = async (sqlQuery: any) => {
-    console.log("Executing SQL query:", sqlQuery);
-    // Future: add your actual SQL execution logic here.
-  };
+    try {
+      setIsLoading(true);
+      const payload = {
+        "query": {
+          "aplctn_cd": "aedldocai",
+          "app_id": "docai",
+          "api_key": "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
+          "prompt": {
+            "messages": [
+              {
+                "role": "user",
+                "content": sqlQuery.prompt || sqlQuery.text
+              }
+            ]
+          },
+          "app_lvl_prefix": "",
+          "session_id": "9df7d52d-da64-470c-8f4e-081be1dbbbfb",
+          "exec_sql": sqlQuery.text
+        }
+      };
+
+      const response = await ApiService.runExeSql(payload);
+      const data = await response;
+      setData(data);
+      const convertToString = (input: any): string => {
+        if (typeof input === 'string') {
+          return input;
+        } else if (Array.isArray(input)) {
+          return input.map(convertToString).join(', ');
+        } else if (typeof input === 'object' && input !== null) {
+          return Object.entries(input)
+            .map(([key, value]) => `${key}: ${convertToString(value)}`)
+            .join(', ');
+        }
+        return String(input);
+      };
+      let modelReply: string | React.ReactNode = "";
+      if (data && Array.isArray(data) && data.length > 0) {
+        const columns = Object.keys(data[0]);
+        const rows = data;
+        modelReply = (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+              <thead>
+                <tr>
+                  {columns.map(column => (
+                    <th key={column} style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{column}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {columns.map(column => (
+                      <td key={`${rowIndex}-${column}`} style={{ border: '1px solid black', padding: '8px' }}>
+                        {convertToString(row[column])}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {(rows.length > 1 && columns.length > 1) && (
+              <Button
+                variant="contained"
+                startIcon={<BarChartIcon />}
+                sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
+                onClick={handleGraphClick}
+              >
+                Graph View
+              </Button>
+            )}
+          </div>
+        );
+      } else if (typeof data === 'string') {
+        modelReply = data;
+      } else {
+        modelReply = convertToString(data);
+      }
+      const botMessage = {
+        text: modelReply,
+        fromUser: false,
+        executedResponse: data,
+        showExecute: false,
+        showSummarize: true,
+        prompt: sqlQuery.prompt,
+      };
+
+      setMessages((prevChatLog) => [...prevChatLog, botMessage]);
+    } catch (err) {
+      const fallbackErrorMessage = 'Error communicating with backend.';
+      const errorMessageContent = {
+        role: 'assistant',
+        text: (
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <p style={{ fontSize: '18px', fontWeight: 'bold', textAlign: 'center' }}>{fallbackErrorMessage}</p>
+          </div>
+        ),
+        fromUser: false,
+        showExecute: false,
+        showSummarize: false,
+      };
+      setMessages((prevChatLog) => [...prevChatLog, errorMessageContent]); // Update chat log with assistant's error message
+      console.error('Error:', err); // Log the error for debugging
+    } finally {
+      setIsLoading(false);
+      setMessages((prevChatLog) =>
+        prevChatLog.map((msg) =>
+          msg.text === sqlQuery.text
+            ? { ...msg, showExecute: false }
+            : msg
+        )
+      );
+    }
+  }
 
   const apiCortex = async (message: any) => {
-    console.log("Summarizing with Cortex:", message);
-    // Future: add your Cortex summarization logic here.
+    const sys_msg = "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.";
+
+    const payload = {
+      query: {
+        aplctn_cd: "aedl",
+        app_id: "aedl",
+        api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
+        method: "cortex",
+        model: "llama3.1-70b-elevance",
+        sys_msg: `${sys_msg}${JSON.stringify(message.executedResponse)}`,
+        limit_convs: "0",
+        prompt: {
+          messages: [
+            {
+              role: "user",
+              content: message.prompt,
+            }
+          ]
+        },
+        app_lvl_prefix: "",
+        user_id: "",
+        session_id: "ad339c7f-feeb-49a3-a5b5-009152b47006"
+      }
+    };
+
+    try {
+      const response = await fetch("http://10.126.192.122:8340/api/cortex/complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.body) throw new Error("No stream in response.");
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      let fullText = '';
+      let isDone = false;
+
+      setMessages(prev => [
+        ...prev,
+        {
+          text: '',
+          fromUser: false,
+          summarized: true,
+          type: 'text',
+          streaming: true
+        }
+      ]);
+
+      while (!isDone) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        let chunk = decoder.decode(value, { stream: true });
+
+        const eosIndex = chunk.indexOf("end_of_stream");
+        if (eosIndex !== -1) {
+          chunk = chunk.slice(0, eosIndex);
+          isDone = true;
+        }
+
+        fullText += chunk;
+
+        setMessages(prev => {
+          const lastIndex = prev.length - 1;
+          const last = prev[lastIndex];
+          if (last?.streaming) {
+            return [
+              ...prev.slice(0, lastIndex),
+              {
+                ...last,
+                text: fullText,
+                streaming: true
+              }
+            ];
+          }
+          return prev;
+        });
+      }
+      setMessages(prev => {
+        const updatedMessages = prev.map((msg, index) => {
+          if (msg === message) {
+            return {
+              ...msg,
+              showSummarize: false
+            };
+          }
+
+          if (index === prev.length - 1 && msg.streaming) {
+            return {
+              ...msg,
+              streaming: false,
+              summarized: true,
+              showSummarize: false
+            };
+          }
+
+          return msg;
+        });
+
+        return updatedMessages;
+      });
+
+
+
+    } catch (err) {
+      console.error("Streaming error:", err);
+
+      setMessages(prev => {
+        if (prev.length && prev[prev.length - 1]?.streaming) {
+          return prev.slice(0, -1); // Remove failed message
+        }
+        return prev;
+      });
+
+      const errorMessage = {
+        text: "An error occurred while summarizing.",
+        fromUser: false
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   useEffect(() => {
