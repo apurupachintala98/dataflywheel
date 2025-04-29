@@ -200,13 +200,14 @@ const MainContent = ({
                             alignItems: 'center',
                             backgroundColor: '#fff',
                             padding: '12px 20px',
-                            borderRadius: '20px',
-                            border: '1px solid #e3e3e3',
+                            borderRadius: '12px',
+                            border: '1px solid #D9D9D9',
                             boxSizing: 'border-box',
-                            boxShadow: '0 0 0 0 #0000, 0 0 0 0 #0000, 0 9px 9px 0px rgba(0, 0, 0, 0.01), 0 2px 5px 0px rgba(0, 0, 0, 0.06)',
+                            boxShadow: '0px 4px 12px 0px rgba(39, 97, 187, 0.20)',
                             width: '100%',
                             maxWidth: '45%',
                             position: 'absolute',
+                            flexShrink: 0,
                             bottom: submitted ? '20px' : '50%',
                             transform: submitted ? 'translateY(0)' : 'translateY(50%)',
                             transition: 'all 0.5s ease-in-out',
@@ -403,7 +404,7 @@ const MainContent = ({
 
 
                                 </Box>
-                                    <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#5d5d5d", borderRadius: "50%" }}>
+                                    <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
                                         <FaArrowUp color="#fff" />
                                     </IconButton></>
                             </Box>
