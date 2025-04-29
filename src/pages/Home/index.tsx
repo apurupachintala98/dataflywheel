@@ -135,49 +135,13 @@ function Home() {
                   <Search sx={{ width: "20px", position: "absolute", left: "5px" }} />
                   <Input type="text" name="" placeholder="Ask me anything!" />
                 </InputSearchContainer>
-                <Button type="button">
+                {/* <Button type="button">
                   <PlusIcon /> New Chat
-                </Button>
-              </List>
-              <List>
-                <ChatContainer>
-                  <ChatHeading>Chat History</ChatHeading>
-                  <ChatItem className="active">
-                    <ChatLeftItem>
-                      <ChatTitle className="active">
-                        What is the FMC denominator based on in HEDIS?
-                      </ChatTitle>
-                      <ChatDateTime>25/04/2025, 14:30</ChatDateTime>
-                    </ChatLeftItem>
-                    <ChatRightItem>
-                      <DeleteOutlineIcon />
-                    </ChatRightItem>
-                  </ChatItem>
-                  <ChatItem className="notActive">
-                    <ChatLeftItem className="notActive">
-                      <ChatTitle>
-                        What is considered continuous enrollment for FMC in HEDIS?
-                      </ChatTitle>
-                      <ChatDateTime>25/04/2025, 16:30</ChatDateTime>
-                    </ChatLeftItem>
-                    <ChatRightItem>
-                      <DeleteOutlineIcon />
-                    </ChatRightItem>
-                  </ChatItem>
-                  <ChatItem className="notActive">
-                    <ChatLeftItem className="notActive">
-                      <ChatTitle>How should I handle direct transfers for PCR in HEDIS?</ChatTitle>
-                      <ChatDateTime>24/04/2025, 08:30</ChatDateTime>
-                    </ChatLeftItem>
-                    <ChatRightItem>
-                      <DeleteOutlineIcon />
-                    </ChatRightItem>
-                  </ChatItem>
-                </ChatContainer>
+                </Button> */}
               </List>
             </SideBarContainer>
           </>
-        )}
+        )} 
         {!collapsed && (
           <NotificationFooter>
             <List>
@@ -209,11 +173,12 @@ function Home() {
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
+          flexGrow: 2,
           mt: 10,
           backgroundColor: "background.default",
           transition: "margin 0.3s ease",
           marginTop: 0,
+          background: "#E1E9F5"
         }}
       >
         <HomeContent />
