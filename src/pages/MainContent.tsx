@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { HashLoader } from "react-spinners";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
+import MessageWithFeedback from "../pages/Feedback";
 
 interface MainContentProps {
     collapsed: boolean;
@@ -128,8 +129,6 @@ const MainContent = ({
                                 </Menu>
                             </Box>
                         ))}
-
-
                     </Box>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -164,8 +163,7 @@ const MainContent = ({
                     </Box>
                 </Box>
 
-                {/* Messages */}
-                <Box id="message-scroll-container" sx={{ pt: 10, pb: 15, flexGrow: 1, maxWidth: "45%", mx: "auto" }}>
+                {/* <Box id="message-scroll-container" sx={{ pt: 10, pb: 15, flexGrow: 1, maxWidth: "45%", mx: "auto" }}>
                     {messages.map((message, idx) => (
                         <Box key={idx} sx={{ textAlign: message.fromUser ? "right" : "left", my: 2 }}>
                             <Box sx={{ display: "inline-block", backgroundColor: "#f1f1f1", p: 2, borderRadius: 2 }}>
@@ -175,9 +173,74 @@ const MainContent = ({
                     ))}
                     {isLoading && <HashLoader color="#000000" size={20} />}
                     <div id="scroll-anchor" style={{ height: 1 }} />
-                </Box>
+                </Box> */}
+                <Box id="message-scroll-container" tabIndex={0}
+                    sx={{
+                        paddingTop: '80px',
+                        paddingBottom: '140px',
 
-                {/* Input Box */}
+                        flexGrow: 1,
+                        textAlign: 'center',
+                        marginTop: '50px',
+                        width: '100%',
+                        overflowY: 'scroll',
+                        scrollbarWidth: 'none',
+                        scrollBehavior: 'smooth', // Firefox
+                        '&::-webkit-scrollbar': {
+                            display: 'none', // Chrome, Safari
+                        },
+                        maxWidth: '45%', // Set max width as needed
+                        margin: '0 auto', // Center it horizontally
+                    }}>
+
+
+
+                    {messages.map((message, index) => (
+                        <Box key={index} sx={{
+                            width: '100%',
+                            maxWidth: '100%',
+                            margin: '10px auto 0',
+                            overflowY: 'auto',
+                        }}>
+                            <Box
+                                key={index}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: message.fromUser ? "flex-end" : "flex-start",
+                                    // flexDirection: message.fromUser ? 'row-reverse' : 'row',
+                                    alignItems: 'center',
+                                    marginBottom: '10px',
+                                }}
+                            >
+                                {message.fromUser ? (
+                                    <Box
+                                        sx={{
+                                            padding: '10px',
+                                            backgroundColor: message.fromUser ? 'hsla(0, 0%, 91%, .5)' : 'transparent', // User messages with background
+                                            color: '#000',
+                                            borderRadius: '10px',
+                                            maxWidth: '75%',
+                                        }}
+                                    >
+                                        <Typography variant="body1">{message.text}</Typography>
+                                    </Box>
+                                ) : (
+                                    <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} key={index}/>
+                                )}
+                            </Box>
+                        </Box>
+
+                    ))}
+
+                    {isLoading && (
+                        <Box sx={{ display: 'flex', justifyContent: 'start', marginTop: '20px' }}>
+                            <HashLoader color="#000000" size={20} aria-label="Loading Spinner" data-testid="loader" />
+                        </Box>
+                    )}
+                    <div id="scroll-anchor" style={{ height: 1 }} />
+
+
+                </Box>
 
                 <Box sx={{
                     display: 'flex',
@@ -188,7 +251,7 @@ const MainContent = ({
                     zIndex: 1200,
                 }}>
                     {messages.length === 0 && (
-                        <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', }}>
+                        <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#161616" }}>
                             Data at your Fingertips
                         </Typography>
                     )}
@@ -285,21 +348,16 @@ const MainContent = ({
                                 }} />
 
                             {messages.length !== 0 && (
-                                <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#5d5d5d", borderRadius: "50%" }}>
+                                <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
                                     <FaArrowUp color="#fff" />
                                 </IconButton>
                             )}
-
                             <input
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
                                 onChange={handleFileChange} />
-
-
                         </Box>
-
-
                         {messages.length === 0 && (
                             <Box
                                 sx={{
@@ -321,27 +379,37 @@ const MainContent = ({
                                                 textTransform: "none",
                                                 fontSize: "14px",
                                                 padding: "6px 12px",
-                                                color: "#5d5d5d",
-                                                borderColor: "#5d5d5d",
+                                                color: "#002d9c",
+                                                borderColor: "#002d9c",
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '6px', // small gap between icon and text
                                             }}
                                         >
-                                            <svg
-                                                width="18"
-                                                height="18"
-                                                viewBox="0 0 18 18"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                aria-label=""
-                                                className="h-[18px] w-[18px]"
+                                            <Box
+                                                component="span"
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
                                             >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    clipRule="evenodd"
-                                                    d="M12 3C12.5523 3 13 3.44772 13 4L13 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13L13 13L13 20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20L11 13L4 13C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11L11 11L11 4C11 3.44772 11.4477 3 12 3Z"
-                                                    fill="currentColor"
-                                                />
-                                            </svg>
-
+                                                <svg
+                                                    width="14" // reduced from 18 to 14
+                                                    height="14"
+                                                    viewBox="0 0 24 24" // keep 24 for viewBox for good scaling
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    aria-label=""
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        clipRule="evenodd"
+                                                        d="M12 3C12.5523 3 13 3.44772 13 4L13 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13L13 13L13 20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20L11 13L4 13C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11L11 11L11 4C11 3.44772 11.4477 3 12 3Z"
+                                                        fill="currentColor"
+                                                    />
+                                                </svg>
+                                            </Box>
                                             Upload your Data
                                         </Button>
 
@@ -354,10 +422,11 @@ const MainContent = ({
                                                     left: 0,
                                                     zIndex: 1300,
                                                     backgroundColor: '#fff',
-                                                    border: '1px solid #ccc',
+                                                    border: '1px solid #002d9c',
                                                     borderRadius: '8px',
                                                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                                                    minWidth: '180px'
+                                                    minWidth: '180px',
+                                                    color: "#002d9c"
                                                 }}
                                             >
 
@@ -376,8 +445,8 @@ const MainContent = ({
                                             textTransform: "none",
                                             fontSize: "14px",
                                             padding: "6px 12px",
-                                            color: "#5d5d5d",
-                                            borderColor: "#5d5d5d",
+                                            color: "#002d9c",
+                                            borderColor: "#002d9c",
                                         }}
                                     >
                                         Semantic Model
@@ -394,8 +463,8 @@ const MainContent = ({
                                             textTransform: "none",
                                             fontSize: "14px",
                                             padding: "6px 12px",
-                                            color: "#5d5d5d",
-                                            borderColor: "#5d5d5d",
+                                            color: "#002d9c",
+                                            borderColor: "#002d9c",
                                         }}
                                     >
                                         Search Service
