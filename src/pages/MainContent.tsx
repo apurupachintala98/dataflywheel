@@ -81,7 +81,7 @@ const MainContent = ({
                     display: "flex",
                     flexDirection: "column",
                     flexGrow: 1,
-                    padding: "20px",
+                    // padding: "20px",
                     overflowY: "auto",
                     position: "relative",
                     height: "100vh",
