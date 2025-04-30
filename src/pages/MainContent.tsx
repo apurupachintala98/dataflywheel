@@ -168,8 +168,8 @@ const MainContent = ({
 
                 <Box id="message-scroll-container" tabIndex={0}
                     sx={{
-                        paddingTop: '80px',
-                        paddingBottom: '140px',
+                        // paddingTop: '80px',
+                        // paddingBottom: '140px',
                         flexGrow: 1,
                         textAlign: 'center',
                         // marginTop: '50px',
