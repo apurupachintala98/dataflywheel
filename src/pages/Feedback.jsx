@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Box, IconButton, Typography, Tooltip, Button } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import PropTypes from 'prop-types';  
+import PropTypes from 'prop-types';
 
 const Feedback = ({ message }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -109,13 +109,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     return (
         <div className="mb-4">
             <div
-                className={`p-2 rounded-lg ${
-                    message.fromUser
+                className={`p-2 rounded-lg ${message.fromUser
                         ? 'bg-blue-500 text-white'
                         : isSQL
-                        ? 'bg-gray-900 text-white'
-                        : 'bg-gray-200 text-black'
-                }`}
+                            ? 'bg-gray-900 text-white'
+                            : 'bg-gray-200 text-black'
+                    }`}
                 style={{
                     fontFamily: 'ui-sans-serif,-apple-system,system-ui,Segoe UI,Helvetica,Arial,sans-serif',
                     textAlign: 'left',
@@ -128,7 +127,11 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         {message.text}
                     </SyntaxHighlighter>
                 ) : (
-                    <Typography>{message.text}</Typography>
+                    typeof message.text === 'string' ? (
+                        <Typography>{message.text}</Typography>
+                    ) : (
+                        <div>{message.text}</div>
+                    )
                 )}
 
                 {message.showExecute && (
@@ -164,27 +167,27 @@ export default MessageWithFeedback;
 //
 
 Feedback.propTypes = {
-  message: PropTypes.shape({
-    text: PropTypes.string,
-    type: PropTypes.string,
-    fromUser: PropTypes.bool,
-    summarized: PropTypes.bool,
-    streaming: PropTypes.bool,
-    showExecute: PropTypes.bool,
-    showSummarize: PropTypes.bool,
-  }).isRequired,
+    message: PropTypes.shape({
+        text: PropTypes.string,
+        type: PropTypes.string,
+        fromUser: PropTypes.bool,
+        summarized: PropTypes.bool,
+        streaming: PropTypes.bool,
+        showExecute: PropTypes.bool,
+        showSummarize: PropTypes.bool,
+    }).isRequired,
 };
 
 MessageWithFeedback.propTypes = {
-  message: PropTypes.shape({
-    text: PropTypes.string,
-    type: PropTypes.string,
-    fromUser: PropTypes.bool,
-    summarized: PropTypes.bool,
-    streaming: PropTypes.bool,
-    showExecute: PropTypes.bool,
-    showSummarize: PropTypes.bool,
-  }).isRequired,
-  executeSQL: PropTypes.func.isRequired,
-  apiCortex: PropTypes.func.isRequired,
+    message: PropTypes.shape({
+        text: PropTypes.string,
+        type: PropTypes.string,
+        fromUser: PropTypes.bool,
+        summarized: PropTypes.bool,
+        streaming: PropTypes.bool,
+        showExecute: PropTypes.bool,
+        showSummarize: PropTypes.bool,
+    }).isRequired,
+    executeSQL: PropTypes.func.isRequired,
+    apiCortex: PropTypes.func.isRequired,
 };

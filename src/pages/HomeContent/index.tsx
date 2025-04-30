@@ -122,18 +122,41 @@ const HomeContent = () => {
         if (response.type === "text") {
           if (response.citations?.length) {
             const html = renderTextWithCitations(response.text, response.citations);
-            setMessages(prev => [...prev, { text: html, fromUser: false, isHTML: true }]);
+            setMessages(prev => {
+              const temp = [...prev];
+              temp[temp.length - 1] = {
+                ...temp[temp.length - 1],
+                text: html,
+                streaming: false,
+                isHTML: true
+              };
+              return temp;
+            });
           } else {
-            setMessages(prev => [...prev, { text: response.text, fromUser: false }]);
+            setMessages(prev => {
+              const temp = [...prev];
+              temp[temp.length - 1] = {
+                ...temp[temp.length - 1],
+                text: response.text,
+                streaming: false
+              };
+              return temp;
+            });
           }
         } else if (response.type === "sql") {
           setMessages(prev => [
             ...prev,
             { text: response.interpretation, fromUser: false },
-            { text: response.sql, fromUser: false, isCode: true, showExecute: true, sqlQuery: response.sql }
+            {
+              text: response.sql,
+              fromUser: false,
+              isCode: true,
+              showExecute: true,
+              sqlQuery: response.sql
+            }
           ]);
         }
-      }
+      }      
     });
   };
 

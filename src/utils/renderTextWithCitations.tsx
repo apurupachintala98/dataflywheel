@@ -1,8 +1,10 @@
-// src/utils/renderTextWithCitations.tsx
 import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 
-export const renderTextWithCitations = (text: string, citations: { source_id: number; text: string }[]) => {
+export const renderTextWithCitations = (
+  text: string,
+  citations: { source_id: number; text: string }[]
+) => {
   const citationMap = new Map<number, string>();
   citations.forEach(c => citationMap.set(c.source_id, c.text));
 
@@ -11,7 +13,6 @@ export const renderTextWithCitations = (text: string, citations: { source_id: nu
     if (match) {
       const sourceId = parseInt(match[1]);
       const citationText = citationMap.get(sourceId);
-
       return citationText ? (
         <Tooltip key={i} title={citationText} arrow placement="top">
           <span style={{ color: "blue", cursor: "pointer" }}>{part}</span>
@@ -20,9 +21,8 @@ export const renderTextWithCitations = (text: string, citations: { source_id: nu
         <span key={i}>{part}</span>
       );
     }
-
     return <span key={i}>{part}</span>;
   });
 
-  return <div>{parts}</div>;
+  return <div style={{ whiteSpace: "pre-wrap" }}>{parts}</div>;
 };
