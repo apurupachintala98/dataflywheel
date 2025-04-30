@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem, Divider, TextField, Button, CircularProgress } from "@mui/material";
 import { FaArrowUp, FaUserCircle, FaAngleDown } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
@@ -6,12 +6,16 @@ import { HashLoader } from "react-spinners";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
 import MessageWithFeedback from "../pages/Feedback";
+type UploadType = 'yaml' | 'data';
+import { MessageType } from '../types/message.types';
+
 
 interface MainContentProps {
+    messages: MessageType[];
     collapsed: boolean;
     toggleSidebar: () => void;
     inputValue: string;
-    messages: { text: string; fromUser: boolean }[];
+    // messages: { text: string; fromUser: boolean }[];
     anchorEls: {
         account: HTMLElement | null;
         chat: HTMLElement | null;
@@ -30,7 +34,7 @@ interface MainContentProps {
     selectedFile: File | null;
     isUploading: boolean;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUploadFromComputer: () => void;
+    handleUpload: (type: UploadType) => void;
     isModalVisible: boolean;
     handleModalClose: () => void;
     data: any;
@@ -59,7 +63,7 @@ const MainContent = ({
     isUploading,
     handleFileChange,
     submitted,
-    handleUploadFromComputer,
+    handleUpload,
     isModalVisible,
     handleModalClose,
     data,
@@ -68,6 +72,7 @@ const MainContent = ({
     apiCortex,
     open,
 }: MainContentProps) => {
+
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />
@@ -158,27 +163,13 @@ const MainContent = ({
                                 />
                             </g>
                         </svg>
-
-
                     </Box>
                 </Box>
 
-                {/* <Box id="message-scroll-container" sx={{ pt: 10, pb: 15, flexGrow: 1, maxWidth: "45%", mx: "auto" }}>
-                    {messages.map((message, idx) => (
-                        <Box key={idx} sx={{ textAlign: message.fromUser ? "right" : "left", my: 2 }}>
-                            <Box sx={{ display: "inline-block", backgroundColor: "#f1f1f1", p: 2, borderRadius: 2 }}>
-                                <Typography>{message.text}</Typography>
-                            </Box>
-                        </Box>
-                    ))}
-                    {isLoading && <HashLoader color="#000000" size={20} />}
-                    <div id="scroll-anchor" style={{ height: 1 }} />
-                </Box> */}
                 <Box id="message-scroll-container" tabIndex={0}
                     sx={{
                         paddingTop: '80px',
                         paddingBottom: '140px',
-
                         flexGrow: 1,
                         textAlign: 'center',
                         marginTop: '50px',
@@ -192,8 +183,6 @@ const MainContent = ({
                         maxWidth: '45%', // Set max width as needed
                         margin: '0 auto', // Center it horizontally
                     }}>
-
-
 
                     {messages.map((message, index) => (
                         <Box key={index} sx={{
@@ -225,7 +214,7 @@ const MainContent = ({
                                         <Typography variant="body1">{message.text}</Typography>
                                     </Box>
                                 ) : (
-                                    <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} key={index}/>
+                                    <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} key={index} />
                                 )}
                             </Box>
                         </Box>
@@ -234,7 +223,7 @@ const MainContent = ({
 
                     {isLoading && (
                         <Box sx={{ display: 'flex', justifyContent: 'start', marginTop: '20px' }}>
-                            <HashLoader color="#000000" size={20} aria-label="Loading Spinner" data-testid="loader" />
+                            <HashLoader color="#2761BB" size={20} aria-label="Loading Spinner" data-testid="loader" />
                         </Box>
                     )}
                     <div id="scroll-anchor" style={{ height: 1 }} />
@@ -251,7 +240,7 @@ const MainContent = ({
                     zIndex: 1200,
                 }}>
                     {messages.length === 0 && (
-                        <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#161616" }}>
+                        <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#2761BB" }}>
                             Data at your Fingertips
                         </Typography>
                     )}
@@ -369,71 +358,46 @@ const MainContent = ({
                                 }}
                             >
                                 <><Box sx={{ display: 'flex', gap: '8px' }}>
+
                                     <Box sx={{ position: 'relative' }}>
-                                        <Button
-                                            variant="outlined"
+                                        <IconButton
                                             onClick={(e) => handleMenuClick(e, 'upload')}
-                                            rel="noopener noreferrer"
                                             sx={{
-                                                borderRadius: "50px",
-                                                textTransform: "none",
-                                                fontSize: "14px",
-                                                padding: "6px 12px",
-                                                color: "#002d9c",
-                                                borderColor: "#002d9c",
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '6px', // small gap between icon and text
+                                                border: '1px solid #002d9c',
+                                                borderRadius: '50%',
+                                                padding: '8px',
+                                                color: '#002d9c',
                                             }}
                                         >
-                                            <Box
-                                                component="span"
-                                                sx={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                }}
+                                            <svg
+                                                width="18"
+                                                height="18"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
                                             >
-                                                <svg
-                                                    width="14" // reduced from 18 to 14
-                                                    height="14"
-                                                    viewBox="0 0 24 24" // keep 24 for viewBox for good scaling
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    aria-label=""
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        clipRule="evenodd"
-                                                        d="M12 3C12.5523 3 13 3.44772 13 4L13 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13L13 13L13 20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20L11 13L4 13C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11L11 11L11 4C11 3.44772 11.4477 3 12 3Z"
-                                                        fill="currentColor"
-                                                    />
-                                                </svg>
-                                            </Box>
-                                            Upload your Data
-                                        </Button>
+                                                <path
+                                                    fillRule="evenodd"
+                                                    clipRule="evenodd"
+                                                    d="M12 3C12.5523 3 13 3.44772 13 4V11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13H13V20C13 20.5523 12.5523 21 12 21C11.4477 21 11 20.5523 11 20V13H4C3.44772 13 3 12.5523 3 12C3 11.4477 3.44772 11 4 11H11V4C11 3.44772 11.4477 3 12 3Z"
+                                                    fill="currentColor"
+                                                />
+                                            </svg>
+                                        </IconButton>
 
-
-                                        {open && (
-                                            <Box
-                                                sx={{
-                                                    position: 'absolute',
-                                                    top: -50,
-                                                    left: 0,
-                                                    zIndex: 1300,
-                                                    backgroundColor: '#fff',
-                                                    border: '1px solid #002d9c',
-                                                    borderRadius: '8px',
-                                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                                                    minWidth: '180px',
-                                                    color: "#002d9c"
-                                                }}
-                                            >
-
-                                                <MenuItem onClick={handleUploadFromComputer}>Upload from computer</MenuItem>
-                                            </Box>
-                                        )}
+                                        <Menu
+                                            anchorEl={anchorEls.upload}
+                                            open={Boolean(anchorEls.upload)}
+                                            onClose={handleMenuClose}
+                                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                                        >
+                                            <MenuItem onClick={() => handleUpload('yaml')}>Upload YAML</MenuItem>
+                                            <MenuItem onClick={() => handleUpload('data')}>Upload Data</MenuItem>
+                                        </Menu>
                                     </Box>
+
+
                                     <Button
                                         variant="outlined"
                                         component="a"
@@ -477,8 +441,6 @@ const MainContent = ({
                         )}
                     </Box>
                 </Box>
-
-
             </Box>
         </>
     );

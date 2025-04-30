@@ -144,7 +144,7 @@ function Home() {
         )} 
         {!collapsed && (
           <NotificationFooter>
-            <List>
+            <List sx={{color: "#2761BB"}}>
               <ListItem>
                 <NotificationsIcon /> Notifications
               </ListItem>
@@ -178,7 +178,6 @@ function Home() {
           backgroundColor: "background.default",
           transition: "margin 0.3s ease",
           marginTop: 0,
-          background: "#E1E9F5"
         }}
       >
         <HomeContent />

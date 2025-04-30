@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Box, IconButton, Typography, Tooltip, Button } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import PropTypes from 'prop-types';  // Correctly imported
+import PropTypes from 'prop-types';  
 
 const Feedback = ({ message }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);

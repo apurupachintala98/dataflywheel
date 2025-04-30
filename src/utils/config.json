@@ -1,0 +1,15 @@
+{
+    "API_BASE_URL": "http://10.126.192.122:8341",
+    "ENDPOINTS": {
+      "LOGIN": "/login",
+      "USER_INFO": "/user-info",
+      "CORTEX_SEARCH": "/api/cortex/search_details",
+      "CORTEX_ANALYST": "/api/cortex/analyst_details",
+      "TEXT_TO_SQL": "/api/cortex/txt2sql",
+      "AGENT": "/api/cortex/agent",
+      "RUN_SQL_QUERY": "/api/cortex/txt2sql/run_sql_query",
+      "CORTEX_COMPLETE": "/api/cortex/complete",
+      "UPLOAD_URL": "/api/cortex/upload_file/"
+    }
+  }
+  
