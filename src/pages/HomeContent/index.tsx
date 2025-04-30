@@ -111,14 +111,14 @@
 //       await uploadFile();
 //       return;
 //     }
-  
+
 //     if (!inputValue.trim()) return;
-  
+
 //     const userMessage = { text: inputValue, fromUser: true };
 //     setMessages(prev => [...prev, userMessage]);
 //     setInputValue("");
 //     setSubmitted(true);
-  
+
 //     const payload = buildPayload({
 //       prompt: inputValue,
 //       semanticModel: selectedModels.yaml,
@@ -128,19 +128,19 @@
 //       database_nm: "POC_SPC_SNOWPARK_DB",
 //       schema_nm: "HEDIS_SCHEMA"
 //     });
-  
+
 //     const endpoint = config.ENDPOINTS.AGENT
 //       ? `${config.API_BASE_URL}${config.ENDPOINTS.AGENT}`
 //       : `${config.API_BASE_URL}${config.ENDPOINTS.TEXT_TO_SQL}`;
-  
+
 //     const { stream, error } = await sendRequest(endpoint, payload, undefined, true);
-  
+
 //     if (!stream || error) {
 //       toast.error("Something went wrong.");
 //       setMessages(prev => [...prev, { text: "An error occurred.", fromUser: false }]);
 //       return;
 //     }
-  
+
 //     await handleStream(stream, {
 //       fromUser: false,
 //       streaming: true,
@@ -169,12 +169,12 @@
 //       setMessages,
 //     });
 //   };
-  
+
 //   const uploadFile = async () => {
 //     setIsUploading(true);
 //     const formData = new FormData();
 //     formData.append("file", selectedFile!);
-  
+
 //     try {
 //       const response = await axios.post(config.ENDPOINTS.UPLOAD_URL, formData, { headers: { "Content-Type": "multipart/form-data" } });
 //       toast.success(response?.data?.message || "File uploaded successfully!");
@@ -185,18 +185,18 @@
 //       setIsUploading(false);
 //     }
 //   };
-  
+
 //   const executeSQL = async (sqlQuery: any) => {
 //     const { sendRequest } = useApiRequest();
-  
+
 //     const payload = buildPayload({
 //       prompt: sqlQuery.prompt || sqlQuery.text,
 //       execSQL: sqlQuery.text,
 //       sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb"
 //     });
-  
+
 //     const { data, error } = await sendRequest("http://10.126.192.122:8340/api/cortex/execute", payload);
-  
+
 //     if (error || !data) {
 //       setMessages(prev => [
 //         ...prev,
@@ -214,7 +214,7 @@
 //       console.error("Error:", error);
 //       return;
 //     }
-  
+
 //     const convertToString = (input: any): string => {
 //       if (typeof input === 'string') return input;
 //       if (Array.isArray(input)) return input.map(convertToString).join(', ');
@@ -224,9 +224,9 @@
 //           .join(', ');
 //       return String(input);
 //     };
-  
+
 //     let modelReply: string | React.ReactNode = "";
-  
+
 //     if (Array.isArray(data) && data.length > 0) {
 //       const columns = Object.keys(data[0]);
 //       modelReply = (
@@ -266,7 +266,7 @@
 //     } else {
 //       modelReply = typeof data === 'string' ? data : convertToString(data);
 //     }
-  
+
 //     setData(data);
 //     setMessages(prev => [
 //       ...prev,
@@ -280,7 +280,7 @@
 //       }
 //     ]);
 //   };
-  
+
 //   const apiCortex = async (message: any) => {
 //     const payload = buildPayload({
 //       method: "cortex",
@@ -291,22 +291,22 @@
 //       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
 //     });
 
-    
-  
+
+
 //     const { stream, error } = await sendRequest("http://10.126.192.122:8340/api/cortex/complete", payload, undefined, true);
-  
+
 //     if (!stream || error) {
 //       console.error("Streaming error:", error);
 //       setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
 //       return;
 //     }
-  
+
 //     await handleStream(stream, {
 //       fromUser: false,
 //       summarized: true,
 //       type: "text"
 //     });
-  
+
 //     setMessages(prev =>
 //       prev.map((msg, index) => {
 //         if (msg === message) return { ...msg, showSummarize: false };
@@ -315,7 +315,7 @@
 //       })
 //     );
 //   };
-  
+
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
@@ -438,7 +438,7 @@ const HomeContent = () => {
 
   const handleGraphClick = () => setIsModalVisible(true);
   const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
-  const handleUpload = (type: 'yaml' | 'data') => {};
+  const handleUpload = (type: 'yaml' | 'data') => { };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
     setSelectedModels(prev => ({
@@ -458,7 +458,9 @@ const HomeContent = () => {
     }
     if (!inputValue.trim()) return;
     const userMessage = { text: inputValue, fromUser: true };
-    setMessages(prev => [...prev, userMessage]);
+    const assistantPlaceholder = { text: "", fromUser: false, streaming: true };
+
+    setMessages(prev => [...prev, userMessage, assistantPlaceholder]);
     setInputValue("");
     setSubmitted(true);
 
