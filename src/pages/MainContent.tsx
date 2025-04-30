@@ -172,7 +172,7 @@ const MainContent = ({
                         paddingBottom: '140px',
                         flexGrow: 1,
                         textAlign: 'center',
-                        marginTop: '50px',
+                        // marginTop: '50px',
                         width: '100%',
                         overflowY: 'scroll',
                         scrollbarWidth: 'none',
