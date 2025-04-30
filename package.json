@@ -1,6 +1,6 @@
 {
   "name": "edagenai-portal",
-  "description": "Elevance Data Intelligence Platform",
+  "description": "Data Flywheel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

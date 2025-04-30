@@ -92,7 +92,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     if (!message?.text) {
         return null;
     }
-
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
         message.type === "text" &&
@@ -102,10 +101,10 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         <div className="mb-4">
             <div
                 className={`p-2 rounded-lg ${message.fromUser
-                        ? 'bg-blue-500 text-white'
-                        : isSQL
-                            ? 'bg-gray-900 text-white'
-                            : 'bg-gray-200 text-black'
+                    ? 'bg-blue-500 text-white'
+                    : isSQL
+                        ? 'bg-gray-900 text-white'
+                        : 'bg-gray-200 text-black'
                     }`}
                 style={{
                     fontFamily: 'ui-sans-serif,-apple-system,system-ui,Segoe UI,Helvetica,Arial,sans-serif',
@@ -146,7 +145,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Button>
                 )}
             </div>
-
             {shouldShowFeedback && <Feedback message={message} />}
         </div>
     );

@@ -15,7 +15,6 @@ interface MainContentProps {
     collapsed: boolean;
     toggleSidebar: () => void;
     inputValue: string;
-    // messages: { text: string; fromUser: boolean }[];
     anchorEls: {
         account: HTMLElement | null;
         chat: HTMLElement | null;
@@ -81,7 +80,6 @@ const MainContent = ({
                     display: "flex",
                     flexDirection: "column",
                     flexGrow: 1,
-                    // padding: "20px",
                     overflowY: "auto",
                     position: "relative",
                     height: "100vh",
@@ -95,8 +93,8 @@ const MainContent = ({
                                 <Box
                                     onClick={(e) => handleMenuClick(e, type)}
                                     sx={{
-                                        backgroundColor: '#2761BB', // The blue background
-                                        color: '#FFFFFF', // White text
+                                        backgroundColor: '#2761BB',
+                                        color: '#FFFFFF',
                                         px: 2,
                                         py: 1,
                                         borderRadius: '6px',
@@ -168,20 +166,17 @@ const MainContent = ({
 
                 <Box id="message-scroll-container" tabIndex={0}
                     sx={{
-                        // paddingTop: '80px',
-                        // paddingBottom: '140px',
                         flexGrow: 1,
                         textAlign: 'center',
-                        // marginTop: '50px',
                         width: '100%',
                         overflowY: 'scroll',
                         scrollbarWidth: 'none',
-                        scrollBehavior: 'smooth', // Firefox
+                        scrollBehavior: 'smooth',
                         '&::-webkit-scrollbar': {
-                            display: 'none', // Chrome, Safari
+                            display: 'none',
                         },
-                        maxWidth: '45%', // Set max width as needed
-                        margin: '50px auto', // Center it horizontally
+                        maxWidth: '45%',
+                        margin: '50px auto',
                     }}>
 
                     {messages.map((message, index) => (
@@ -196,7 +191,6 @@ const MainContent = ({
                                 sx={{
                                     display: 'flex',
                                     justifyContent: message.fromUser ? "flex-end" : "flex-start",
-                                    // flexDirection: message.fromUser ? 'row-reverse' : 'row',
                                     alignItems: 'center',
                                     marginBottom: '10px',
                                 }}
@@ -218,7 +212,6 @@ const MainContent = ({
                                 )}
                             </Box>
                         </Box>
-
                     ))}
 
                     {isLoading && (
@@ -227,8 +220,6 @@ const MainContent = ({
                         </Box>
                     )}
                     <div id="scroll-anchor" style={{ height: 1 }} />
-
-
                 </Box>
 
                 <Box sx={{
@@ -236,7 +227,7 @@ const MainContent = ({
                     flexDirection: 'column',
                     alignItems: 'center',
                     width: '100%',
-                    marginTop: messages.length === 0 ? '36%' : '40px', // Add spacing above input field
+                    marginTop: messages.length === 0 ? '36%' : '40px',
                     zIndex: 1200,
                 }}>
                     {messages.length === 0 && (
@@ -244,7 +235,6 @@ const MainContent = ({
                             Data at your Fingertips
                         </Typography>
                     )}
-
                     <Box
                         sx={{
                             display: 'flex',
@@ -285,7 +275,6 @@ const MainContent = ({
                                         ) : (
                                             <InsertDriveFileIcon sx={{ color: '#9e9e9e', fontSize: 20 }} />
                                         )}
-
                                         <IconButton
                                             size="small"
                                             onClick={() => setSelectedFile(null)}
@@ -312,8 +301,8 @@ const MainContent = ({
                                 onChange={handleInputChange}
                                 onKeyDown={(e) => {
                                     if (e.key === "Enter" && !e.shiftKey) {
-                                        e.preventDefault(); // Prevents new line in input field
-                                        handleSubmit(); // Calls submit function
+                                        e.preventDefault();
+                                        handleSubmit();
                                     }
                                 }}
                                 variant="standard"
@@ -351,14 +340,13 @@ const MainContent = ({
                             <Box
                                 sx={{
                                     display: 'flex',
-                                    justifyContent: 'space-between', // Ensures buttons left, submit button right
+                                    justifyContent: 'space-between',
                                     alignItems: 'center',
                                     width: '100%',
                                     marginTop: '12px'
                                 }}
                             >
                                 <><Box sx={{ display: 'flex', gap: '8px' }}>
-
                                     <Box sx={{ position: 'relative' }}>
                                         <IconButton
                                             onClick={(e) => handleMenuClick(e, 'upload')}
@@ -396,8 +384,6 @@ const MainContent = ({
                                             <MenuItem onClick={() => handleUpload('data')}>Upload Data</MenuItem>
                                         </Menu>
                                     </Box>
-
-
                                     <Button
                                         variant="outlined"
                                         component="a"

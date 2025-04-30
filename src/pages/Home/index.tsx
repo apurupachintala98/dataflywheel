@@ -28,7 +28,6 @@ import {
 } from "../styled.components";
 import { CopyrightText } from "./styled.components";
 import Header from "components/Header";
-
 import dfwLogo from "../../assests/images/dfwLogo.svg";
 import PlusIcon from "@mui/icons-material/Add";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -77,7 +76,6 @@ function Home() {
           "& .MuiDrawer-paper": {
             width: drawerWidth[sidebarType],
             transition: "width 0.3s ease",
-            //overflowX: "hidden",
             overflow: "visible",
             display: "flex",
             backgroundColor: "#fff",
@@ -108,16 +106,6 @@ function Home() {
             </ToggleContainer>
           )}
         </Box>
-        {/* <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            padding: "16px 0",
-            marginLeft: "7px",
-            fontWeight: "bold",
-          }}
-        ></Box> */}
         {!collapsed && (
           <>
             <Divider />
@@ -161,15 +149,6 @@ function Home() {
           </NotificationFooter>
         )}
       </Drawer>
-      {/* <AppBar
-        position="fixed"
-        sx={{
-          zIndex: 1201,
-          transition: "background-color 0.3s ease",
-          width: `calc(100% - ${drawerWidth[sidebarType]}px)`,
-          ml: `${drawerWidth[sidebarType]}px`,
-        }}
-      ></AppBar> */}
       <Box
         component="main"
         sx={{

@@ -9,8 +9,8 @@ import Spinner from "components/Spinner";
 function ReactRoute() {
   return (
     <BrowserRouter>
-      <Helmet defaultTitle="Elevance Data Intelligence Platform">
-        <meta name="description" content="Elevance Data Intelligence Platform" />
+      <Helmet defaultTitle="Data Flywheel">
+        <meta name="description" content="Data Flywheel" />
       </Helmet>
       <Suspense fallback={<Spinner />}>
         <Routes>
