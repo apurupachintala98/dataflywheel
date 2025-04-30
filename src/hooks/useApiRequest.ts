@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export const useApiRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
-
   const sendRequest = async <T>(
     url: string,
     payload: any,
@@ -18,9 +17,7 @@ export const useApiRequest = () => {
         ...options,
         body: JSON.stringify(payload)
       });
-
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-
       if (isStream) {
         return {
           data: null,
@@ -28,7 +25,6 @@ export const useApiRequest = () => {
           error: null
         };
       }
-
       const data = await response.json();
       return { data, stream: null, error: null };
     } catch (err) {
@@ -37,6 +33,5 @@ export const useApiRequest = () => {
       setIsLoading(false);
     }
   };
-
   return { sendRequest, isLoading };
 };

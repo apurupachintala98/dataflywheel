@@ -1,5 +1,3 @@
-// Feedback.jsx
-
 import { useState, useEffect, useRef } from "react";
 import { Box, IconButton, Typography, Tooltip, Button } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -72,22 +70,18 @@ const Feedback = ({ message }) => {
         <div className="flex space-x-4 p-2 border-t" style={{ textAlign: "left", marginTop: "10px" }}>
             <Tooltip title="Copy">
                 <IconButton onClick={handleCopy}>
-                    {/* Your SVG here, make sure class -> className and fill-rule -> fillRule */}
                 </IconButton>
             </Tooltip>
             <Tooltip title="Good Response">
                 <IconButton>
-                    {/* Your Good response SVG */}
                 </IconButton>
             </Tooltip>
             <Tooltip title="Bad Response">
                 <IconButton>
-                    {/* Your Bad response SVG */}
                 </IconButton>
             </Tooltip>
             <Tooltip title={isSpeaking ? "Stop Reading" : "Read Aloud"}>
                 <IconButton onClick={handleSpeak}>
-                    {/* Your Speaking / Stop SVG */}
                 </IconButton>
             </Tooltip>
         </div>
@@ -100,12 +94,10 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     }
 
     const isSQL = message.type === "sql";
-
     const shouldShowFeedback =
         message.type === "text" &&
         !message.fromUser &&
         (message.summarized || message.streaming);
-
     return (
         <div className="mb-4">
             <div
@@ -161,10 +153,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
 };
 
 export default MessageWithFeedback;
-
-//
-// Prop types validation
-//
 
 Feedback.propTypes = {
     message: PropTypes.shape({

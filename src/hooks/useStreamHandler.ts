@@ -26,19 +26,15 @@ export const useStreamHandler = (
       const result = await reader.read();
       done = result.done;
       if (done) break;
-
       const chunk = decoder.decode(result.value, { stream: true });
       buffer += chunk;
-
       const endIndex = buffer.indexOf('end_of_stream');
       if (endIndex !== -1) {
-        // Extract only the streamed content up to the marker
         const parts = buffer.split('end_of_stream');
         buffer = parts[0].trim();
         metadata = parts[1]?.trim() || '';
         done = true;
       }
-
       setMessages(prev => {
         const temp = [...prev];
         temp[temp.length - 1] = {
@@ -48,11 +44,8 @@ export const useStreamHandler = (
         };
         return temp;
       });
-
       if (done) break;
     }
-
-    // Try to parse metadata if it exists
     let parsed: any = { text: buffer, type: 'text' };
     if (metadata) {
       try {
@@ -62,7 +55,6 @@ export const useStreamHandler = (
         console.warn("Could not parse trailing metadata:", metadata);
       }
     }
-
     try {
       onComplete?.(parsed);
     } catch (e) {

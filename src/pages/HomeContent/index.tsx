@@ -217,7 +217,6 @@ const HomeContent = () => {
     } else {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
-
     setData(data);
     setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
   };
@@ -239,7 +238,6 @@ const HomeContent = () => {
       setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
       return;
     }
-
     await handleStream(stream, { fromUser: false, streaming: true });
 
     setMessages(prev => prev.map((msg, index) => {

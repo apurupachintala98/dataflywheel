@@ -181,7 +181,7 @@ const MainContent = ({
                             display: 'none', // Chrome, Safari
                         },
                         maxWidth: '45%', // Set max width as needed
-                        margin: '0 auto', // Center it horizontally
+                        margin: '70px auto', // Center it horizontally
                     }}>
 
                     {messages.map((message, index) => (
