@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../utils/config.json"; // Adjust path if needed
+import config from "../utils/config.json";
 
 const { API_BASE_URL, ENDPOINTS } = config;
 
@@ -11,31 +11,31 @@ const axiosInstance = axios.create({
 });
 
 const ApiService = {
-  login: async (email: string, password: string) => {
-    try {
-      const response = await axiosInstance.post(ENDPOINTS.LOGIN, {});
-      return response.data;
-    } catch (error) {
-      console.error("Error logging in:", error);
-      throw error;
-    }
-  },
+  // login: async (email: string, password: string) => {
+  //   try {
+  //     const response = await axiosInstance.post(ENDPOINTS.LOGIN, {});
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error logging in:", error);
+  //     throw error;
+  //   }
+  // },
 
-  fetchUserInfo: async (token: string) => {
-    try {
-      const response = await axiosInstance.post(
-        ENDPOINTS.USER_INFO,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-      throw error;
-    }
-  },
+  // fetchUserInfo: async (token: string) => {
+  //   try {
+  //     const response = await axiosInstance.post(
+  //       ENDPOINTS.USER_INFO,
+  //       {},
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error fetching user info:", error);
+  //     throw error;
+  //   }
+  // },
 
   getCortexSearchDetails: async () => {
     try {
@@ -57,35 +57,35 @@ const ApiService = {
     }
   },
 
-  sendTextToSQL: async (payload: any) => {
-    try {
-      const response = await axiosInstance.post(ENDPOINTS.TEXT_TO_SQL, payload);
-      return response.data;
-    } catch (error) {
-      console.error('Error processing text-to-SQL request:', error);
-      throw error;
-    }
-  },
+  // sendTextToSQL: async (payload: any) => {
+  //   try {
+  //     const response = await axiosInstance.post(ENDPOINTS.TEXT_TO_SQL, payload);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error processing text-to-SQL request:', error);
+  //     throw error;
+  //   }
+  // },
 
-  runExeSql: async (payload: any) => {
-    try {
-      const response = await axiosInstance.post(ENDPOINTS.RUN_SQL_QUERY, payload);
-      return response.data;
-    } catch (error) {
-      console.error('Error processing request:', error);
-      throw error;
-    }
-  },
+  // runExeSql: async (payload: any) => {
+  //   try {
+  //     const response = await axiosInstance.post(ENDPOINTS.RUN_SQL_QUERY, payload);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error processing request:', error);
+  //     throw error;
+  //   }
+  // },
 
-  postCortexPrompt: async (payload: any) => {
-    try {
-      const response = await axiosInstance.post(ENDPOINTS.CORTEX_COMPLETE, payload);
-      return response.data;
-    } catch (error) {
-      console.error("Error sending cortex prompt:", error);
-      throw error;
-    }
-  }
+  // postCortexPrompt: async (payload: any) => {
+  //   try {
+  //     const response = await axiosInstance.post(ENDPOINTS.CORTEX_COMPLETE, payload);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error sending cortex prompt:", error);
+  //     throw error;
+  //   }
+  // }
 };
 
 export default ApiService;

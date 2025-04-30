@@ -183,7 +183,7 @@ const HomeContent = () => {
       sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb"
     });
 
-    const { data, error } = await sendRequest("http://10.126.192.122:8340/api/cortex/execute", payload);
+    const { data, error } = await sendRequest("http://10.126.192.122:8341/api/cortex/execute", payload);
 
     if (error || !data) {
       setMessages(prev => [...prev, { text: "Error communicating with backend.", fromUser: false, showExecute: false, showSummarize: false }]);
@@ -231,7 +231,7 @@ const HomeContent = () => {
       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
     });
 
-    const { stream, error } = await sendRequest("http://10.126.192.122:8340/api/cortex/complete", payload, undefined, true);
+    const { stream, error } = await sendRequest("http://10.126.192.122:8341/api/cortex/complete", payload, undefined, true);
 
     if (!stream || error) {
       console.error("Streaming error:", error);
