@@ -151,7 +151,7 @@ export const useStreamHandler = (
 
     if (parsed.type === 'sql') {
       const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_sql/);
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
 
       parsed = {
         ...parsed,

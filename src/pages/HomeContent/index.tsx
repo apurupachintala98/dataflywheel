@@ -144,18 +144,24 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
+          const pureText = response.text;
+        
+          const interpretation = pureText.split("end_of_interpretation")[0].trim();
+          const sqlMatch = pureText.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+          const sql = sqlMatch ? sqlMatch[1].trim() : '';
+        
           setMessages(prev => [
             ...prev,
-            { text: response.interpretation, fromUser: false },
+            { text: interpretation, fromUser: false },
             {
-              text: response.sql,
+              text: sql,
               fromUser: false,
               isCode: true,
               showExecute: true,
-              sqlQuery: response.sql
+              sqlQuery: sql
             }
           ]);
-        }
+        }        
       }      
     });
   };
