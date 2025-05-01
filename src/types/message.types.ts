@@ -1,17 +1,13 @@
-import { ReactNode } from 'react';
-
-export type MessageType = {
-  text: string | ReactNode;
-  fromUser: boolean;
-  streaming?: boolean;
-  isHTML?: boolean;
-  isCode?: boolean;
-  showExecute?: boolean;
-  showSummarize?: boolean;
-  executedResponse?: any;
-  sqlQuery?: string;
-  type?: "text" | "sql";
-  interpretation?: string;
-  sql?: string;
-  prompt?: any;
-};
+export interface MessageType {
+    text: string | React.ReactNode;
+    fromUser: boolean;
+    isHTML?: boolean;
+    isCode?: boolean;
+    sqlQuery?: string;
+    executedResponse?: any;
+    showExecute?: boolean;
+    showSummarize?: boolean;
+    streaming?: boolean;
+    summarized?: boolean;
+    prompt?: string;
+  }

@@ -78,32 +78,18 @@ export const useStreamHandler = (
     //   };
     // }
 
-    // if (jsons.find((j: any) => j.type === 'sql')) {
-    //   const [interpretationPart] = buffer.split('end_of_interpretation');
-    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-    //   const sqlText = sqlMatch?.[1]?.trim() || '';
-
-    //   parsed = {
-    //     ...parsed,
-    //     type: 'sql',
-    //     interpretation: interpretationPart?.trim(),
-    //     sql: sqlText,
-    //   };
-    // }
-
     if (jsons.find((j: any) => j.type === 'sql')) {
-      const parts = buffer.split('end_of_interpretation');
-      const interpretation = parts[0]?.trim() || '';
-      const sql = parts[1]?.replace(/end_of_sql|end_of_stream/g, '')?.trim() || '';
-    
+      const [interpretationPart] = buffer.split('end_of_interpretation');
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+      const sqlText = sqlMatch?.[1]?.trim() || '';
+
       parsed = {
         ...parsed,
         type: 'sql',
-        interpretation,
-        sql,
+        interpretation: interpretationPart?.trim(),
+        sql: sqlText,
       };
     }
-    
 
     // if (jsons.find((j: any) => j.type === 'sql')) {
     //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
