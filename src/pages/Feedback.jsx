@@ -125,12 +125,15 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                             wordBreak: 'break-word',
                             position: 'relative',
                             zIndex: 1000,
+                            overflow: 'visible',
                         }}
                     >
                         {message.text}
                     </Box>
                 )}
-
+<Tooltip title="Hello [TEST]" arrow>
+  <span style={{ color: 'red', cursor: 'pointer' }}>[TEST]</span>
+</Tooltip>
 
 
                 {message.showExecute && (
