@@ -103,7 +103,7 @@ export const useStreamHandler = (
     let buffer = '';
     let done = false;
     let meta = '';
-    let jsons: any[] = [];
+    const jsons: any[] = [];
 
     while (!done) {
       const { value, done: readDone } = await reader.read();
