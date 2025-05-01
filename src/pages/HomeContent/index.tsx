@@ -144,24 +144,28 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
-          const pureText = response.text;
+          const raw = response.text || '';
+          const interpretation = raw.split("end_of_interpretation")[0]?.trim();
+          const sqlMatch = raw.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+          const sql = sqlMatch?.[1]?.trim() || '';
         
-          const interpretation = pureText.split("end_of_interpretation")[0].trim();
-          const sqlMatch = pureText.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-          const sql = sqlMatch ? sqlMatch[1].trim() : '';
+          const newMessages: MessageType[] = [];
         
-          setMessages(prev => [
-            ...prev,
-            { text: interpretation, fromUser: false },
-            {
+          if (interpretation) {
+            newMessages.push({ text: interpretation, fromUser: false });
+          } 
+          if (sql) {
+            newMessages.push({
               text: sql,
               fromUser: false,
               isCode: true,
               showExecute: true,
               sqlQuery: sql
-            }
-          ]);
-        }        
+            });
+          }
+        
+          setMessages(prev => [...prev, ...newMessages]);
+        }       
       }      
     });
   };
