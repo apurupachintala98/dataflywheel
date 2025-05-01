@@ -132,10 +132,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
   </Box>
 )}
 
-              
-<Tooltip title="Hello [TEST]" arrow>
-  <span style={{ color: 'red', cursor: 'pointer' }}>[TEST]</span>
-</Tooltip>
 
 
                 {message.showExecute && (
