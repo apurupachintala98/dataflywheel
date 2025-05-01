@@ -117,13 +117,14 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <SyntaxHighlighter language="sql" style={dracula}>
                         {message.text}
                     </SyntaxHighlighter>
+                ) : typeof message.text === 'string' ? (
+                    <Typography>{message.text}</Typography>
                 ) : (
-                    typeof message.text === 'string' ? (
-                        <Typography>{message.text}</Typography>
-                    ) : (
-                        <div>{message.text}</div>
-                    )
+                    <Box sx={{ wordBreak: 'break-word', position: 'relative', zIndex: 1000 }}>
+                        {message.text}
+                    </Box>
                 )}
+
 
                 {message.showExecute && (
                     <Button
