@@ -149,37 +149,12 @@ export const useStreamHandler = (
       }
     }
 
-    // if (parsed.type === 'sql') {
-    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-
-    //   parsed = {
-    //     ...parsed,
-    //     interpretation: interpretationMatch?.[1]?.trim() || '',
-    //     sql: sqlMatch?.[1]?.trim() || '',
-    //   };
-    // }
-
-    // if (jsons.find((j: any) => j.type === 'sql')) {
-    //   const [interpretationPart] = buffer.split('end_of_interpretation');
-    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-    //   const sqlText = sqlMatch?.[1]?.trim() || '';
-
-    //   parsed = {
-    //     ...parsed,
-    //     type: 'sql',
-    //     interpretation: interpretationPart?.trim(),
-    //     sql: sqlText,
-    //   };
-    // }
+    const interpretationMatch = buffer.match(/^(.*?)end_of_interpretation/);
+    const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
 
     if (jsons.find((j: any) => j.type === 'sql')) {
-      const [interpretationPartRaw] = buffer.split('end_of_interpretation');
-      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_sql/);
+      const interpretationPart = interpretationMatch?.[1]?.trim() || '';
       const sqlText = sqlMatch?.[1]?.trim() || '';
-
-      const interpretationPart = interpretationPartRaw?.replace(/end_of_interpretation/g, '').trim();
-
       parsed = {
         ...parsed,
         type: 'sql',
