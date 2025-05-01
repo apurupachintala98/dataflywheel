@@ -149,17 +149,17 @@ export const useStreamHandler = (
       }
     }
 
-    const interpretationMatch = buffer.match(/^(.*?)end_of_interpretation/);
-    const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-
     if (jsons.find((j: any) => j.type === 'sql')) {
-      const interpretationPart = interpretationMatch?.[1]?.trim() || '';
-      const sqlText = sqlMatch?.[1]?.trim() || '';
+      const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+      const interpretation = interpretationMatch?.[1]?.trim() || '';
+      const sql = sqlMatch?.[1]?.trim() || '';
+
       parsed = {
         ...parsed,
         type: 'sql',
-        interpretation: interpretationPart,
-        sql: sqlText,
+        interpretation,
+        sql,
       };
     }
 
