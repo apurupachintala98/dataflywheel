@@ -149,29 +149,29 @@ export const useStreamHandler = (
       }
     }
 
-    if (parsed.type === 'sql') {
-      const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-
-      parsed = {
-        ...parsed,
-        interpretation: interpretationMatch?.[1]?.trim() || '',
-        sql: sqlMatch?.[1]?.trim() || '',
-      };
-    }
-
-    // if (jsons.find((j: any) => j.type === 'sql')) {
-    //   const [interpretationPart] = buffer.split('end_of_interpretation');
+    // if (parsed.type === 'sql') {
+    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
     //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-    //   const sqlText = sqlMatch?.[1]?.trim() || '';
 
     //   parsed = {
     //     ...parsed,
-    //     type: 'sql',
-    //     interpretation: interpretationPart?.trim(),
-    //     sql: sqlText,
+    //     interpretation: interpretationMatch?.[1]?.trim() || '',
+    //     sql: sqlMatch?.[1]?.trim() || '',
     //   };
     // }
+
+    if (jsons.find((j: any) => j.type === 'sql')) {
+      const [interpretationPart] = buffer.split('end_of_interpretation');
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+      const sqlText = sqlMatch?.[1]?.trim() || '';
+
+      parsed = {
+        ...parsed,
+        type: 'sql',
+        interpretation: interpretationPart?.trim(),
+        sql: sqlText,
+      };
+    }
 
     // if (jsons.find((j: any) => j.type === 'sql')) {
     //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
