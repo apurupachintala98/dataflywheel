@@ -6,8 +6,7 @@ export const renderTextWithCitations = (
   citations: { source_id: number; text: string }[]
 ) => {
   const citationMap = new Map<number, string>();
-
-  citations.forEach(c => citationMap.set(Math.floor(c.source_id), c.text));
+  citations.forEach(c => citationMap.set(Math.floor(c.source_id), c.text)); // normalize source_id (e.g. 2.0 → 2)
 
   const parts = text.split(/(\[\d+\])/g).map((part, i) => {
     const match = part.match(/\[(\d+)\]/);
@@ -15,14 +14,13 @@ export const renderTextWithCitations = (
       const sourceId = parseInt(match[1]);
       const citationText = citationMap.get(sourceId);
 
-      return citationText ? (
-        <Tooltip key={i} title={citationText} arrow placement="top" enterDelay={100}>
+      return (
+        <Tooltip key={i} title={citationText || ''} arrow placement="top" enterDelay={100}>
           <span style={{ color: "blue", cursor: "pointer" }}>{part}</span>
         </Tooltip>
-      ) : (
-        <span key={i}>{part}</span>
       );
     }
+
     return <span key={i}>{part}</span>;
   });
 

@@ -113,24 +113,26 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     borderRadius: '8px',
                 }}
             >
-                {isSQL ? (
-                    <SyntaxHighlighter language="sql" style={dracula}>
-                        {typeof message.text === 'string' ? message.text : ''}
-                    </SyntaxHighlighter>
-                ) : typeof message.text === 'string' ? (
-                    <Typography>{message.text}</Typography>
-                ) : (
-                    <Box
-                        sx={{
-                            wordBreak: 'break-word',
-                            position: 'relative',
-                            zIndex: 1000,
-                            overflow: 'visible',
-                        }}
-                    >
-                        {message.text}
-                    </Box>
-                )}
+               {isSQL ? (
+  <SyntaxHighlighter language="sql" style={dracula}>
+    {typeof message.text === 'string' ? message.text : ''}
+  </SyntaxHighlighter>
+) : typeof message.text === 'string' ? (
+  <Typography>{message.text}</Typography>
+) : (
+  <Box
+    sx={{
+      wordBreak: 'break-word',
+      position: 'relative',
+      zIndex: 1000,
+      overflow: 'visible',
+    }}
+  >
+    {message.text}
+  </Box>
+)}
+
+              
 <Tooltip title="Hello [TEST]" arrow>
   <span style={{ color: 'red', cursor: 'pointer' }}>[TEST]</span>
 </Tooltip>
