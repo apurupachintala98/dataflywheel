@@ -113,10 +113,13 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     borderRadius: '8px',
                 }}
             >
-                {isSQL ? (
-                    <SyntaxHighlighter language="sql" style={dracula}>
-                        {typeof message.text === 'string' ? message.text : ''}
-                    </SyntaxHighlighter>
+                {message.type === 'sql' && message.interpretation ? (
+                    <>
+                        <Typography>{message.interpretation}</Typography>
+                        <SyntaxHighlighter language="sql" style={dracula}>
+                            {message.sql}
+                        </SyntaxHighlighter>
+                    </>
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
                 ) : (
@@ -173,14 +176,17 @@ Feedback.propTypes = {
 
 MessageWithFeedback.propTypes = {
     message: PropTypes.shape({
-        text: PropTypes.string,
-        type: PropTypes.string,
-        fromUser: PropTypes.bool,
-        summarized: PropTypes.bool,
-        streaming: PropTypes.bool,
-        showExecute: PropTypes.bool,
-        showSummarize: PropTypes.bool,
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+      type: PropTypes.string,
+      fromUser: PropTypes.bool,
+      summarized: PropTypes.bool,
+      streaming: PropTypes.bool,
+      showExecute: PropTypes.bool,
+      showSummarize: PropTypes.bool,
+      interpretation: PropTypes.string, 
+      sql: PropTypes.string,           
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,
     apiCortex: PropTypes.func.isRequired,
-};
+  };
+  

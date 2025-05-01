@@ -162,7 +162,7 @@ export const useStreamHandler = (
 
     if (jsons.find((j: any) => j.type === 'sql')) {
       const [interpretationPart] = buffer.split('end_of_interpretation');
-      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_sql/);
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
       const sqlText = sqlMatch?.[1]?.trim() || '';
 
       parsed = {
