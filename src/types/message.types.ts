@@ -11,4 +11,3 @@ export interface MessageType {
     summarized?: boolean;
     prompt?: string;
   }
-  

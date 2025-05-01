@@ -128,7 +128,7 @@ const HomeContent = () => {
                 ...temp[temp.length - 1],
                 text: html,
                 streaming: false,
-                isHTML: true
+                isHTML: true,
               };
               return temp;
             });
@@ -138,7 +138,7 @@ const HomeContent = () => {
               temp[temp.length - 1] = {
                 ...temp[temp.length - 1],
                 text: response.text,
-                streaming: false
+                streaming: false,
               };
               return temp;
             });
