@@ -131,6 +131,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         {message.text}
                     </Box>
                 )}
+
                 {message.showExecute && (
                     <Button
                         variant="contained"

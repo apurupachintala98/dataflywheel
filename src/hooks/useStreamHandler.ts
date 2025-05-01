@@ -103,6 +103,7 @@ export const useStreamHandler = (
     let buffer = '';
     let done = false;
     let meta = '';
+    let jsons: any[] = [];
 
     while (!done) {
       const { value, done: readDone } = await reader.read();
@@ -133,7 +134,6 @@ export const useStreamHandler = (
 
     let parsed: any = { text: buffer, type: 'text' };
 
-    // 🔍 Parse trailing JSON metadata (citations, type, etc.)
     if (meta) {
       try {
         const jsons = meta
@@ -149,14 +149,27 @@ export const useStreamHandler = (
       }
     }
 
-    if (parsed.type === 'sql') {
-      const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+    // if (parsed.type === 'sql') {
+    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
+    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+
+    //   parsed = {
+    //     ...parsed,
+    //     interpretation: interpretationMatch?.[1]?.trim() || '',
+    //     sql: sqlMatch?.[1]?.trim() || '',
+    //   };
+    // }
+
+    if (jsons.find((j: any) => j.type === 'sql')) {
+      const [interpretationPart] = buffer.split('end_of_interpretation');
+      const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_sql/);
+      const sqlText = sqlMatch?.[1]?.trim() || '';
 
       parsed = {
         ...parsed,
-        interpretation: interpretationMatch?.[1]?.trim() || '',
-        sql: sqlMatch?.[1]?.trim() || '',
+        type: 'sql',
+        interpretation: interpretationPart?.trim(),
+        sql: sqlText,
       };
     }
 

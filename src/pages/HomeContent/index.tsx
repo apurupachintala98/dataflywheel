@@ -144,28 +144,18 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
-          const raw = response.text || '';
-          const interpretation = raw.split("end_of_interpretation")[0]?.trim();
-          const sqlMatch = raw.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-          const sql = sqlMatch?.[1]?.trim() || '';
-        
-          const newMessages: MessageType[] = [];
-        
-          if (interpretation) {
-            newMessages.push({ text: interpretation, fromUser: false });
-          } 
-          if (sql) {
-            newMessages.push({
-              text: sql,
+          setMessages(prev => [
+            ...prev,
+            { text: response.interpretation, fromUser: false },
+            {
+              text: response.sql,
               fromUser: false,
               isCode: true,
               showExecute: true,
-              sqlQuery: sql
-            });
-          }
-        
-          setMessages(prev => [...prev, ...newMessages]);
-        }       
+              sqlQuery: response.sql,
+            },
+          ]);
+        } 
       }      
     });
   };
