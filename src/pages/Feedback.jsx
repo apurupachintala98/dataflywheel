@@ -113,7 +113,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     borderRadius: '8px',
                 }}
             >
-                {message.type === 'sql' && message.interpretation ? (
+                {/* {message.type === 'sql' && message.interpretation ? (
                     <>
                         <Typography>{message.interpretation}</Typography>
                         <SyntaxHighlighter language="sql" style={dracula}>
@@ -133,7 +133,32 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     >
                         {message.text}
                     </Box>
-                )}
+                )} */}
+
+{message.type === 'sql' ? (
+  <>
+    {message.interpretation && (
+      <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
+    )}
+    <SyntaxHighlighter language="sql" style={dracula}>
+      {message.sql}
+    </SyntaxHighlighter>
+  </>
+) : typeof message.text === 'string' ? (
+  <Typography>{message.text}</Typography>
+) : (
+  <Box
+    sx={{
+      wordBreak: 'break-word',
+      position: 'relative',
+      zIndex: 1000,
+      overflow: 'visible',
+    }}
+  >
+    {message.text}
+  </Box>
+)}
+
 
                 {message.showExecute && (
                     <Button
