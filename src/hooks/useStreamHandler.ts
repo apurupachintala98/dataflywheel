@@ -149,19 +149,30 @@ export const useStreamHandler = (
       }
     }
 
+    // if (parsed.type === 'sql') {
+    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
+    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
+
+    //   parsed = {
+    //     ...parsed,
+    //     interpretation: interpretationMatch?.[1]?.trim() || '',
+    //     sql: sqlMatch?.[1]?.trim() || '',
+    //   };
+    // }
+
     if (jsons.find((j: any) => j.type === 'sql')) {
-      const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
+      const [interpretationPart] = buffer.split('end_of_interpretation');
       const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-      const interpretation = interpretationMatch?.[1]?.trim() || '';
-      const sql = sqlMatch?.[1]?.trim() || '';
+      const sqlText = sqlMatch?.[1]?.trim() || '';
 
       parsed = {
         ...parsed,
         type: 'sql',
-        interpretation,
-        sql,
+        interpretation: interpretationPart?.trim(),
+        sql: sqlText,
       };
     }
+
 
 
     try {
