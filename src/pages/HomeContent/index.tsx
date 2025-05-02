@@ -156,7 +156,7 @@ const HomeContent = () => {
             showExecute: true,
             sqlQuery: sql,
             type: "sql",
-            interpretation: interpretation,
+            interpretation,
             streaming: false,
           };
       
