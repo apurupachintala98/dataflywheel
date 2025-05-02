@@ -139,7 +139,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 )}
 
 
-                {message.showExecute && (
+                {message.type === 'sql' && message.showExecute && (
                     <Button
                         variant="contained"
                         sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
@@ -148,6 +148,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         Execute SQL
                     </Button>
                 )}
+
 
                 {message.showSummarize && (
                     <Button

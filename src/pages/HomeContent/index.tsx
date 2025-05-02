@@ -144,19 +144,34 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
-          setMessages(prev => [
-            ...prev,
-            { text: response.interpretation, fromUser: false },
-            {
-              text: response.sql,
+          // setMessages(prev => [
+          //   ...prev,
+          //   { text: response.interpretation, fromUser: false },
+          //   {
+          //     text: response.sql,
+          //     fromUser: false,
+          //     isCode: true,
+          //     showExecute: true,
+          //     sqlQuery: response.sql,
+          //     type: "sql",
+          //     interpretation: response.interpretation,
+          //   },
+          // ]);
+          setMessages(prev => {
+            const temp = [...prev];
+            temp[temp.length - 1] = {
+              ...temp[temp.length - 1],
               fromUser: false,
               isCode: true,
               showExecute: true,
               sqlQuery: response.sql,
               type: "sql",
               interpretation: response.interpretation,
-            },
-          ]);
+              text: response.sql,
+              streaming: false,
+            };
+            return temp;
+          });
         } 
       }      
     });
