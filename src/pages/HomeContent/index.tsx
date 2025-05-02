@@ -145,14 +145,18 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
+          const rawText = response.text;
+          const [interpretationPart, sqlPart] = rawText.split('end_of_interpretation');
+          const interpretation = (interpretationPart || '').trim();
+          const sql = (sqlPart || '').trim();
           const sqlMessage: MessageType = {
-            text: response.sql,
+            text: sql,
             fromUser: false,
             isCode: true,
             showExecute: true,
-            sqlQuery: response.sql,
+            sqlQuery: sql,
             type: "sql",
-            interpretation: response.interpretation,
+            interpretation: interpretation,
             streaming: false,
           };
       
