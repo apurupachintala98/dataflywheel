@@ -153,6 +153,8 @@ const HomeContent = () => {
               isCode: true,
               showExecute: true,
               sqlQuery: response.sql,
+              type: "sql",
+              interpretation: response.interpretation,
             },
           ]);
         } 

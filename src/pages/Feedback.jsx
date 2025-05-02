@@ -96,7 +96,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     const shouldShowFeedback =
         message.type === "text" &&
         !message.fromUser &&
-        (message.summarized || message.streaming);
+        !message.streaming;
     return (
         <div className="mb-4">
             <div
@@ -113,9 +113,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     borderRadius: '8px',
                 }}
             >
-                {/* {message.type === 'sql' && message.interpretation ? (
+
+                {message.type === 'sql' ? (
                     <>
-                        <Typography>{message.interpretation}</Typography>
+                        {message.interpretation && (
+                            <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
+                        )}
                         <SyntaxHighlighter language="sql" style={dracula}>
                             {message.sql}
                         </SyntaxHighlighter>
@@ -133,31 +136,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     >
                         {message.text}
                     </Box>
-                )} */}
-
-{message.type === 'sql' ? (
-  <>
-    {message.interpretation && (
-      <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
-    )}
-    <SyntaxHighlighter language="sql" style={dracula}>
-      {message.sql}
-    </SyntaxHighlighter>
-  </>
-) : typeof message.text === 'string' ? (
-  <Typography>{message.text}</Typography>
-) : (
-  <Box
-    sx={{
-      wordBreak: 'break-word',
-      position: 'relative',
-      zIndex: 1000,
-      overflow: 'visible',
-    }}
-  >
-    {message.text}
-  </Box>
-)}
+                )}
 
 
                 {message.showExecute && (
@@ -201,17 +180,16 @@ Feedback.propTypes = {
 
 MessageWithFeedback.propTypes = {
     message: PropTypes.shape({
-      text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-      type: PropTypes.string,
-      fromUser: PropTypes.bool,
-      summarized: PropTypes.bool,
-      streaming: PropTypes.bool,
-      showExecute: PropTypes.bool,
-      showSummarize: PropTypes.bool,
-      interpretation: PropTypes.string, 
-      sql: PropTypes.string,           
+        text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+        type: PropTypes.string,
+        fromUser: PropTypes.bool,
+        summarized: PropTypes.bool,
+        streaming: PropTypes.bool,
+        showExecute: PropTypes.bool,
+        showSummarize: PropTypes.bool,
+        interpretation: PropTypes.string,
+        sql: PropTypes.string,
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,
     apiCortex: PropTypes.func.isRequired,
-  };
-  
+};
