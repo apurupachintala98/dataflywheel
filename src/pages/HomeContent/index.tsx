@@ -144,45 +144,20 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
-          const sqlMessage: MessageType = {
-            fromUser: false,
-            isCode: true,
-            showExecute: true,
-            sqlQuery: response.sql,
-            type: 'sql',
-            interpretation: response.interpretation,
-            text: response.sql,
-            streaming: false,
-          };
-      
-          setMessages(prev => {
-            const temp = [...prev];
-            const last = temp[temp.length - 1];
-      
-            if (last?.streaming && !last.fromUser) {
-              temp[temp.length - 1] = sqlMessage;
-            } else {
-              temp.push(sqlMessage);
-            }
-      
-            return temp;
-          });
-        }
-        // } else if (response.type === "sql") {
-        //   setMessages(prev => [
-        //     ...prev,
-        //     { text: response.interpretation, fromUser: false },
-        //     {
-        //       text: response.sql,
-        //       fromUser: false,
-        //       isCode: true,
-        //       showExecute: true,
-        //       sqlQuery: response.sql,
-        //       type: "sql",
-        //       interpretation: response.interpretation,
-        //     },
-        //   ]);
-        // } 
+          setMessages(prev => [
+            ...prev,
+            { text: response.interpretation, fromUser: false },
+            {
+              text: response.sql,
+              fromUser: false,
+              isCode: true,
+              showExecute: true,
+              sqlQuery: response.sql,
+              type: "sql",
+              interpretation: response.interpretation,
+            },
+          ]);
+        } 
       }      
     });
   };

@@ -97,6 +97,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         message.type === "text" &&
         !message.fromUser &&
         !message.streaming;
+
+        console.log(message);
     return (
         <div className="mb-4">
             <div
