@@ -26,7 +26,6 @@ interface AnchorElState {
   upload: HTMLElement | null;
 }
 
-
 const HomeContent = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleSidebar = () => setCollapsed(prev => !prev);
@@ -119,7 +118,6 @@ const HomeContent = () => {
       fromUser: false,
       streaming: true,
       onComplete: async (response: any) => {
-        console.log("🔥 SQL/Text response from stream:", response);
         if (response.type === "text") {
           if (response.citations?.length) {
             const html = renderTextWithCitations(response.text, response.citations);
@@ -172,22 +170,6 @@ const HomeContent = () => {
       
             return temp;
           });
-      
-          
-          
-          // setMessages(prev => [
-          //   ...prev,
-          //   { text: response.interpretation, fromUser: false },
-          //   {
-          //     text: response.sql,
-          //     fromUser: false,
-          //     isCode: true,
-          //     showExecute: true,
-          //     sqlQuery: response.sql,
-          //     type: "sql",
-          //     interpretation: response.interpretation,
-          //   },
-          // ]);
         } 
       }      
     });
@@ -213,11 +195,10 @@ const HomeContent = () => {
     const payload = buildPayload({
       prompt: sqlQuery.prompt || sqlQuery.text,
       execSQL: sqlQuery.text,
-      sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb"
+      sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb",
+      minimal: true,
     });
-
-    const { data, error } = await sendRequest("http://10.126.192.122:8341/api/cortex/execute", payload);
-
+    const { data, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`, payload);
     if (error || !data) {
       setMessages(prev => [...prev, { text: "Error communicating with backend.", fromUser: false, showExecute: false, showSummarize: false }]);
       console.error("Error:", error);
@@ -264,7 +245,7 @@ const HomeContent = () => {
       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
     });
 
-    const { stream, error } = await sendRequest("http://10.126.192.122:8341/api/cortex/complete", payload, undefined, true);
+    const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
 
     if (!stream || error) {
       console.error("Streaming error:", error);
