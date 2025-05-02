@@ -119,6 +119,7 @@ const HomeContent = () => {
       fromUser: false,
       streaming: true,
       onComplete: async (response: any) => {
+        console.log("🔥 SQL/Text response from stream:", response);
         if (response.type === "text") {
           if (response.citations?.length) {
             const html = renderTextWithCitations(response.text, response.citations);
