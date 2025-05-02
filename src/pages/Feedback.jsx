@@ -91,12 +91,14 @@ const Feedback = ({ message }) => {
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     if (!message?.text && message.type !== 'sql') {
         return null;
-      }
+    }
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
-        message.type === "text" &&
-        !message.fromUser &&
-        !message.streaming;
+  message.type === "text" &&
+  !message.fromUser &&
+  !message.streaming &&
+  (message.summarized || message.showFeedback);
+
 
     console.log(message);
     return (
@@ -118,12 +120,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
 
                 {message.type === 'sql' ? (
                     <>
-                         {message.interpretation && (
-      <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
-    )}
-    <SyntaxHighlighter language="sql" style={dracula}>
-      {typeof message.text === 'string' ? message.text : ''}
-    </SyntaxHighlighter>
+                        {message.interpretation && (
+                            <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
+                        )}
+                        <SyntaxHighlighter language="sql" style={dracula}>
+                            {typeof message.text === 'string' ? message.text : ''}
+                        </SyntaxHighlighter>
                     </>
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
@@ -179,6 +181,7 @@ Feedback.propTypes = {
         streaming: PropTypes.bool,
         showExecute: PropTypes.bool,
         showSummarize: PropTypes.bool,
+        showFeedback: PropTypes.bool,
     }).isRequired,
 };
 
@@ -192,6 +195,7 @@ MessageWithFeedback.propTypes = {
         showExecute: PropTypes.bool,
         showSummarize: PropTypes.bool,
         interpretation: PropTypes.string,
+        showFeedback: PropTypes.bool,
         sql: PropTypes.string,
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,

@@ -254,11 +254,25 @@ const HomeContent = () => {
     }
     await handleStream(stream, { fromUser: false, streaming: true });
 
+    // setMessages(prev => prev.map((msg, index) => {
+    //   if (msg === message) return { ...msg, showSummarize: false };
+    //   if (index === prev.length - 1 && msg.streaming) return { ...msg, streaming: false, summarized: true, showSummarize: false };
+    //   return msg;
+    // }));
     setMessages(prev => prev.map((msg, index) => {
       if (msg === message) return { ...msg, showSummarize: false };
-      if (index === prev.length - 1 && msg.streaming) return { ...msg, streaming: false, summarized: true, showSummarize: false };
+      if (index === prev.length - 1 && msg.streaming) {
+        return {
+          ...msg,
+          streaming: false,
+          summarized: true,
+          showSummarize: false,
+          showFeedback: true, 
+        };
+      }
       return msg;
     }));
+    
   };
 
   useEffect(() => {
