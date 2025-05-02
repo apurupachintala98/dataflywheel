@@ -89,9 +89,9 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
-    if (!message?.text) {
+    if (!message?.text && message.type !== 'sql') {
         return null;
-    }
+      }
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
         message.type === "text" &&
@@ -118,12 +118,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
 
                 {message.type === 'sql' ? (
                     <>
-                        {message.interpretation && (
-                            <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
-                        )}
-                        <SyntaxHighlighter language="sql" style={dracula}>
-                            {message.sql}
-                        </SyntaxHighlighter>
+                         {message.interpretation && (
+      <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
+    )}
+    <SyntaxHighlighter language="sql" style={dracula}>
+      {typeof message.text === 'string' ? message.text : ''}
+    </SyntaxHighlighter>
                     </>
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>

@@ -153,17 +153,22 @@ const HomeContent = () => {
             type: "sql",
             interpretation: response.interpretation,
             streaming: false,
-          }; 
+          };
+      
           setMessages(prev => {
             const temp = [...prev];
             const last = temp[temp.length - 1];
+      
             if (last?.streaming && !last.fromUser) {
               temp[temp.length - 1] = sqlMessage;
             } else {
               temp.push(sqlMessage);
             }
+      
             return temp;
           });
+      
+          
           
           // setMessages(prev => [
           //   ...prev,
