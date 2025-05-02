@@ -144,19 +144,40 @@ const HomeContent = () => {
             });
           }
         } else if (response.type === "sql") {
-          setMessages(prev => [
-            ...prev,
-            { text: response.interpretation, fromUser: false },
-            {
-              text: response.sql,
-              fromUser: false,
-              isCode: true,
-              showExecute: true,
-              sqlQuery: response.sql,
-              type: "sql",
-              interpretation: response.interpretation,
-            },
-          ]);
+          const sqlMessage: MessageType = {
+            text: response.sql,
+            fromUser: false,
+            isCode: true,
+            showExecute: true,
+            sqlQuery: response.sql,
+            type: "sql",
+            interpretation: response.interpretation,
+            streaming: false,
+          }; 
+          setMessages(prev => {
+            const temp = [...prev];
+            const last = temp[temp.length - 1];
+            if (last?.streaming && !last.fromUser) {
+              temp[temp.length - 1] = sqlMessage;
+            } else {
+              temp.push(sqlMessage);
+            }
+            return temp;
+          });
+          
+          // setMessages(prev => [
+          //   ...prev,
+          //   { text: response.interpretation, fromUser: false },
+          //   {
+          //     text: response.sql,
+          //     fromUser: false,
+          //     isCode: true,
+          //     showExecute: true,
+          //     sqlQuery: response.sql,
+          //     type: "sql",
+          //     interpretation: response.interpretation,
+          //   },
+          // ]);
         } 
       }      
     });

@@ -98,7 +98,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         !message.fromUser &&
         !message.streaming;
 
-        console.log(message);
+    console.log(message);
     return (
         <div className="mb-4">
             <div
@@ -141,15 +141,15 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 )}
 
 
-{message.showExecute && (
-  <Button
-    variant="contained"
-    sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
-    onClick={() => executeSQL(message)}
-  >
-    Execute SQL
-  </Button>
-)}
+                {message.showExecute && (
+                    <Button
+                        variant="contained"
+                        sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
+                        onClick={() => executeSQL(message)}
+                    >
+                        Execute SQL
+                    </Button>
+                )}
 
 
 
