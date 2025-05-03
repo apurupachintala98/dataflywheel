@@ -232,7 +232,23 @@ const HomeContent = () => {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
     setData(data);
-    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
+    // setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
+    setMessages(prev => {
+      const updated = [...prev];
+      const index = updated.findIndex(msg => msg === sqlQuery);
+    
+      if (index !== -1) {
+        updated[index] = {
+          ...updated[index],
+          text: modelReply,
+          executedResponse: data,
+          showExecute: false,
+          showSummarize: true,
+        };
+      }
+    
+      return updated;
+    });    
   };
 
   const apiCortex = async (message: any) => {
@@ -253,12 +269,6 @@ const HomeContent = () => {
       return;
     }
     await handleStream(stream, { fromUser: false, streaming: true });
-
-    // setMessages(prev => prev.map((msg, index) => {
-    //   if (msg === message) return { ...msg, showSummarize: false };
-    //   if (index === prev.length - 1 && msg.streaming) return { ...msg, streaming: false, summarized: true, showSummarize: false };
-    //   return msg;
-    // }));
     setMessages(prev => prev.map((msg, index) => {
       if (msg === message) return { ...msg, showSummarize: false };
       if (index === prev.length - 1 && msg.streaming) {
