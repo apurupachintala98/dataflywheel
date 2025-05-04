@@ -186,28 +186,50 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                 </IconButton>
                             </Tooltip>
                         </Box>
-                        <Box sx={{
-                            maxHeight: 300,
-                            overflowY: 'auto',
-                            borderRadius: 2,
-                            border: '1px solid #333',
-                            backgroundColor: '#282a36',
-                            padding: 1,
-                            '&::-webkit-scrollbar': {
-                                width: '8px',
-                            },
-                            '&::-webkit-scrollbar-thumb': {
-                                backgroundColor: '#555',
-                                borderRadius: '8px',
-                            },
-                            '&::-webkit-scrollbar-track': {
-                                backgroundColor: '#2a2a2a',
-                            },
-                        }}>
-                            <SyntaxHighlighter language="sql" style={dracula}>
-                                {typeof message.text === 'string' ? message.text : ''}
-                            </SyntaxHighlighter>
-                        </Box>
+                        {!sqlState.collapsed && (
+                            <Box sx={{
+                                maxHeight: 300,
+                                overflowY: 'auto',
+                                borderRadius: 2,
+                                border: '1px solid #333',
+                                backgroundColor: '#282a36',
+                                padding: 1,
+                                '&::-webkit-scrollbar': {
+                                    width: '8px',
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                    backgroundColor: '#555',
+                                    borderRadius: '8px',
+                                },
+                                '&::-webkit-scrollbar-track': {
+                                    backgroundColor: '#2a2a2a',
+                                },
+                            }}>
+                                {sqlState.isEditing ? (
+                                    <textarea
+                                        value={sqlState.editedSQL}
+                                        onChange={(e) => setSqlState(prev => ({ ...prev, editedSQL: e.target.value }))}
+                                        style={{
+                                            width: '100%',
+                                            height: '200px',
+                                            backgroundColor: '#1e1e1e',
+                                            color: '#fff',
+                                            fontFamily: 'monospace',
+                                            fontSize: '14px',
+                                            border: 'none',
+                                            outline: 'none',
+                                            resize: 'vertical',
+                                            padding: '8px',
+                                            borderRadius: '4px'
+                                        }}
+                                    />
+                                ) : (
+                                    <SyntaxHighlighter language="sql" style={dracula}>
+                                        {typeof message.text === 'string' ? message.text : ''}
+                                    </SyntaxHighlighter>
+                                )}
+                            </Box>
+                        )}
                     </Box>
                     </>
                 ) : typeof message.text === 'string' ? (
