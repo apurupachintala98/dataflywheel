@@ -154,15 +154,15 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         )}
                         <Box sx={{
                             position: 'absolute',
-                            top: 8,
+                            top: 34,
                             right: 8,
                             display: 'flex',
                             gap: 1,
-                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            backgroundColor: 'rgba(255,255,255)',
                             borderRadius: '8px',
                             padding: '4px 6px',
                             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                            zIndex: 10
+                            zIndex: 1000
                         }}>
                             <Tooltip title="Copy SQL">
                                 <IconButton size="small" onClick={() => navigator.clipboard.writeText(message.text)}>
