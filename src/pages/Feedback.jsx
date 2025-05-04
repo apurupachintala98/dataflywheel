@@ -3,6 +3,11 @@ import { Box, IconButton, Typography, Tooltip, Button } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import PropTypes from 'prop-types';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const Feedback = ({ message }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
