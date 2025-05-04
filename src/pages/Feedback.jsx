@@ -94,10 +94,10 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     }
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
-  message.type === "text" &&
-  !message.fromUser &&
-  !message.streaming &&
-  (message.summarized || message.showFeedback);
+        message.type === "text" &&
+        !message.fromUser &&
+        !message.streaming &&
+        (message.summarized || message.showFeedback);
 
 
     console.log(message);
@@ -118,7 +118,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 }}
             >
 
-                {message.type === 'sql' ? (
+                {/* {message.type === 'sql' ? (
                     <>
                         {message.interpretation && (
                             <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
@@ -140,8 +140,53 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     >
                         {message.text}
                     </Box>
-                )}
+                )} */}
 
+                {message.type === 'sql' ? (
+                    <><Box sx={{ position: 'relative', marginBottom: 2 }}>
+                        {message.interpretation && (
+                            <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
+                        )}
+                        <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', gap: 1, zIndex: 10 }}>
+                            <Tooltip title="Copy SQL">
+                                <IconButton size="small">
+                                    <ContentCopyIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Collapse SQL">
+                                <IconButton size="small">
+                                    <ExpandMoreIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Edit SQL">
+                                <IconButton size="small">
+                                    <EditIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Hide SQL">
+                                <IconButton size="small">
+                                    <CloseIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+
+                        <Box sx={{
+                            maxHeight: 300, overflowY: 'auto', borderRadius: 2, border: '1px solid #333', padding: 1,
+                            backgroundColor: '#282a36'
+                        }}>
+                            <SyntaxHighlighter language="sql" style={dracula}>
+                                {typeof message.text === 'string' ? message.text : ''}
+                            </SyntaxHighlighter>
+                        </Box>
+                    </Box>
+                    </>
+                ) : typeof message.text === 'string' ? (
+                    <Typography>{message.text}</Typography>
+                ) : (
+                    <Box sx={{ wordBreak: 'break-word', position: 'relative', zIndex: 1000, overflow: 'visible', }}>
+                        {message.text}
+                    </Box>
+                )}
 
                 {message.showExecute && (
                     <Button
