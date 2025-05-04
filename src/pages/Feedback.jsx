@@ -115,8 +115,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     //     (message.summarized);
     message.type === "text" &&
     !message.fromUser &&
-    !message.streaming &&
-    (message.summarized || message.showFeedback);
+    !message.streaming && message.summarized;
 
 
     console.log(shouldShowFeedback);
