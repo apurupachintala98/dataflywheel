@@ -150,7 +150,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     size="small"
                                     onClick={() => navigator.clipboard.writeText(sqlState.editedSQL)}
                                 >
-                                    <ContentCopyIcon fontSize="small" sx={{ color: 'white' }} />
+                                    <ContentCopyIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
 
@@ -162,7 +162,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     <ExpandMoreIcon
                                         fontSize="small"
                                         sx={{
-                                            color: 'white',
                                             transform: sqlState.collapsed ? 'rotate(180deg)' : 'none',
                                             transition: 'transform 0.2s ease'
                                         }}
@@ -183,7 +182,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                         }));
                                     }}
                                 >
-                                    <EditIcon fontSize="small" sx={{ color: 'white' }} />
+                                    <EditIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                         </Box>
