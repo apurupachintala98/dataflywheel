@@ -215,46 +215,19 @@ const HomeContent = () => {
 
     let modelReply: string | React.ReactNode = "";
 
-    const formatAsTable = (records: any[]) => {
-      if (records.length === 0) return "No data available.";
-      const columns = Object.keys(records[0]);
-      return (
+    if (Array.isArray(data) && data.length > 0) {
+      const columns = Object.keys(data[0]);
+      modelReply = (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
           <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-            <thead>
-              <tr>{columns.map(col => <th key={col} style={{ textAlign: 'left', padding: '8px' }}>{col}</th>)}</tr>
-            </thead>
-            <tbody>
-              {records.map((row, i) => (
-                <tr key={i}>
-                  {columns.map(col => <td key={`${i}-${col}`} style={{ padding: '8px' }}>{convertToString(row[col])}</td>)}
-                </tr>
-              ))}
-            </tbody>
+            <thead><tr>{columns.map(col => <th key={col}>{col}</th>)}</tr></thead>
+            <tbody>{data.map((row: any, i: number) => <tr key={i}>{columns.map(col => <td key={`${i}-${col}`}>{convertToString(row[col])}</td>)}</tr>)}</tbody>
           </table>
-          {records.length > 1 && columns.length > 1 && (
+          {data.length > 1 && columns.length > 1 && (
             <Button variant="contained" startIcon={<BarChartIcon />} onClick={handleGraphClick}>Graph View</Button>
           )}
         </div>
       );
-    };
-
-    if (Array.isArray(data) && data.length > 0) {
-      modelReply = formatAsTable(data);
-    } else if (typeof data === 'object' && data !== null) {
-      modelReply = formatAsTable([data]);
-      // const columns = Object.keys(data[0]);
-      // modelReply = (
-      //   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-      //     <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-      //       <thead><tr>{columns.map(col => <th key={col}>{col}</th>)}</tr></thead>
-      //       <tbody>{data.map((row: any, i: number) => <tr key={i}>{columns.map(col => <td key={`${i}-${col}`}>{convertToString(row[col])}</td>)}</tr>)}</tbody>
-      //     </table>
-      //     {data.length > 1 && columns.length > 1 && (
-      //       <Button variant="contained" startIcon={<BarChartIcon />} onClick={handleGraphClick}>Graph View</Button>
-      //     )}
-      //   </div>
-      // );
     } else {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
