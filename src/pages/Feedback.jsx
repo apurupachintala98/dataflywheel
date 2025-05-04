@@ -14,12 +14,6 @@ const Feedback = ({ message }) => {
     const synthRef = useRef(window.speechSynthesis);
     const utteranceRef = useRef(null);
     const voicesRef = useRef([]);
-    const [sqlState, setSqlState] = useState({
-        collapsed: false,
-        hidden: false,
-        isEditing: false,
-        editedSQL: message.text || ''
-    });
 
     useEffect(() => {
         const loadVoices = () => {
@@ -103,6 +97,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
+    const [sqlState, setSqlState] = useState({
+        collapsed: false,
+        hidden: false,
+        isEditing: false,
+        editedSQL: message.text || ''
+    });
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
         message.type === "text" &&
@@ -128,7 +128,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     borderRadius: '8px',
                 }}
             >
-                {message.type === 'sql' && !hidden ? (
+                {message.type === 'sql' && !sqlState.hidden ? (
                     <><Box sx={{ position: 'relative', mb: 2 }}>
                         {message.interpretation && (
                             <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
@@ -146,10 +146,14 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                             zIndex: 1000
                         }}>
                             <Tooltip title="Copy SQL">
-                                <IconButton size="small" onClick={() => navigator.clipboard.writeText(sqlState.editedSQL)}>
+                                <IconButton
+                                    size="small"
+                                    onClick={() => navigator.clipboard.writeText(sqlState.editedSQL)}
+                                >
                                     <ContentCopyIcon fontSize="small" sx={{ color: 'white' }} />
                                 </IconButton>
                             </Tooltip>
+
                             <Tooltip title={sqlState.collapsed ? "Expand SQL" : "Collapse SQL"}>
                                 <IconButton
                                     size="small"
@@ -157,10 +161,15 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                 >
                                     <ExpandMoreIcon
                                         fontSize="small"
-                                        sx={{ color: 'white', transform: sqlState.collapsed ? 'rotate(180deg)' : 'none' }}
+                                        sx={{
+                                            color: 'white',
+                                            transform: sqlState.collapsed ? 'rotate(180deg)' : 'none',
+                                            transition: 'transform 0.2s ease'
+                                        }}
                                     />
                                 </IconButton>
                             </Tooltip>
+
                             <Tooltip title={sqlState.isEditing ? "Save SQL" : "Edit SQL"}>
                                 <IconButton
                                     size="small"
@@ -174,7 +183,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                         }));
                                     }}
                                 >
-                                    <EditIcon fontSize="small" />
+                                    <EditIcon fontSize="small" sx={{ color: 'white' }} />
                                 </IconButton>
                             </Tooltip>
                         </Box>
@@ -214,7 +223,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <Button
                         variant="contained"
                         sx={{ mt: 2, backgroundColor: '#000', color: '#fff' }}
-                        onClick={() => executeSQL({ ...message, text: editedSQL })}
+                        onClick={() => executeSQL({ ...message, text: sqlState.editedSQL })}
                     >
                         Execute SQL
                     </Button>
