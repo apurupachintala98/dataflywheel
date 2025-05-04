@@ -114,7 +114,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     // (message.summarized || message.showFeedback);
 
 
-    console.log(message);
+    console.log(shouldShowFeedback);
     return (
         <div className="mb-4">
             <div
