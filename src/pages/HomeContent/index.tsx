@@ -232,23 +232,8 @@ const HomeContent = () => {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
     setData(data);
-    // setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
-    setMessages(prev => {
-      const updated = [...prev];
-      const index = updated.findIndex(msg => msg === sqlQuery);
-    
-      if (index !== -1) {
-        updated[index] = {
-          ...updated[index],
-          text: modelReply,
-          executedResponse: data,
-          showExecute: false,
-          showSummarize: true,
-        };
-      }
-    
-      return updated;
-    });    
+    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
+     
   };
 
   const apiCortex = async (message: any) => {
