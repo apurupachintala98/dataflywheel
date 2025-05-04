@@ -165,22 +165,22 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                             zIndex: 10
                         }}>
                             <Tooltip title="Copy SQL">
-                                <IconButton size="small" onClick={() => navigator.clipboard.writeText(message.text)} sx={{ color: '#fff' }}>
+                                <IconButton size="small" onClick={() => navigator.clipboard.writeText(message.text)}>
                                     <ContentCopyIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Collapse SQL">
-                                <IconButton size="small" sx={{ color: '#fff' }}>
+                                <IconButton size="small">
                                     <ExpandMoreIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Edit SQL">
-                                <IconButton size="small" sx={{ color: '#fff' }}>
+                                <IconButton size="small">
                                     <EditIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Hide SQL">
-                                <IconButton size="small" sx={{ color: '#fff' }}>
+                                <IconButton size="small">
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
