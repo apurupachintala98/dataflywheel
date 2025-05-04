@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 const Feedback = ({ message }) => {
@@ -174,15 +174,16 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     size="small"
                                     onClick={() => {
                                         if (sqlState.isEditing) {
-                                            message.text = sqlState.editedSQL; // persist edited SQL
+                                            message.text = sqlState.editedSQL;
                                         }
-                                        setSqlState(prev => ({
-                                            ...prev,
-                                            isEditing: !prev.isEditing
-                                        }));
+                                        setSqlState((prev) => ({ ...prev, isEditing: !prev.isEditing }));
                                     }}
                                 >
-                                    <EditIcon fontSize="small" />
+                                    {sqlState.isEditing ? (
+                                        <SaveIcon fontSize="small" />
+                                    ) : (
+                                        <EditIcon fontSize="small" />
+                                    )}
                                 </IconButton>
                             </Tooltip>
                         </Box>
@@ -209,6 +210,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     <textarea
                                         value={sqlState.editedSQL}
                                         onChange={(e) => setSqlState(prev => ({ ...prev, editedSQL: e.target.value }))}
+                                        wrap="soft"
                                         style={{
                                             width: '100%',
                                             height: '200px',
@@ -220,7 +222,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                             outline: 'none',
                                             resize: 'vertical',
                                             padding: '8px',
-                                            borderRadius: '4px'
+                                            borderRadius: '4px',
+                                            overflowX: 'hidden',
                                         }}
                                     />
                                 ) : (
