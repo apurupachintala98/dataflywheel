@@ -66,18 +66,6 @@ export const useStreamHandler = (
         console.warn('Could not parse trailing metadata:', meta);
       }
     }
-
-    // if (parsed.type === 'sql') {
-    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
-
-    //   parsed = {
-    //     ...parsed,
-    //     interpretation: interpretationMatch?.[1]?.trim() || '',
-    //     sql: sqlMatch?.[1]?.trim() || '',
-    //   };
-    // }
-
     if (jsons.find((j: any) => j.type === 'sql')) {
       const [interpretationPart] = buffer.split('end_of_interpretation');
       const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_stream/);
@@ -90,22 +78,6 @@ export const useStreamHandler = (
         sql: sqlText,
       };
     }
-
-    // if (jsons.find((j: any) => j.type === 'sql')) {
-    //   const interpretationMatch = buffer.match(/([\s\S]*?)end_of_interpretation/);
-    //   const sqlMatch = buffer.match(/end_of_interpretation([\s\S]*?)end_of_sql/);
-    //   const interpretation = interpretationMatch?.[1]?.trim() || '';
-    //   const sql = sqlMatch?.[1]?.trim() || '';
-
-    //   parsed = {
-    //     ...parsed,
-    //     type: 'sql',
-    //     interpretation,
-    //     sql,
-    //   };
-    // }
-
-
     try {
       onComplete?.(parsed);
     } catch (e) {
