@@ -148,36 +148,61 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 )} */}
 
                 {message.type === 'sql' ? (
-                    <><Box sx={{ position: 'relative', marginBottom: 2 }}>
+                    <><Box sx={{ position: 'relative', mb: 2 }}>
                         {message.interpretation && (
                             <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
                         )}
-                        <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', gap: 1, zIndex: 10 }}>
+                        <Box sx={{
+                            position: 'absolute',
+                            top: 8,
+                            right: 8,
+                            display: 'flex',
+                            gap: 1,
+                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            borderRadius: '8px',
+                            padding: '4px 6px',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+                            zIndex: 10
+                        }}>
                             <Tooltip title="Copy SQL">
-                                <IconButton size="small">
+                                <IconButton size="small" onClick={() => navigator.clipboard.writeText(message.text)} sx={{ color: '#fff' }}>
                                     <ContentCopyIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Collapse SQL">
-                                <IconButton size="small">
+                                <IconButton size="small" sx={{ color: '#fff' }}>
                                     <ExpandMoreIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Edit SQL">
-                                <IconButton size="small">
+                                <IconButton size="small" sx={{ color: '#fff' }}>
                                     <EditIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Hide SQL">
-                                <IconButton size="small">
+                                <IconButton size="small" sx={{ color: '#fff' }}>
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                         </Box>
 
                         <Box sx={{
-                            maxHeight: 300, overflowY: 'auto', borderRadius: 2, border: '1px solid #333', padding: 1,
-                            backgroundColor: '#282a36'
+                            maxHeight: 300,
+                            overflowY: 'auto',
+                            borderRadius: 2,
+                            border: '1px solid #333',
+                            backgroundColor: '#282a36',
+                            padding: 1,
+                            '&::-webkit-scrollbar': {
+                                width: '8px',
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: '#555',
+                                borderRadius: '8px',
+                            },
+                            '&::-webkit-scrollbar-track': {
+                                backgroundColor: '#2a2a2a',
+                            },
                         }}>
                             <SyntaxHighlighter language="sql" style={dracula}>
                                 {typeof message.text === 'string' ? message.text : ''}
