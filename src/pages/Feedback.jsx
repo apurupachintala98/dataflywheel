@@ -108,15 +108,15 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     });
     const isSQL = message.type === "sql";
     const shouldShowFeedback =
-    !message.fromUser;
+    // !message.fromUser;
         // const shouldShowFeedback =
     //     message.type === "text" &&
     //     !message.fromUser &&
     //     (message.summarized);
-    // message.type === "text" &&
-    // !message.fromUser &&
-    // !message.streaming &&
-    // (message.summarized || message.showFeedback);
+    message.type === "text" &&
+    !message.fromUser &&
+    !message.streaming &&
+    (message.summarized || message.showFeedback);
 
 
     console.log(shouldShowFeedback);
