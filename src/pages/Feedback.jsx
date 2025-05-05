@@ -249,7 +249,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                             <thead>
                                 <tr>
                                     {Object.keys(message.executedResponse[0]).map((key) => (
-                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>
+                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d" }}>
                                             {key}
                                         </th>
                                     ))}
