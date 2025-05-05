@@ -265,11 +265,13 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     // </TableContainer>
 <Box
   sx={{
-    maxWidth: '40%', // constrain within parent
-    overflow: 'auto',
+    maxWidth: '100%',
+    maxHeight: 400,
+    overflowX: 'auto',
+    overflowY: 'auto',
     '&::-webkit-scrollbar': {
       width: '8px',
-      height: '8px', // for horizontal scroll
+      height: '8px',
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '#555',
@@ -280,7 +282,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     },
   }}
 >
-  <TableContainer component={Paper} sx={{ minWidth: 300 /* or 1000px based on content */ }}>
+  <TableContainer component={Paper} sx={{ display: 'block', minWidth: '1000px' }}>
     <Table stickyHeader>
       <TableHead>
         <TableRow>
@@ -306,6 +308,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     </Table>
   </TableContainer>
 </Box>
+
 
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
