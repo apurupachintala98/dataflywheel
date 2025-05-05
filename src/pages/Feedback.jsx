@@ -248,7 +248,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     //         <TableHead>
                     //             <TableRow>
                     //                 {Object.keys(message.executedResponse[0]).map((key) => (
-                    //                     <TableCell key={key}>{key}</TableCell>
+                    //                     <TableCell
+                    //                         key={key}
+                    //                         sx={{ backgroundColor: '#5d5d5d', color: '#fff', whiteSpace: 'nowrap' }}
+                    //                     >
+                    //                         {key}
+                    //                     </TableCell>
                     //                 ))}
                     //             </TableRow>
                     //         </TableHead>
@@ -265,25 +270,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     // </TableContainer>
 <Box
   sx={{
-    maxWidth: '100%',
-    maxHeight: 400,
+    width: '100%',
     overflowX: 'auto',
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': {
-      width: '8px',
-      height: '8px',
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#555',
-      borderRadius: '8px',
-    },
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: '#2a2a2a',
-    },
   }}
 >
-  <TableContainer component={Paper} sx={{ display: 'block', minWidth: '1000px' }}>
-    <Table stickyHeader>
+  <TableContainer component={Paper} sx={{ width: 'fit-content', minWidth: '100%' }}>
+    <Table>
       <TableHead>
         <TableRow>
           {Object.keys(message.executedResponse[0]).map((key) => (
@@ -300,7 +292,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         {message.executedResponse.map((row, rowIndex) => (
           <TableRow key={rowIndex}>
             {Object.values(row).map((value, colIndex) => (
-              <TableCell key={colIndex} sx={{ whiteSpace: 'nowrap' }}>{value}</TableCell>
+              <TableCell key={colIndex}>{value}</TableCell>
             ))}
           </TableRow>
         ))}
