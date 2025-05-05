@@ -215,15 +215,10 @@ const HomeContent = () => {
     }
   };
   
-  
-  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-  
     setSelectedFile(file);
-  
-    // Trigger actual upload after selecting
     handleUpload('data');
   };
   
@@ -260,6 +255,7 @@ const HomeContent = () => {
 
   const apiCortex = async (message: any) => {
     setIsLoading(true);
+    let streamedText = '';
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
@@ -277,21 +273,59 @@ const HomeContent = () => {
       setIsLoading(false);
       return;
     }
-    await handleStream(stream, { fromUser: false, streaming: true });
-    setMessages(prev => prev.map((msg, index) => {
-      if (msg === message) return { ...msg, showSummarize: false };
-      if (index === prev.length - 1 && msg.streaming) {
-        return {
-          ...msg,
-          streaming: false,
-          summarized: true,
-          showSummarize: false,
-          showFeedback: true,
-        };
+    // await handleStream(stream, { fromUser: false, streaming: true });
+    // setMessages(prev => prev.map((msg, index) => {
+    //   if (msg === message) return { ...msg, showSummarize: false };
+    //   if (index === prev.length - 1 && msg.streaming) {
+    //     return {
+    //       ...msg,
+    //       streaming: false,
+    //       summarized: true,
+    //       showSummarize: false,
+    //       showFeedback: true,
+    //     };
+    //   }
+    //   return msg;
+    // }));
+    await handleStream(stream, {
+      fromUser: false,
+      streaming: true,
+      onToken: (token: string) => {
+        streamedText += token;
+        setMessages(prev => {
+          const updated = [...prev];
+          const lastIndex = updated.findIndex(msg => msg === message);
+          if (lastIndex !== -1) {
+            updated[lastIndex] = {
+              ...updated[lastIndex],
+              streaming: true,
+              text: streamedText,
+              isHTML: false,
+            };
+          }
+          return updated;
+        });
+      },
+      onComplete: () => {
+        setMessages(prev => {
+          const updated = [...prev];
+          const lastIndex = updated.findIndex(msg => msg === message);
+          if (lastIndex !== -1) {
+            updated[lastIndex] = {
+              ...updated[lastIndex],
+              streaming: false,
+              summarized: true,
+              showSummarize: false,
+              showFeedback: true,
+              text: streamedText,
+              isHTML: false,
+            };
+          }
+          return updated;
+        });
+        setIsLoading(false);
       }
-      return msg;
-    }));
-    setIsLoading(false);
+    });
   };
 
   useEffect(() => {
