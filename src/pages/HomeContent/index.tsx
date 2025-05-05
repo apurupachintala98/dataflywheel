@@ -85,6 +85,7 @@ const HomeContent = () => {
       return;
     }
     if (!inputValue.trim()) return;
+    setIsLoading(true);
     const userMessage = { text: inputValue, fromUser: true };
     const assistantPlaceholder = { text: "", fromUser: false, streaming: true };
 
@@ -111,6 +112,7 @@ const HomeContent = () => {
     if (!stream || error) {
       toast.error("Something went wrong.");
       setMessages(prev => [...prev, { text: "An error occurred.", fromUser: false }]);
+      setIsLoading(false);
       return;
     }
 
@@ -158,21 +160,22 @@ const HomeContent = () => {
             streaming: false,
           };
           console.log("sqlMessage", sqlMessage);
-      
+
           setMessages(prev => {
             const temp = [...prev];
             const last = temp[temp.length - 1];
-      
+
             if (last?.streaming && !last.fromUser) {
               temp[temp.length - 1] = sqlMessage;
             } else {
               temp.push(sqlMessage);
             }
-      
+
             return temp;
           });
-        } 
-      }      
+        }
+        setIsLoading(false);
+      }
     });
   };
 
@@ -193,6 +196,7 @@ const HomeContent = () => {
   };
 
   const executeSQL = async (sqlQuery: any) => {
+    setIsLoading(true);
     const payload = buildPayload({
       prompt: sqlQuery.prompt || sqlQuery.text,
       execSQL: sqlQuery.sqlQuery,
@@ -203,6 +207,7 @@ const HomeContent = () => {
     if (error || !data) {
       setMessages(prev => [...prev, { text: "Error communicating with backend.", fromUser: false, showExecute: false, showSummarize: false }]);
       console.error("Error:", error);
+      setIsLoading(false);
       return;
     }
 
@@ -216,11 +221,12 @@ const HomeContent = () => {
     let modelReply: string | React.ReactNode = "";
     modelReply = typeof data === 'string' ? data : convertToString(data);
     setData(data);
-    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, type: "table",showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
-     
+    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, type: "table", showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
+    setIsLoading(false);
   };
 
   const apiCortex = async (message: any) => {
+    setIsLoading(true);
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
@@ -235,6 +241,7 @@ const HomeContent = () => {
     if (!stream || error) {
       console.error("Streaming error:", error);
       setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
+      setIsLoading(false);
       return;
     }
     await handleStream(stream, { fromUser: false, streaming: true });
@@ -246,12 +253,12 @@ const HomeContent = () => {
           streaming: false,
           summarized: true,
           showSummarize: false,
-          showFeedback: true, 
+          showFeedback: true,
         };
       }
       return msg;
     }));
-    
+    setIsLoading(false);
   };
 
   useEffect(() => {
