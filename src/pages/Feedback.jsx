@@ -243,7 +243,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+                     <Box
+                    sx={{
+                      width: '100%',
+                      overflowX: 'auto',
+                    }}
+                  >
                         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                             <thead>
                                 <tr>
@@ -295,7 +300,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <Button
                         variant="contained"
                         sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
-                        onClick={() => apiCortex(message.text)}
+                        onClick={() => apiCortex(message)}
                     >
                         Summarize
                     </Button>
