@@ -80,7 +80,6 @@ const MainContent = ({
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        paddingTop: '70px',
       }}
     >
     
