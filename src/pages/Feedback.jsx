@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Typography, Tooltip, Button } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, IconButton, Typography, Tooltip } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import PropTypes from 'prop-types';
