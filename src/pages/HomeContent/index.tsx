@@ -213,34 +213,39 @@ const HomeContent = () => {
       return String(input);
     };
 
+    const renderTableFromData = (data: any[]) => {
+      const columns = Object.keys(data[0]);
+    
+      return (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {columns.map((key) => (
+                  <TableCell key={key} sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{key}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  {columns.map((col, colIndex) => (
+                    <TableCell key={colIndex}>
+                      {convertToString(row[col])}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
+    };
+
     let modelReply: string | React.ReactNode = "";
     console.log("data", data);
     if (Array.isArray(data) && data.length > 0) {
-      console.log(data);
-      const columns = Object.keys(data);
-      console.log("columns", columns);
-      modelReply = (
-        <TableContainer component={Paper}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    {Object.keys(data).map((key) => (
-                        <TableCell key={key}>{key}</TableCell>
-                    ))}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {data.map((row, rowIndex) => (
-                    <TableRow key={rowIndex}>
-                        {Object.values(row).map((value, colIndex) => (
-                             <TableCell key={colIndex}>{convertToString(value)}</TableCell>
-                        ))}
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
-      );
+      modelReply = renderTableFromData(data);
     } else {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
