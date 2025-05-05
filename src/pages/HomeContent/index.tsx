@@ -188,13 +188,11 @@ const HomeContent = () => {
       fileInputRef.current?.click();
       return;
     }
-  
-    if (!selectedFile) {
-      toast.warn("Please select a file before uploading.", { position: 'top-right' });
-      return;
-    }
-  
     if (type === 'data') {
+      if (!selectedFile) {
+        toast.warn("Please select a file before uploading.", { position: 'top-right' });
+        return;
+      }
       setIsUploading(true);
       const formData = new FormData();
       formData.append("file", selectedFile);
