@@ -272,47 +272,63 @@ const HomeContent = () => {
       setIsLoading(false);
       return;
     }
-    // await handleStream(stream, { fromUser: false, streaming: true });
-    // setMessages(prev => prev.map((msg, index) => {
-    //   if (msg === message) return { ...msg, showSummarize: false };
-    //   if (index === prev.length - 1 && msg.streaming) {
-    //     return {
-    //       ...msg,
-    //       streaming: false,
-    //       summarized: true,
-    //       showSummarize: false,
-    //       showFeedback: true,
-    //     };
-    //   }
-    //   return msg;
-    // }));
+    // await handleStream(stream, {
+    //   fromUser: false,
+    //   streaming: true,
+    //   onComplete: (response) => {
+    //     setMessages(prev => [
+    //       ...prev,
+    //       {
+    //         text: response.text,
+    //         fromUser: false,
+    //         streaming: false,
+    //         summarized: true,
+    //         showSummarize: false,
+    //         showFeedback: true,
+    //         type: "text",
+    //         isHTML: false,
+    //         prompt: message.prompt, // optional for traceability
+    //       },
+    //     ]);
+    //     setIsLoading(false);
+    
+    //     // Remove the Summarize button from the original message
+    //     setMessages(prev =>
+    //       prev.map(msg =>
+    //         msg === message ? { ...msg, showSummarize: false } : msg
+    //       )
+    //     );
+    //   },
+    // });
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
       onComplete: (response) => {
-        setMessages(prev => [
-          ...prev,
-          {
-            text: response.text,
-            fromUser: false,
-            streaming: false,
-            summarized: true,
-            showSummarize: false,
-            showFeedback: true,
-            type: "text",
-            isHTML: false,
-            prompt: message.prompt, // optional for traceability
-          },
-        ]);
-        setIsLoading(false);
-    
-        // Remove the Summarize button from the original message
-        setMessages(prev =>
-          prev.map(msg =>
+        setMessages(prev => {
+          // Hide Summarize button in original message
+          const updated = prev.map(msg =>
             msg === message ? { ...msg, showSummarize: false } : msg
-          )
-        );
-      },
+          );
+    
+          // Append new summarized message
+          return [
+            ...updated,
+            {
+              text: response.text,
+              fromUser: false,
+              streaming: false,
+              summarized: true,
+              showSummarize: false,
+              showFeedback: true,
+              type: "text",
+              isHTML: false,
+              prompt: message.prompt,
+            },
+          ];
+        });
+    
+        setIsLoading(false);
+      }
     });
     
     setIsLoading(false);
