@@ -196,7 +196,7 @@ const HomeContent = () => {
     console.log("sqlQuery", sqlQuery);
     const payload = buildPayload({
       prompt: sqlQuery.prompt || sqlQuery.text,
-      execSQL: sqlQuery.text,
+      execSQL: sqlQuery.sqlQuery,
       sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb",
       minimal: true,
     });
