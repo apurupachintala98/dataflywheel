@@ -76,6 +76,23 @@ const MainContent = ({
         <>
             <ToastContainer position="top-right" autoClose={3000} />
             <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        paddingTop: '70px',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: '0 16px',
+          position: 'relative',
+        }}
+      >
+            {/* <Box
                 sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -84,7 +101,7 @@ const MainContent = ({
                     position: "relative",
                     height: "100vh",
                 }}
-            >
+            > */}
                 {/* Top Navigation */}
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: "0px 30px", position: "absolute", top: 0, width: "100%", zIndex: 100, marginTop: "20px" }}>
                     <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
@@ -175,8 +192,11 @@ const MainContent = ({
                         '&::-webkit-scrollbar': {
                             display: 'none',
                         },
-                        maxWidth: '45%',
-                        margin: '50px auto',
+                        maxWidth: '100%',
+                        margin: '0 auto',
+                        mt: '90px'
+                        // maxWidth: '45%',
+                        // margin: '50px auto',
                     }}>
 
                     {messages.map((message, index) => (
@@ -427,6 +447,7 @@ const MainContent = ({
                         )}
                     </Box>
                 </Box>
+            </Box>
             </Box>
         </>
     );
