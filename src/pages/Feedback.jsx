@@ -246,47 +246,64 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </>
                 ) : message.type === 'table' ? (
                     // <TableContainer component={Paper}>
-                    //           <Table>
-                    //             <TableHead>
-                    //               <TableRow>
-                    //                 {columns.map((key) => (
-                    //                   <TableCell key={key} sx={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{key}</TableCell>
+                    //     <Table>
+                    //         <TableHead>
+                    //             <TableRow>
+                    //                 {Object.keys(message.executedResponse[0]).map((key) => (
+                    //                     <TableCell key={key}>{key}</TableCell>
                     //                 ))}
-                    //               </TableRow>
-                    //             </TableHead>
-                    //             <TableBody>
-                    //               {data.map((row, rowIndex) => (
+                    //             </TableRow>
+                    //         </TableHead>
+                    //         <TableBody>
+                    //             {message.executedResponse.map((row, rowIndex) => (
                     //                 <TableRow key={rowIndex}>
-                    //                   {columns.map((col, colIndex) => (
-                    //                     <TableCell key={colIndex}>
-                    //                       {convertToString(row[col])}
-                    //                     </TableCell>
-                    //                   ))}
+                    //                     {Object.values(row).map((value, colIndex) => (
+                    //                         <TableCell key={colIndex}>{value}</TableCell>
+                    //                     ))}
                     //                 </TableRow>
-                    //               ))}
-                    //             </TableBody>
-                    //           </Table>
-                    //         </TableContainer>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    {Object.keys(message.executedResponse[0]).map((key) => (
-                                        <TableCell key={key}>{key}</TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {message.executedResponse.map((row, rowIndex) => (
-                                    <TableRow key={rowIndex}>
-                                        {Object.values(row).map((value, colIndex) => (
-                                            <TableCell key={colIndex}>{value}</TableCell>
+                    //             ))}
+                    //         </TableBody>
+                    //     </Table>
+                    // </TableContainer>
+                    <Box
+                        sx={{
+                            maxHeight: 400,
+                            overflow: 'auto',
+                            '&::-webkit-scrollbar': {
+                                width: '8px',
+                            },
+                            '&::-webkit-scrollbar-thumb': {
+                                backgroundColor: '#555',
+                                borderRadius: '8px',
+                            },
+                            '&::-webkit-scrollbar-track': {
+                                backgroundColor: '#2a2a2a',
+                            },
+                        }}
+                    >
+                        <TableContainer component={Paper}>
+                            <Table stickyHeader>
+                                <TableHead>
+                                    <TableRow sx={{ backgroundColor: '#5d5d5d' }}>
+                                        {Object.keys(message.executedResponse[0]).map((key) => (
+                                            <TableCell key={key} sx={{ backgroundColor: '#5d5d5d', color: '#fff' }}>
+                                                {key}
+                                            </TableCell>
                                         ))}
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {message.executedResponse.map((row, rowIndex) => (
+                                        <TableRow key={rowIndex}>
+                                            {Object.values(row).map((value, colIndex) => (
+                                                <TableCell key={colIndex}>{value}</TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
                 ) : (
