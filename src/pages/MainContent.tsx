@@ -214,7 +214,7 @@ const MainContent = ({
 
                             {isLoading && (
                                 <Box sx={{ display: 'flex', justifyContent: 'start', mt: 2 }}>
-                                    <HashLoader color="#2761BB" size={20} />
+                                    <HashLoader color="#000000" size={20} />
                                 </Box>
                             )}
                             <div id="scroll-anchor" style={{ height: 1 }} />
