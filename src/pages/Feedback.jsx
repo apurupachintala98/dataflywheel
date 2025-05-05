@@ -243,63 +243,31 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
-                    // <TableContainer component={Paper}>
-                    //     <Table>
-                    //         <TableHead>
-                    //             <TableRow>
-                    //                 {Object.keys(message.executedResponse[0]).map((key) => (
-                    //                     <TableCell
-                    //                         key={key}
-                    //                         sx={{ backgroundColor: '#5d5d5d', color: '#fff', whiteSpace: 'nowrap' }}
-                    //                     >
-                    //                         {key}
-                    //                     </TableCell>
-                    //                 ))}
-                    //             </TableRow>
-                    //         </TableHead>
-                    //         <TableBody>
-                    //             {message.executedResponse.map((row, rowIndex) => (
-                    //                 <TableRow key={rowIndex}>
-                    //                     {Object.values(row).map((value, colIndex) => (
-                    //                         <TableCell key={colIndex}>{value}</TableCell>
-                    //                     ))}
-                    //                 </TableRow>
-                    //             ))}
-                    //         </TableBody>
-                    //     </Table>
-                    // </TableContainer>
-<Box
-  sx={{
-    width: '100%',
-    overflowX: 'auto',
-  }}
->
-  <TableContainer component={Paper} sx={{ width: 'fit-content', minWidth: '100%' }}>
-    <Table>
-      <TableHead>
-        <TableRow>
-          {Object.keys(message.executedResponse[0]).map((key) => (
-            <TableCell
-              key={key}
-              sx={{ backgroundColor: '#5d5d5d', color: '#fff', whiteSpace: 'nowrap' }}
-            >
-              {key}
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {message.executedResponse.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
-            {Object.values(row).map((value, colIndex) => (
-              <TableCell key={colIndex}>{value}</TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
-</Box>
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+                        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                            <thead>
+                                <tr>
+                                    {Object.keys(message.executedResponse[0]).map((key) => (
+                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>
+                                            {key}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {message.executedResponse.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                        {Object.values(row).map((value, colIndex) => (
+                                            <td key={colIndex} style={{ border: '1px solid black', padding: '8px' }}>
+                                                {value}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Box>
 
 
                 ) : typeof message.text === 'string' ? (
@@ -331,7 +299,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 )}
             </div>
             {shouldShowFeedback && <Feedback message={message} />}
-        </div>
+        </div >
     );
 };
 
