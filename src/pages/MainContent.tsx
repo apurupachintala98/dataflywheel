@@ -192,7 +192,9 @@ const MainContent = ({
                                     display: 'none',
                                 },
                                 maxWidth: '100%',
-                                margin: '0 auto',
+                                pt: '100px',
+                                pb: '140px',
+                                margin: '50px auto',
                                 // mt: '90px'
                                 // maxWidth: '45%',
                             }}>
