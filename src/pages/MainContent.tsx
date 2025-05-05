@@ -175,7 +175,7 @@ const MainContent = ({
         sx={{
           width: '100%',
           maxWidth: '900px',
-          margin: '0 auto',
+          margin: '50px auto',
           padding: '0 16px',
           position: 'relative',
         }}
@@ -192,10 +192,9 @@ const MainContent = ({
                             display: 'none',
                         },
                         maxWidth: '100%',
-                        // margin: '0 auto',
+                        margin: '0 auto',
                         // mt: '90px'
                         // maxWidth: '45%',
-                        margin: '50px auto',
                     }}>
 
                     {messages.map((message, index) => (
