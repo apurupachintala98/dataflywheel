@@ -446,6 +446,13 @@ const MainContent = ({
                     </Box>
                 </Box>
             </Box> */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%',
+                }}
+            >
             <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
                 {/* Top Navigation */}
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: "0px 30px", position: "absolute", top: 0, width: "100%", zIndex: 100, marginTop: "20px" }}>
@@ -800,7 +807,7 @@ const MainContent = ({
                     </Box>
                 </Box>
             </Box>
-
+            </Box>
         </>
     );
 };
