@@ -182,7 +182,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     />
                                 ) : (
                                     <SyntaxHighlighter language="sql" style={dracula}>
-                                        {typeof message.text === 'string' ? message.text : ''}
+                                        {message.text}
                                     </SyntaxHighlighter>
                                 )}
                             </Box>
