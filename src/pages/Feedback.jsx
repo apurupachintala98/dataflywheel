@@ -7,7 +7,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
-
+import PaginatedTable from './components/PaginatedTable';
 
 const Feedback = ({ message }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -243,36 +243,36 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
-                     <Box
-                    sx={{
-                      width: '100%',
-                      overflowX: 'auto',
-                    }}
-                  >
-                        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                            <thead>
-                                <tr>
-                                    {Object.keys(message.executedResponse[0]).map((key) => (
-                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d", color: "#fff" }}>
-                                            {key}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {message.executedResponse.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                        {Object.values(row).map((value, colIndex) => (
-                                            <td key={colIndex} style={{ border: '1px solid black', padding: '8px' }}>
-                                                {value}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </Box>
-
+                //      <Box
+                //     sx={{
+                //       width: '100%',
+                //       overflowX: 'auto',
+                //     }}
+                //   >
+                //         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                //             <thead>
+                //                 <tr>
+                //                     {Object.keys(message.executedResponse[0]).map((key) => (
+                //                         <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d", color: "#fff" }}>
+                //                             {key}
+                //                         </th>
+                //                     ))}
+                //                 </tr>
+                //             </thead>
+                //             <tbody>
+                //                 {message.executedResponse.map((row, rowIndex) => (
+                //                     <tr key={rowIndex}>
+                //                         {Object.values(row).map((value, colIndex) => (
+                //                             <td key={colIndex} style={{ border: '1px solid black', padding: '8px' }}>
+                //                                 {value}
+                //                             </td>
+                //                         ))}
+                //                     </tr>
+                //                 ))}
+                //             </tbody>
+                //         </table>
+                //     </Box>
+                <PaginatedTable data={message.executedResponse} />
 
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
