@@ -242,6 +242,7 @@ const HomeContent = () => {
     // };
 
     let modelReply: string | React.ReactNode = "";
+    modelReply = typeof data === 'string' ? data : convertToString(data);
     // if (Array.isArray(data) && data.length > 0) {
     //   modelReply = renderTableFromData(data);
     // } else {
