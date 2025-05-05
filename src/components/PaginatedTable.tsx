@@ -17,17 +17,7 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
-        {data.length > rowsPerPage && (
-      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2, gap: 2 }}>
-        <Button onClick={handlePrev} disabled={page === 0} sx={{backgroundColor: "#000", color: "#fff"}}>
-          Previous
-        </Button>
-        <Button onClick={handleNext} disabled={page === totalPages - 1} sx={{backgroundColor: "#000", color: "#fff"}}>
-          Next
-        </Button>
-        <span style={{ alignSelf: 'center' }}>Page {page + 1} of {totalPages}</span>
-      </Box>
-    )}
+      
       <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
@@ -59,6 +49,17 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
           ))}
         </tbody>
       </table>
+      {data.length > rowsPerPage && (
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2, gap: 2 }}>
+        <Button onClick={handlePrev} disabled={page === 0} sx={{backgroundColor: "#000", color: "#fff"}}>
+          Previous
+        </Button>
+        <Button onClick={handleNext} disabled={page === totalPages - 1} sx={{backgroundColor: "#000", color: "#fff"}}>
+          Next
+        </Button>
+        <span style={{ alignSelf: 'center' }}>Page {page + 1} of {totalPages}</span>
+      </Box>
+    )}
     </Box>
   );
 };
