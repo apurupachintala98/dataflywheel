@@ -83,15 +83,7 @@ const MainContent = ({
         paddingTop: '70px',
       }}
     >
-      {/* <Box
-        sx={{
-          width: '100%',
-          maxWidth: '900px',
-          margin: '0 auto',
-          padding: '0 16px',
-          position: 'relative',
-        }}
-      > */}
+    
             <Box
                 sx={{
                     display: "flex",
@@ -180,7 +172,15 @@ const MainContent = ({
                         </svg>
                     </Box>
                 </Box>
-
+  <Box
+        sx={{
+          width: '100%',
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: '0 16px',
+          position: 'relative',
+        }}
+      >
                 <Box id="message-scroll-container" tabIndex={0}
                     sx={{
                         flexGrow: 1,
@@ -241,7 +241,7 @@ const MainContent = ({
                     )}
                     <div id="scroll-anchor" style={{ height: 1 }} />
                 </Box>
-
+</Box>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column',
