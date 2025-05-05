@@ -290,27 +290,31 @@ const HomeContent = () => {
       fromUser: false,
       streaming: true,
       onComplete: (response) => {
-        setMessages(prev => {
-          const updated = [...prev];
-          const lastIndex = updated.findIndex(msg =>
-            msg.prompt === message.prompt && msg.fromUser === false
-          );
-          if (lastIndex !== -1) {
-            updated[lastIndex] = {
-              ...updated[lastIndex],
-              streaming: false,
-              summarized: true,
-              showSummarize: false,
-              showFeedback: true,
-              text: response.text,
-              isHTML: false,
-            };
-          }
-          return updated;
-        });
+        setMessages(prev => [
+          ...prev,
+          {
+            text: response.text,
+            fromUser: false,
+            streaming: false,
+            summarized: true,
+            showSummarize: false,
+            showFeedback: true,
+            type: "text",
+            isHTML: false,
+            prompt: message.prompt, // optional for traceability
+          },
+        ]);
         setIsLoading(false);
-      }
+    
+        // Remove the Summarize button from the original message
+        setMessages(prev =>
+          prev.map(msg =>
+            msg === message ? { ...msg, showSummarize: false } : msg
+          )
+        );
+      },
     });
+    
     setIsLoading(false);
   };
 

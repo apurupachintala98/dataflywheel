@@ -192,7 +192,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 ) : message.type === 'table' ? (
                     <PaginatedTable data={message.executedResponse} />
                 ) : typeof message.text === 'string' ? (
-                    <Typography>{message.text}</Typography>
+                    <Typography sx={{ whiteSpace: 'pre-wrap' }}>{message.text}</Typography>
                 ) : (
                     <Box sx={{ wordBreak: 'break-word', position: 'relative', zIndex: 1000, overflow: 'visible', }}>
                         {message.text}
@@ -212,16 +212,16 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         Execute SQL
                     </Button>
                 )}
+{message.showSummarize === true && (
+  <Button
+    variant="contained"
+    sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
+    onClick={() => apiCortex(message)}
+  >
+    Summarize
+  </Button>
+)}
 
-                {message.showSummarize && (
-                    <Button
-                        variant="contained"
-                        sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
-                        onClick={() => apiCortex(message)}
-                    >
-                        Summarize
-                    </Button>
-                )}
             </div>
             {shouldShowFeedback && <Feedback message={message} />}
         </div >
