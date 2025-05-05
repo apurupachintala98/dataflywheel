@@ -97,7 +97,6 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
-    console.log("response", message);
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
@@ -120,7 +119,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     // !message.streaming &&
     // (message.summarized || message.showFeedback);
 
-    console.log(shouldShowFeedback);
     return (
         <div className="mb-4">
             <div
@@ -267,8 +265,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     // </TableContainer>
 <Box
   sx={{
-    maxHeight: 400,
-    maxWidth: '100%', // constrain within parent
+    maxWidth: '40%', // constrain within parent
     overflow: 'auto',
     '&::-webkit-scrollbar': {
       width: '8px',
@@ -283,7 +280,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     },
   }}
 >
-  <TableContainer component={Paper} sx={{ minWidth: 800 /* or 1000px based on content */ }}>
+  <TableContainer component={Paper} sx={{ minWidth: 300 /* or 1000px based on content */ }}>
     <Table stickyHeader>
       <TableHead>
         <TableRow>
