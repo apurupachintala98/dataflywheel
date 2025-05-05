@@ -250,7 +250,7 @@ const HomeContent = () => {
       modelReply = typeof data === 'string' ? data : convertToString(data);
     }
     setData(data);
-    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
+    setMessages(prev => [...prev, { text: modelReply, fromUser: false, executedResponse: data, type: "table",showExecute: false, showSummarize: true, prompt: sqlQuery.prompt }]);
      
   };
 

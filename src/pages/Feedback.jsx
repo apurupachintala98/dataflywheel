@@ -97,6 +97,7 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
+    console.log(message);
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
@@ -243,6 +244,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         )}
                     </Box>
                     </>
+                ) : message.type === 'table' ? (
+                    <Box sx={{ mt: 1 }}>{message.text}</Box>
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
                 ) : (

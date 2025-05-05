@@ -11,5 +11,5 @@ export interface MessageType {
   summarized?: boolean;
   prompt?: string;
   interpretation?: string;
-  type?: 'text' | 'sql';
+  type?: "text" | "sql" | "table";
 }
