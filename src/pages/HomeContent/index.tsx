@@ -305,34 +305,37 @@ const HomeContent = () => {
       streaming: true,
       onComplete: (response) => {
         setMessages(prev => {
-          // Hide Summarize button in original message
-          const updated = prev.map(msg =>
-            msg === message ? { ...msg, showSummarize: false } : msg
-          );
-    
-          // Append new summarized message
+          const updated = prev.map(msg => {
+            if (
+              msg.prompt === message.prompt &&
+              msg.executedResponse === message.executedResponse &&
+              msg.fromUser === false &&
+              msg.showSummarize
+            ) {
+              return { ...msg, showSummarize: false };
+            }
+            return msg;
+          });
+  
           return [
             ...updated,
             {
               text: response.text,
               fromUser: false,
+              type: "text",
               streaming: false,
               summarized: true,
               showSummarize: false,
               showFeedback: true,
-              type: "text",
               isHTML: false,
               prompt: message.prompt,
             },
           ];
-        });
-    
+        });    
         setIsLoading(false);
       }
     });
-    
-    setIsLoading(false);
-  };
+      };
 
   useEffect(() => {
     const fetchData = async () => {
