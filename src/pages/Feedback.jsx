@@ -97,7 +97,7 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
-    console.log(message);
+    console.log("response",message);
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
