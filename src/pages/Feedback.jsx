@@ -243,13 +243,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
-
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
                         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                             <thead>
                                 <tr>
                                     {Object.keys(message.executedResponse[0]).map((key) => (
-                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d" }}>
+                                        <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d", color: "#fff" }}>
                                             {key}
                                         </th>
                                     ))}
@@ -282,7 +281,12 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <Button
                         variant="contained"
                         sx={{ mt: 2, backgroundColor: '#000', color: '#fff' }}
-                        onClick={() => executeSQL({ ...message, text: sqlState.editedSQL })}
+                        onClick={async () => {
+                            await executeSQL({ ...message, text: sqlState.editedSQL });
+                            setSqlState((prev) => ({ ...prev, hidden: true })); 
+                            message.showExecute = false;
+                          }}
+                        // onClick={() => executeSQL({ ...message, text: sqlState.editedSQL })}
                     >
                         Execute SQL
                     </Button>
