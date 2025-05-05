@@ -1,13 +1,6 @@
 import { toast } from 'react-toastify';
 import { MessageType } from '../types/message.types';
 
-interface StreamOptions {
-  fromUser: boolean;
-  streaming: boolean;
-  onComplete?: (response: any) => void;
-}
-
-
 export const useStreamHandler = (
   setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>
 ) => {

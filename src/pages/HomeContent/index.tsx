@@ -253,81 +253,6 @@ const HomeContent = () => {
     setIsLoading(false);
   };
 
-  // const apiCortex = async (message: any) => {
-  //   setIsLoading(true);
-  //   let streamedText = '';
-  //   const payload = buildPayload({
-  //     method: "cortex",
-  //     model: "llama3.1-70b-elevance",
-  //     prompt: message.prompt,
-  //     sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
-  //     responseData: message.executedResponse,
-  //     sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
-  //   });
-
-  //   const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
-
-  //   if (!stream || error) {
-  //     console.error("Streaming error:", error);
-  //     setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
-  //     setIsLoading(false);
-  //     return;
-  //   }
-  //   // await handleStream(stream, { fromUser: false, streaming: true });
-  //   // setMessages(prev => prev.map((msg, index) => {
-  //   //   if (msg === message) return { ...msg, showSummarize: false };
-  //   //   if (index === prev.length - 1 && msg.streaming) {
-  //   //     return {
-  //   //       ...msg,
-  //   //       streaming: false,
-  //   //       summarized: true,
-  //   //       showSummarize: false,
-  //   //       showFeedback: true,
-  //   //     };
-  //   //   }
-  //   //   return msg;
-  //   // }));
-  //   await handleStream(stream, {
-  //     fromUser: false,
-  //     streaming: true,
-  //     onToken: (token: string) => {
-  //       streamedText += token;
-  //       setMessages(prev => {
-  //         const updated = [...prev];
-  //         const lastIndex = updated.findIndex(msg => msg === message);
-  //         if (lastIndex !== -1) {
-  //           updated[lastIndex] = {
-  //             ...updated[lastIndex],
-  //             streaming: true,
-  //             text: streamedText,
-  //             isHTML: false,
-  //           };
-  //         }
-  //         return updated;
-  //       });
-  //     },
-  //     onComplete: () => {
-  //       setMessages(prev => {
-  //         const updated = [...prev];
-  //         const lastIndex = updated.findIndex(msg => msg === message);
-  //         if (lastIndex !== -1) {
-  //           updated[lastIndex] = {
-  //             ...updated[lastIndex],
-  //             streaming: false,
-  //             summarized: true,
-  //             showSummarize: false,
-  //             showFeedback: true,
-  //             text: streamedText,
-  //             isHTML: false,
-  //           };
-  //         }
-  //         return updated;
-  //       });
-  //       setIsLoading(false);
-  //     }
-  //   });
-  // };
-
   const apiCortex = async (message: any) => {
     setIsLoading(true);
     const payload = buildPayload({
@@ -338,16 +263,29 @@ const HomeContent = () => {
       responseData: message.executedResponse,
       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
     });
-  
+
     const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
-  
+
     if (!stream || error) {
       console.error("Streaming error:", error);
       setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
       setIsLoading(false);
       return;
     }
-  
+    // await handleStream(stream, { fromUser: false, streaming: true });
+    // setMessages(prev => prev.map((msg, index) => {
+    //   if (msg === message) return { ...msg, showSummarize: false };
+    //   if (index === prev.length - 1 && msg.streaming) {
+    //     return {
+    //       ...msg,
+    //       streaming: false,
+    //       summarized: true,
+    //       showSummarize: false,
+    //       showFeedback: true,
+    //     };
+    //   }
+    //   return msg;
+    // }));
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
@@ -373,8 +311,9 @@ const HomeContent = () => {
         setIsLoading(false);
       }
     });
+    setIsLoading(false);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
