@@ -107,7 +107,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         editedSQL: message.text || ''
     });
     const isSQL = message.type === "sql";
-    const shouldShowFeedback = !message.fromUser && message.type === "text";    // !message.fromUser;
+    const shouldShowFeedback = !message.fromUser;    // !message.fromUser;
         // const shouldShowFeedback =
     //     message.type === "text" &&
     //     !message.fromUser &&
