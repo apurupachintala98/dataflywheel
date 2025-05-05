@@ -216,15 +216,15 @@ const HomeContent = () => {
     let modelReply: string | React.ReactNode = "";
     console.log("data", data);
     if (Array.isArray(data) && data.length > 0) {
-      const columns = Object.keys(data[0]);
+      console.log(data);
+      const columns = Object.keys(data);
       console.log("columns", columns);
       modelReply = (
-     
         <TableContainer component={Paper}>
         <Table>
             <TableHead>
                 <TableRow>
-                    {Object.keys(data[0]).map((key) => (
+                    {Object.keys(data).map((key) => (
                         <TableCell key={key}>{key}</TableCell>
                     ))}
                 </TableRow>
