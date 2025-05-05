@@ -66,7 +66,6 @@ const HomeContent = () => {
 
   const handleGraphClick = () => setIsModalVisible(true);
   const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
-  const handleUpload = (type: 'yaml' | 'data') => { };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
     setSelectedModels(prev => ({
@@ -81,7 +80,7 @@ const HomeContent = () => {
 
   const handleSubmit = async () => {
     if (selectedFile) {
-      await uploadFile();
+      await handleUpload('data');
       return;
     }
     if (!inputValue.trim()) return;
@@ -179,21 +178,40 @@ const HomeContent = () => {
     });
   };
 
-  const uploadFile = async () => {
-    if (!selectedFile) return;
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    try {
-      const response = await axios.post(config.ENDPOINTS.UPLOAD_URL, formData, { headers: { "Content-Type": "multipart/form-data" } });
-      toast.success(response?.data?.message || "File uploaded successfully!");
-      setSelectedFile(null);
-    } catch {
-      toast.error("Upload failed. Please try again.");
-    } finally {
-      setIsUploading(false);
+  const handleUpload = async (type: 'yaml' | 'data') => {
+    handleMenuClose(); 
+  
+    if (!selectedFile) {
+      toast.warn("Please select a file before uploading.", { position: 'top-right' });
+      return;
+    }
+
+    if (type === 'data') {
+      setIsUploading(true);
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+  
+      try {
+        const response = await axios.post(config.ENDPOINTS.UPLOAD_URL, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        const successMessage = response?.data?.message || "File uploaded successfully!";
+        toast.success(successMessage, { position: 'top-right' });
+        setSelectedFile(null);
+      } catch (error) {
+        console.error("Upload error:", error);
+        toast.error("Upload failed. Please try again.", { position: 'top-right' });
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  
+    // Placeholder for YAML handling if needed later
+    else if (type === 'yaml') {
+      toast.info("YAML upload is not yet implemented.", { position: 'top-right' });
     }
   };
+  
 
   const executeSQL = async (sqlQuery: any) => {
     setIsLoading(true);
