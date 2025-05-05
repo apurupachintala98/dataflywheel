@@ -295,7 +295,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <Button
                         variant="contained"
                         sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
-                        onClick={() => apiCortex(message)}
+                        onClick={() => apiCortex(message.text)}
                     >
                         Summarize
                     </Button>
