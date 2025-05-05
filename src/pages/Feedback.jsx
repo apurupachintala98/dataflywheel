@@ -281,12 +281,11 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     <Button
                         variant="contained"
                         sx={{ mt: 2, backgroundColor: '#000', color: '#fff' }}
-                        onClick={async () => {
-                            await executeSQL({ ...message, text: sqlState.editedSQL });
-                            setSqlState((prev) => ({ ...prev, hidden: true })); 
+                        onClick={() => {
+                            executeSQL({ ...message, text: sqlState.editedSQL })
                             message.showExecute = false;
-                          }}
-                        // onClick={() => executeSQL({ ...message, text: sqlState.editedSQL })}
+                        }}
+
                     >
                         Execute SQL
                     </Button>
