@@ -337,17 +337,23 @@ Feedback.propTypes = {
 
 MessageWithFeedback.propTypes = {
     message: PropTypes.shape({
-        text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-        type: PropTypes.string,
-        fromUser: PropTypes.bool,
-        summarized: PropTypes.bool,
-        streaming: PropTypes.bool,
-        showExecute: PropTypes.bool,
-        showSummarize: PropTypes.bool,
-        interpretation: PropTypes.string,
-        showFeedback: PropTypes.bool,
-        sql: PropTypes.string,
+      text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+      type: PropTypes.oneOf(['text', 'sql', 'table']),
+      fromUser: PropTypes.bool,
+      summarized: PropTypes.bool,
+      streaming: PropTypes.bool,
+      showExecute: PropTypes.bool,
+      showSummarize: PropTypes.bool,
+      interpretation: PropTypes.string,
+      showFeedback: PropTypes.bool,
+      sql: PropTypes.string,
+      executedResponse: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.object),
+        PropTypes.object,
+        PropTypes.string
+      ])
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,
     apiCortex: PropTypes.func.isRequired,
-};
+  };
+  
