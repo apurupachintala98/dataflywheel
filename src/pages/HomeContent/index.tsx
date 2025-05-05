@@ -330,8 +330,6 @@ const HomeContent = () => {
 
   const apiCortex = async (message: any) => {
     setIsLoading(true);
-    let streamedText = '';
-  
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
@@ -353,25 +351,7 @@ const HomeContent = () => {
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
-      onToken: (token: string) => {
-        streamedText += token;
-        setMessages(prev => {
-          const updated = [...prev];
-          const lastIndex = updated.findIndex(msg =>
-            msg.prompt === message.prompt && msg.fromUser === false
-          );
-          if (lastIndex !== -1) {
-            updated[lastIndex] = {
-              ...updated[lastIndex],
-              streaming: true,
-              text: streamedText,
-              isHTML: false,
-            };
-          }
-          return updated;
-        });
-      },
-      onComplete: () => {
+      onComplete: (response) => {
         setMessages(prev => {
           const updated = [...prev];
           const lastIndex = updated.findIndex(msg =>
@@ -384,7 +364,7 @@ const HomeContent = () => {
               summarized: true,
               showSummarize: false,
               showFeedback: true,
-              text: streamedText,
+              text: response.text,
               isHTML: false,
             };
           }
