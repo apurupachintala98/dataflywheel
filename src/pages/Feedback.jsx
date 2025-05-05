@@ -44,6 +44,7 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
+    console.log("apicortex",apiCortex(message));
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
