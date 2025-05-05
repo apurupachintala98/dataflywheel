@@ -272,37 +272,15 @@ const HomeContent = () => {
       setIsLoading(false);
       return;
     }
-    // await handleStream(stream, {
-    //   fromUser: false,
-    //   streaming: true,
-    //   onComplete: (response) => {
-    //     setMessages(prev => [
-    //       ...prev,
-    //       {
-    //         text: response.text,
-    //         fromUser: false,
-    //         streaming: false,
-    //         summarized: true,
-    //         showSummarize: false,
-    //         showFeedback: true,
-    //         type: "text",
-    //         isHTML: false,
-    //         prompt: message.prompt, // optional for traceability
-    //       },
-    //     ]);
-    //     setIsLoading(false);
-    
-    //     // Remove the Summarize button from the original message
-    //     setMessages(prev =>
-    //       prev.map(msg =>
-    //         msg === message ? { ...msg, showSummarize: false } : msg
-    //       )
-    //     );
-    //   },
-    // });
+
+    let streamedText = '';
+
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
+      onToken: (token: string) => {
+        streamedText += token;
+      },
       onComplete: (response) => {
         setMessages(prev => {
           const updated = prev.map(msg => {
@@ -320,7 +298,7 @@ const HomeContent = () => {
           return [
             ...updated,
             {
-              text: response.text,
+              text: streamedText || response.text,
               fromUser: false,
               type: "text",
               streaming: false,

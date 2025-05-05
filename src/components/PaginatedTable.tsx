@@ -17,11 +17,9 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
 
     return (
         <Box sx={{
-            overflowX: 'auto',
             maxWidth: '100%',
             mt: 2,
             mb: 4,
-            px: 2, 
             '&::-webkit-scrollbar': {
               height: '8px',
             },
@@ -34,7 +32,7 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
             },
           }}>
 
-            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+            <table style={{ borderCollapse: 'collapse', width: '100%',  overflowX: 'auto', }}>
                 <thead>
                     <tr>
                         {Object.keys(data[0]).map((key) => (

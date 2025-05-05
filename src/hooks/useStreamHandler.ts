@@ -10,10 +10,12 @@ export const useStreamHandler = (
       fromUser,
       streaming,
       onComplete,
+      onToken,
     }: {
       fromUser: boolean;
       streaming: boolean;
       onComplete?: (response: any) => void;
+      onToken?: (token: string) => void;
     }
   ) => {
     const reader = stream.getReader();
@@ -29,7 +31,7 @@ export const useStreamHandler = (
       if (value) {
         const chunk = decoder.decode(value, { stream: true });
         buffer += chunk;
-
+        if (onToken) onToken(chunk);
         const endIndex = buffer.indexOf('end_of_stream');
         if (endIndex !== -1) {
           const [textPart, trailingPart] = buffer.split('end_of_stream');
