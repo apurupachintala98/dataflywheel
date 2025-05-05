@@ -6,7 +6,7 @@ import MainContent from "../MainContent";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import BarChartIcon from '@mui/icons-material/BarChart';
-import { Button } from '@mui/material';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useApiRequest } from "../../hooks/useApiRequest";
 import { useStreamHandler } from "../../hooks/useStreamHandler";
 import { buildPayload } from "../../utils/buildPayload";
@@ -219,28 +219,27 @@ const HomeContent = () => {
       const columns = Object.keys(data[0]);
       console.log("columns", columns);
       modelReply = (
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ borderCollapse: 'collapse', width: '100%', marginTop: '10px' }}>
-            <thead>
-              <tr>
-                {columns.map(col => (
-                  <th key={col} style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }}>{col}</th>
+     
+        <TableContainer component={Paper}>
+        <Table>
+            <TableHead>
+                <TableRow>
+                    {Object.keys(data[0]).map((key) => (
+                        <TableCell key={key}>{key}</TableCell>
+                    ))}
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data.map((row, rowIndex) => (
+                    <TableRow key={rowIndex}>
+                        {Object.values(row).map((value, colIndex) => (
+                             <TableCell key={colIndex}>{convertToString(value)}</TableCell>
+                        ))}
+                    </TableRow>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row: any, i: number) => (
-                <tr key={i}>
-                  {columns.map(col => (
-                    <td key={`${i}-${col}`} style={{ border: '1px solid #ccc', padding: '8px' }}>
-                      {convertToString(row[col])}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+        </Table>
+    </TableContainer>
       );
     } else {
       modelReply = typeof data === 'string' ? data : convertToString(data);
