@@ -66,7 +66,7 @@ const HomeContent = () => {
 
   const handleGraphClick = () => setIsModalVisible(true);
   const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
     setSelectedModels(prev => ({
       ...prev,
@@ -178,14 +178,22 @@ const HomeContent = () => {
     });
   };
 
-  const handleUpload = async (type: 'yaml' | 'data') => {
-    handleMenuClose(); 
+  const handleUpload = async (
+    type: 'yaml' | 'data',
+    triggerFileDialog: boolean = false
+  ): Promise<void> => {
+    handleMenuClose();
+  
+    if (triggerFileDialog) {
+      fileInputRef.current?.click();
+      return;
+    }
   
     if (!selectedFile) {
       toast.warn("Please select a file before uploading.", { position: 'top-right' });
       return;
     }
-
+  
     if (type === 'data') {
       setIsUploading(true);
       const formData = new FormData();
@@ -204,12 +212,21 @@ const HomeContent = () => {
       } finally {
         setIsUploading(false);
       }
-    }
-  
-    // Placeholder for YAML handling if needed later
-    else if (type === 'yaml') {
+    } else if (type === 'yaml') {
       toast.info("YAML upload is not yet implemented.", { position: 'top-right' });
     }
+  };
+  
+  
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    setSelectedFile(file);
+  
+    // Trigger actual upload after selecting
+    handleUpload('data');
   };
   
 

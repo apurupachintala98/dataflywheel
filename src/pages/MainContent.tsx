@@ -9,7 +9,6 @@ import MessageWithFeedback from "../pages/Feedback";
 type UploadType = 'yaml' | 'data';
 import { MessageType } from '../types/message.types';
 
-
 interface MainContentProps {
     messages: MessageType[];
     collapsed: boolean;
@@ -33,7 +32,7 @@ interface MainContentProps {
     selectedFile: File | null;
     isUploading: boolean;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleUpload: (type: UploadType) => void;
+    handleUpload: (type: 'yaml' | 'data', triggerFileDialog?: boolean) => void;
     isModalVisible: boolean;
     handleModalClose: () => void;
     data: any;
@@ -379,8 +378,8 @@ const MainContent = ({
                                                     transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                                                 >
                                                     <MenuItem onClick={() => handleUpload('yaml')}>Upload YAML</MenuItem>
-                                                    <MenuItem onClick={() => handleUpload('data')}>Upload Data</MenuItem>
-                                                </Menu>
+                                                    <MenuItem onClick={() => handleUpload('data', true)}>Upload Data</MenuItem>
+                                                    </Menu>
                                             </Box>
                                             <Button
                                                 variant="outlined"
