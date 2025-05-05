@@ -192,10 +192,10 @@ const MainContent = ({
                             display: 'none',
                         },
                         maxWidth: '100%',
-                        margin: '0 auto',
-                        mt: '90px'
+                        // margin: '0 auto',
+                        // mt: '90px'
                         // maxWidth: '45%',
-                        // margin: '50px auto',
+                        margin: '50px auto',
                     }}>
 
                     {messages.map((message, index) => (
