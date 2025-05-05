@@ -214,18 +214,32 @@ const HomeContent = () => {
     };
 
     let modelReply: string | React.ReactNode = "";
-
+    console.log("data", data);
     if (Array.isArray(data) && data.length > 0) {
       const columns = Object.keys(data[0]);
+      console.log("columns", columns);
       modelReply = (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-          <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-            <thead><tr>{columns.map(col => <th key={col}>{col}</th>)}</tr></thead>
-            <tbody>{data.map((row: any, i: number) => <tr key={i}>{columns.map(col => <td key={`${i}-${col}`}>{convertToString(row[col])}</td>)}</tr>)}</tbody>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ borderCollapse: 'collapse', width: '100%', marginTop: '10px' }}>
+            <thead>
+              <tr>
+                {columns.map(col => (
+                  <th key={col} style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row: any, i: number) => (
+                <tr key={i}>
+                  {columns.map(col => (
+                    <td key={`${i}-${col}`} style={{ border: '1px solid #ccc', padding: '8px' }}>
+                      {convertToString(row[col])}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
           </table>
-          {data.length > 1 && columns.length > 1 && (
-            <Button variant="contained" startIcon={<BarChartIcon />} onClick={handleGraphClick}>Graph View</Button>
-          )}
         </div>
       );
     } else {
