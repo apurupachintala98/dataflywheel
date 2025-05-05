@@ -157,6 +157,7 @@ const HomeContent = () => {
             interpretation,
             streaming: false,
           };
+          console.log("sqlMessage", sqlMessage);
       
           setMessages(prev => {
             const temp = [...prev];
