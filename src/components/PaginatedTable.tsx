@@ -7,7 +7,7 @@ type PaginatedTableProps = {
 
 const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
   const [page, setPage] = useState(0);
-  const rowsPerPage = 12;
+  const rowsPerPage = 5;
 
   const totalPages = Math.ceil(data.length / rowsPerPage);
   const paginatedData = data.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
@@ -17,6 +17,17 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
+         {data.length > rowsPerPage && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, gap: 2 }}>
+          <Button onClick={handlePrev} disabled={page === 0}>
+            Previous
+          </Button>
+          <span>Page {page + 1} of {totalPages}</span>
+          <Button onClick={handleNext} disabled={page === totalPages - 1}>
+            Next
+          </Button>
+        </Box>
+      )}
       <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
@@ -48,18 +59,6 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
           ))}
         </tbody>
       </table>
-
-      {data.length > rowsPerPage && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, gap: 2 }}>
-          <Button onClick={handlePrev} disabled={page === 0}>
-            Previous
-          </Button>
-          <span>Page {page + 1} of {totalPages}</span>
-          <Button onClick={handleNext} disabled={page === totalPages - 1}>
-            Next
-          </Button>
-        </Box>
-      )}
     </Box>
   );
 };
