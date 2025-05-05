@@ -7,7 +7,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
-import PaginatedTable from './components/PaginatedTable';
+import PaginatedTable from '../components/PaginatedTable';
 
 const Feedback = ({ message }) => {
     const [isSpeaking, setIsSpeaking] = useState(false);
