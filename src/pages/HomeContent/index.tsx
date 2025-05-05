@@ -193,6 +193,7 @@ const HomeContent = () => {
   };
 
   const executeSQL = async (sqlQuery: any) => {
+    console.log("sqlQuery", sqlQuery);
     const payload = buildPayload({
       prompt: sqlQuery.prompt || sqlQuery.text,
       execSQL: sqlQuery.text,
