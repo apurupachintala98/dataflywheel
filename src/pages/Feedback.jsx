@@ -10,55 +10,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import PaginatedTable from '../components/PaginatedTable';
 
 const Feedback = ({ message }) => {
-    const [isSpeaking, setIsSpeaking] = useState(false);
-    const synthRef = useRef(window.speechSynthesis);
-    const utteranceRef = useRef(null);
-    const voicesRef = useRef([]);
-
-    useEffect(() => {
-        const loadVoices = () => {
-            voicesRef.current = synthRef.current.getVoices();
-        };
-        loadVoices();
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-    }, []);
-
-    const handleSpeak = () => {
-        if (!message?.text) {
-            console.error("Message is undefined or empty");
-            return;
-        }
-
-        const synth = synthRef.current;
-
-        if (synth.speaking) {
-            synth.cancel();
-            setIsSpeaking(false);
-            return;
-        }
-
-        const utterance = new SpeechSynthesisUtterance(message.text);
-        utterance.rate = 0.85;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-        utterance.voice = voicesRef.current.find(
-            voice =>
-                voice.name.includes("Google UK English Female") ||
-                voice.name.includes("Google US English Female")
-        ) || voicesRef.current[0];
-
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-        utterance.onerror = (err) => {
-            console.error("Speech Synthesis Error:", err);
-            setIsSpeaking(false);
-        };
-
-        synth.cancel();
-        synth.speak(utterance);
-        utteranceRef.current = utterance;
-    };
-
     const handleCopy = async () => {
         if (!message?.text) {
             console.error("Message is undefined or empty");
@@ -88,10 +39,6 @@ const Feedback = ({ message }) => {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="icon-md-heavy"><path fillRule="evenodd" clipRule="evenodd" d="M11.8727 21.4961C11.6725 21.8466 11.2811 22.0423 10.8805 21.9922L10.4267 21.9355C7.95958 21.6271 6.36855 19.1665 7.09975 16.7901L7.65054 15H6.93226C4.29476 15 2.37923 12.4921 3.0732 9.94753L4.43684 4.94753C4.91145 3.20728 6.49209 2 8.29589 2H18.0045C19.6614 2 21.0045 3.34315 21.0045 5V12C21.0045 13.6569 19.6614 15 18.0045 15H16.0045C15.745 15 15.5054 15.1391 15.3766 15.3644L11.8727 21.4961ZM14.0045 4H8.29589C7.39399 4 6.60367 4.60364 6.36637 5.47376L5.00273 10.4738C4.65574 11.746 5.61351 13 6.93226 13H9.00451C9.32185 13 9.62036 13.1506 9.8089 13.4059C9.99743 13.6612 10.0536 13.9908 9.96028 14.2941L9.01131 17.3782C8.6661 18.5002 9.35608 19.6596 10.4726 19.9153L13.6401 14.3721C13.9523 13.8258 14.4376 13.4141 15.0045 13.1902V5C15.0045 4.44772 14.5568 4 14.0045 4ZM17.0045 13V5C17.0045 4.64937 16.9444 4.31278 16.8338 4H18.0045C18.5568 4 19.0045 4.44772 19.0045 5V12C19.0045 12.5523 18.5568 13 18.0045 13H17.0045Z" fill="currentColor"></path></svg>
                 </IconButton>
             </Tooltip>
-            {/* <Tooltip title={isSpeaking ? "Stop Reading" : "Read Aloud"}>
-                <IconButton onClick={handleSpeak}>
-                </IconButton>
-            </Tooltip> */}
         </div>
     );
 };
@@ -243,37 +190,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
-                //      <Box
-                //     sx={{
-                //       width: '100%',
-                //       overflowX: 'auto',
-                //     }}
-                //   >
-                //         <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                //             <thead>
-                //                 <tr>
-                //                     {Object.keys(message.executedResponse[0]).map((key) => (
-                //                         <th key={key} style={{ border: '1px solid black', padding: '8px', textAlign: 'left', backgroundColor: "#5d5d5d", color: "#fff" }}>
-                //                             {key}
-                //                         </th>
-                //                     ))}
-                //                 </tr>
-                //             </thead>
-                //             <tbody>
-                //                 {message.executedResponse.map((row, rowIndex) => (
-                //                     <tr key={rowIndex}>
-                //                         {Object.values(row).map((value, colIndex) => (
-                //                             <td key={colIndex} style={{ border: '1px solid black', padding: '8px' }}>
-                //                                 {value}
-                //                             </td>
-                //                         ))}
-                //                     </tr>
-                //                 ))}
-                //             </tbody>
-                //         </table>
-                //     </Box>
-                <PaginatedTable data={message.executedResponse} />
-
+                    <PaginatedTable data={message.executedResponse} />
                 ) : typeof message.text === 'string' ? (
                     <Typography>{message.text}</Typography>
                 ) : (

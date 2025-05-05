@@ -16,7 +16,23 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
     const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages - 1));
 
     return (
-        <Box sx={{ width: '100%', overflowX: 'auto' }}>
+        <Box sx={{
+            overflowX: 'auto',
+            maxWidth: '100%',
+            mt: 2,
+            mb: 4,
+            px: 2, 
+            '&::-webkit-scrollbar': {
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#999',
+              borderRadius: '4px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: '#eee',
+            },
+          }}>
 
             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                 <thead>
