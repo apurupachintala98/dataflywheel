@@ -215,7 +215,8 @@ const HomeContent = () => {
 
     const renderTableFromData = (data: any[]) => {
       const columns = Object.keys(data[0]);
-    
+      console.log(data[0]);
+      console.log(data);
       return (
         <TableContainer component={Paper}>
           <Table>
@@ -243,7 +244,6 @@ const HomeContent = () => {
     };
 
     let modelReply: string | React.ReactNode = "";
-    console.log("data", data);
     if (Array.isArray(data) && data.length > 0) {
       modelReply = renderTableFromData(data);
     } else {
