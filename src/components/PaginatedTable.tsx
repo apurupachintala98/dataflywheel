@@ -50,7 +50,7 @@ const PaginatedTable: React.FC<PaginatedTableProps> = ({ data }) => {
         </tbody>
       </table>
       {data.length > rowsPerPage && (
-      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2, gap: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2, gap: 2, mt: 2 }}>
         <Button onClick={handlePrev} disabled={page === 0} sx={{backgroundColor: "#000", color: "#fff"}}>
           Previous
         </Button>
