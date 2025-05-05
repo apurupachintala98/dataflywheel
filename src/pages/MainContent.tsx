@@ -83,7 +83,7 @@ const MainContent = ({
         paddingTop: '70px',
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           width: '100%',
           maxWidth: '900px',
@@ -91,8 +91,8 @@ const MainContent = ({
           padding: '0 16px',
           position: 'relative',
         }}
-      >
-            {/* <Box
+      > */}
+            <Box
                 sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -101,7 +101,7 @@ const MainContent = ({
                     position: "relative",
                     height: "100vh",
                 }}
-            > */}
+            >
                 {/* Top Navigation */}
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: "0px 30px", position: "absolute", top: 0, width: "100%", zIndex: 100, marginTop: "20px" }}>
                     <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
