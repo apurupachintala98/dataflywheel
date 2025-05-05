@@ -446,228 +446,263 @@ const MainContent = ({
                     </Box>
                 </Box>
             </Box> */}
-         <Box
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    width: '100%',
-  }}
->
-  {/* Top Navigation */}
-  <Box sx={{ flexShrink: 0, px: 3, py: 2 }}>
-    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-        {(['chat', 'search'] as const).map((type) => (
-          <Box key={type} sx={{ display: 'inline-block' }}>
-            <Box
-              onClick={(e) => handleMenuClick(e, type)}
-              sx={{
-                backgroundColor: '#2761BB',
-                color: '#FFFFFF',
-                px: 2,
-                py: 1,
-                borderRadius: '6px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                minWidth: 150,
-                justifyContent: 'space-between',
-              }}
-            >
-              {type === 'chat' ? 'Semantic Model' : 'Search'} <FaAngleDown />
-            </Box>
-            <Menu
-              anchorEl={anchorEls[type]}
-              open={Boolean(anchorEls[type])}
-              onClose={handleMenuClose}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-            >
-              {fileLists[type === 'chat' ? 'yaml' : 'search'].length ? (
-                fileLists[type === 'chat' ? 'yaml' : 'search'].map((file) => (
-                  <MenuItem
-                    key={file}
-                    onClick={() => handleModelSelect(file, type === 'chat' ? 'yaml' : 'search')}
-                  >
-                    {file} {selectedModels[type === 'chat' ? 'yaml' : 'search'].includes(file) && '✓'}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>No Files</MenuItem>
-              )}
-            </Menu>
-          </Box>
-        ))}
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Typography>Welcome, Balaji!</Typography>
-        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
-          <circle cx="16.5" cy="16.5" r="16.5" fill="#A6C8FF" />
-          <g transform="translate(7.5, 7.5)">
-            <path
-              d="M14.2299 14.9418V13.5188C14.2299 12.764 13.9301 12.0401 13.3963 11.5063C12.8626 10.9726 12.1387 10.6727 11.3839 10.6727H5.69175C4.93693 10.6727 4.21303 10.9726 3.67929 11.5063C3.14555 12.0401 2.8457 12.764 2.8457 13.5188V14.9418"
-              stroke="#002D9C"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M8.53843 7.82662C10.1103 7.82662 11.3845 6.5524 11.3845 4.98057C11.3845 3.40874 10.1103 2.13452 8.53843 2.13452C6.9666 2.13452 5.69238 3.40874 5.69238 4.98057C5.69238 6.5524 6.9666 7.82662 8.53843 7.82662Z"
-              stroke="#002D9C"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
-        </svg>
-      </Box>
-    </Box>
-  </Box>
-
-  {/* Scrollable Message Container */}
-  <Box
-    id="message-scroll-container"
+      <Box
     sx={{
-      flexGrow: 1,
-      overflowY: 'auto',
-      px: 2,
-      scrollBehavior: 'smooth',
-      '&::-webkit-scrollbar': { width: '6px' },
-      '&::-webkit-scrollbar-thumb': { backgroundColor: '#ccc', borderRadius: '6px' },
-    }}
-  >
-    {messages.map((message, index) => (
-      <Box key={index} sx={{ mb: 1 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: message.fromUser ? "flex-end" : "flex-start",
-          }}
-        >
-          {message.fromUser ? (
-            <Box
-              sx={{
-                padding: '10px',
-                backgroundColor: 'hsla(0, 0%, 91%, .5)',
-                color: '#000',
-                borderRadius: '10px',
-                maxWidth: '75%',
-              }}
-            >
-              <Typography variant="body1">{message.text}</Typography>
-            </Box>
-          ) : (
-            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} />
-          )}
-        </Box>
-      </Box>
-    ))}
-    {isLoading && (
-      <Box sx={{ display: 'flex', justifyContent: 'start', mt: 2 }}>
-        <HashLoader color="#2761BB" size={20} />
-      </Box>
-    )}
-    <div id="scroll-anchor" style={{ height: 1 }} />
-  </Box>
-
-  {/* Fixed Prompt Input */}
-  <Box
-    sx={{
-      flexShrink: 0,
-      px: 2,
-      py: 2,
-      borderTop: '1px solid #e0e0e0',
-      backgroundColor: '#fff',
-    }}
-  >
-    {messages.length === 0 && (
-      <Typography variant="h5" sx={{ mb: 2, textAlign: "center", color: "#2761BB", fontWeight: 600 }}>
-        Data at your Fingertips
-      </Typography>
-    )}
-    <Box
-      sx={{
         display: 'flex',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: '12px 20px',
-        borderRadius: '12px',
-        border: '1px solid #D9D9D9',
-        boxShadow: '0px 4px 12px rgba(39, 97, 187, 0.20)',
-        maxWidth: '800px',
-        margin: '0 auto',
-      }}
-    >
-      {selectedFile && (
-        <Box sx={{ mr: 2, position: 'relative' }}>
-          <Box
-            sx={{
-              height: 48,
-              width: 48,
-              borderRadius: '12px',
-              border: '1px solid #e0e0e0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#f9f9f9',
-            }}
-          >
-            {isUploading ? (
-              <CircularProgress size={22} />
-            ) : (
-              <InsertDriveFileIcon sx={{ color: '#9e9e9e', fontSize: 20 }} />
-            )}
-            <IconButton
-              size="small"
-              onClick={() => setSelectedFile(null)}
-              sx={{
-                position: 'absolute',
-                top: '-6px',
-                right: '-6px',
-                backgroundColor: '#000',
-                color: '#fff',
-                '&:hover': { backgroundColor: '#333' },
-                width: 18,
-                height: 18,
-              }}
-            >
-              <CloseIcon sx={{ fontSize: 12 }} />
-            </IconButton>
-          </Box>
+        flexDirection: 'column',
+        height: '100vh',
+        width: '100%',
+    }}
+>
+    {/* Top Navigation */}
+    <Box sx={{ flexShrink: 0, px: 3, py: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                {(['chat', 'search'] as const).map((type) => (
+                    <Box key={type} sx={{ display: 'inline-block' }}>
+                        <Box
+                            onClick={(e) => handleMenuClick(e, type)}
+                            sx={{
+                                backgroundColor: '#2761BB',
+                                color: '#FFFFFF',
+                                px: 2,
+                                py: 1,
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                                minWidth: 150,
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            {type === 'chat' ? 'Semantic Model' : 'Search'} <FaAngleDown />
+                        </Box>
+                        <Menu
+                            anchorEl={anchorEls[type]}
+                            open={Boolean(anchorEls[type])}
+                            onClose={handleMenuClose}
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                        >
+                            {fileLists[type === 'chat' ? 'yaml' : 'search'].length ? (
+                                fileLists[type === 'chat' ? 'yaml' : 'search'].map((file) => (
+                                    <MenuItem
+                                        key={file}
+                                        onClick={() => handleModelSelect(file, type === 'chat' ? 'yaml' : 'search')}
+                                    >
+                                        {file} {selectedModels[type === 'chat' ? 'yaml' : 'search'].includes(file) && '✓'}
+                                    </MenuItem>
+                                ))
+                            ) : (
+                                <MenuItem disabled>No Files</MenuItem>
+                            )}
+                        </Menu>
+                    </Box>
+                ))}
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Typography>Welcome, Balaji!</Typography>
+                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
+                    <circle cx="16.5" cy="16.5" r="16.5" fill="#A6C8FF" />
+                    <g transform="translate(7.5, 7.5)">
+                        <path
+                            d="M14.2299 14.9418V13.5188C14.2299 12.764 13.9301 12.0401 13.3963 11.5063C12.8626 10.9726 12.1387 10.6727 11.3839 10.6727H5.69175C4.93693 10.6727 4.21303 10.9726 3.67929 11.5063C3.14555 12.0401 2.8457 12.764 2.8457 13.5188V14.9418"
+                            stroke="#002D9C"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                        <path
+                            d="M8.53843 7.82662C10.1103 7.82662 11.3845 6.5524 11.3845 4.98057C11.3845 3.40874 10.1103 2.13452 8.53843 2.13452C6.9666 2.13452 5.69238 3.40874 5.69238 4.98057C5.69238 6.5524 6.9666 7.82662 8.53843 7.82662Z"
+                            stroke="#002D9C"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </g>
+                </svg>
+            </Box>
         </Box>
-      )}
-
-      <TextField
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSubmit();
-          }
-        }}
-        placeholder="Ask anything"
-        variant="standard"
-        fullWidth
-        sx={{
-          mx: 2,
-          "& .MuiInputBase-root": { border: "none", boxShadow: "none" },
-          "& .MuiInput-underline:before": { borderBottom: "none" },
-          "& .MuiInput-underline:after": { borderBottom: "none" },
-        }}
-      />
-
-      <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
-        <FaArrowUp color="#fff" />
-      </IconButton>
-
-      <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
     </Box>
-  </Box>
+
+    {/* Center-aligned Message + Prompt Section */}
+    <Box
+        sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            flexGrow: 1,
+            overflow: 'hidden',
+        }}
+    >
+        <Box
+            sx={{
+                width: '100%',
+                maxWidth: '900px',
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: 1,
+            }}
+        >
+            {/* Message Scroll Area */}
+            <Box
+                id="message-scroll-container"
+                sx={{
+                    flexGrow: 1,
+                    overflowY: 'auto',
+                    px: 2,
+                    py: 1,
+                    scrollBehavior: 'smooth',
+                    '&::-webkit-scrollbar': { width: '6px' },
+                    '&::-webkit-scrollbar-thumb': { backgroundColor: '#ccc', borderRadius: '6px' },
+                }}
+            >
+                {messages.map((message, index) => (
+                    <Box key={index} sx={{ mb: 1 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: message.fromUser ? 'flex-end' : 'flex-start',
+                            }}
+                        >
+                            {message.fromUser ? (
+                                <Box
+                                    sx={{
+                                        padding: '10px',
+                                        backgroundColor: 'hsla(0, 0%, 91%, .5)',
+                                        color: '#000',
+                                        borderRadius: '10px',
+                                        maxWidth: '75%',
+                                    }}
+                                >
+                                    <Typography variant="body1">{message.text}</Typography>
+                                </Box>
+                            ) : (
+                                <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} />
+                            )}
+                        </Box>
+                    </Box>
+                ))}
+
+                {isLoading && (
+                    <Box sx={{ display: 'flex', justifyContent: 'start', mt: 2 }}>
+                        <HashLoader color="#2761BB" size={20} />
+                    </Box>
+                )}
+                <div id="scroll-anchor" style={{ height: 1 }} />
+            </Box>
+
+            {/* Prompt Input */}
+            <Box
+                sx={{
+                    px: 2,
+                    py: 2,
+                    borderTop: '1px solid #e0e0e0',
+                    backgroundColor: '#fff',
+                }}
+            >
+                {messages.length === 0 && (
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            mb: 2,
+                            textAlign: "center",
+                            color: "#2761BB",
+                            fontWeight: 600,
+                        }}
+                    >
+                        Data at your Fingertips
+                    </Typography>
+                )}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        backgroundColor: '#fff',
+                        padding: '12px 20px',
+                        borderRadius: '12px',
+                        border: '1px solid #D9D9D9',
+                        boxShadow: '0px 4px 12px rgba(39, 97, 187, 0.20)',
+                        maxWidth: '100%',
+                    }}
+                >
+                    {selectedFile && (
+                        <Box sx={{ mr: 2, position: 'relative' }}>
+                            <Box
+                                sx={{
+                                    height: 48,
+                                    width: 48,
+                                    borderRadius: '12px',
+                                    border: '1px solid #e0e0e0',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: '#f9f9f9',
+                                }}
+                            >
+                                {isUploading ? (
+                                    <CircularProgress size={22} />
+                                ) : (
+                                    <InsertDriveFileIcon sx={{ color: '#9e9e9e', fontSize: 20 }} />
+                                )}
+                                <IconButton
+                                    size="small"
+                                    onClick={() => setSelectedFile(null)}
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '-6px',
+                                        right: '-6px',
+                                        backgroundColor: '#000',
+                                        color: '#fff',
+                                        '&:hover': { backgroundColor: '#333' },
+                                        width: 18,
+                                        height: 18,
+                                    }}
+                                >
+                                    <CloseIcon sx={{ fontSize: 12 }} />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    )}
+
+                    <TextField
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit();
+                            }
+                        }}
+                        variant="standard"
+                        placeholder="Ask anything"
+                        fullWidth
+                        sx={{
+                            mx: 2,
+                            "& .MuiInputBase-root": { border: "none", boxShadow: "none" },
+                            "& .MuiInput-underline:before": { borderBottom: "none" },
+                            "& .MuiInput-underline:after": { borderBottom: "none" },
+                        }}
+                    />
+
+                    <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
+                        <FaArrowUp color="#fff" />
+                    </IconButton>
+
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
+                    />
+                </Box>
+            </Box>
+        </Box>
+    </Box>
 </Box>
+
 
         </>
     );
