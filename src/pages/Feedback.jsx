@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, IconButton, Typography, Tooltip } from '@mui/material';
+import { Button, Box, IconButton, Typography, Tooltip } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import PropTypes from 'prop-types';
@@ -56,7 +56,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     const [sqlResult, setSqlResult] = useState([]);
     const [executed, setExecuted] = useState(false);
     const isSQL = message.type === "sql";
-    const shouldShowFeedback = !message.fromUser;    // !message.fromUser;
+    // const shouldShowFeedback = !message.fromUser;    
+    // !message.fromUser;
     // const shouldShowFeedback =
     //     message.type === "text" &&
     //     !message.fromUser &&
@@ -65,6 +66,14 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
     // !message.fromUser &&
     // !message.streaming &&
     // (message.summarized || message.showFeedback);
+
+    const shouldShowFeedback =
+  !message.fromUser &&
+  (
+    message.type === "text" ||
+    (message.type === "sql" && message.summarized && message.showSummarize === false)
+  );
+
 
     return (
         <div className="mb-4">

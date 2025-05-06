@@ -6,7 +6,6 @@ import { HashLoader } from "react-spinners";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
 import MessageWithFeedback from "../pages/Feedback";
-type UploadType = 'yaml' | 'data';
 import { MessageType } from '../types/message.types';
 
 interface MainContentProps {
@@ -74,10 +73,9 @@ const MainContent = ({
     useEffect(() => {
         const anchor = document.getElementById("scroll-anchor");
         if (anchor) {
-          anchor.scrollIntoView({ behavior: "smooth" });
+            anchor.scrollIntoView({ behavior: "smooth" });
         }
-      }, [messages]);
-      
+    }, [messages]);
 
     return (
         <>
