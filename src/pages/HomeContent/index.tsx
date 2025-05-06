@@ -13,6 +13,7 @@ import { buildPayload } from "../../utils/buildPayload";
 import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
 import { MessageType } from '../../types/message.types';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SelectedModelState {
   yaml: string[];
@@ -40,6 +41,9 @@ const HomeContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [storedPrompt, setStoredPrompt] = useState<string>("");
+  const [sessionId] = useState(() => uuidv4());
+
+
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
     account: null,
     chat: null,
@@ -97,7 +101,7 @@ const HomeContent = () => {
       semanticModel: selectedModels.yaml,
       searchModel: selectedModels.search,
       model: "llama3.1-70b",
-      sessionId: "session-id",
+      sessionId,
       database_nm: "POC_SPC_SNOWPARK_DB",
       schema_nm: "HEDIS_SCHEMA"
     });
@@ -206,7 +210,7 @@ const HomeContent = () => {
         api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
         app_nm: "sample2",
         app_lvl_prefix: "",
-        session_id: 123
+        session_id: sessionId
       };
 
       formData.append("query", JSON.stringify(query));
@@ -246,7 +250,7 @@ const HomeContent = () => {
     const payload = buildPayload({
       prompt: storedPrompt,
       execSQL: sqlQuery.sqlQuery,
-      sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb",
+      sessionId,
       minimal: true,
     });
     const { data, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`, payload);
@@ -291,8 +295,8 @@ const HomeContent = () => {
       prompt: storedPrompt,
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
-      sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
-    });
+      sessionId
+      });
 
     const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
 
