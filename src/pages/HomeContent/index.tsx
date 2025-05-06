@@ -254,6 +254,7 @@ const HomeContent = () => {
   };
 
   const apiCortex = async (message: any) => {
+    console.log("cortexmessage",message);
     setIsLoading(true);
     const payload = buildPayload({
       method: "cortex",
