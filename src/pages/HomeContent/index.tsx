@@ -343,28 +343,48 @@ const HomeContent = () => {
           });
         }
       },
+      // onComplete: () => {
+      //   setMessages(prev =>
+      //     prev.map(msg => {
+      //       if (
+      //         msg.prompt === message.prompt &&
+      //         msg.executedResponse === message.executedResponse &&
+      //         msg.fromUser === false &&
+      //         msg.streaming
+      //       ) {
+      //         return {
+      //           ...msg,
+      //           streaming: false,
+      //           summarized: true,
+      //           showSummarize: false,
+      //           showFeedback: true,
+      //         };
+      //       }
+      //       return msg;
+      //     })
+      //   );
       onComplete: () => {
-        setMessages(prev =>
-          prev.map(msg => {
-            const isMatching =
+        setMessages(prev => {
+          const updated = prev.map(msg => {
+            if (
               msg.prompt === message.prompt &&
               msg.executedResponse === message.executedResponse &&
               msg.fromUser === false &&
-              msg.type === "text" &&
-              (msg.streaming || msg.showSummarize);
-      
-            if (isMatching) {
-              return {
-                ...msg,
-                streaming: false,
-                summarized: true,
-                showSummarize: false,
-                showFeedback: true,
-              };
+              msg.showSummarize
+            ) {
+              return { ...msg, showSummarize: false };
             }
             return msg;
-          })
-        );        
+          });
+  
+          return {
+            ...updated,
+            streaming: false,
+            summarized: true,
+            showSummarize: false,
+            showFeedback: true,
+          }
+        }); 
         setIsLoading(false);
       }
     });
