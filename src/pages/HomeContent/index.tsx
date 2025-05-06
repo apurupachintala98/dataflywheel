@@ -46,7 +46,6 @@ const HomeContent = () => {
     search: null,
     upload: null,
   });
-
   const open = Boolean(anchorEls.upload);
   const [fileLists, setFileLists] = useState({ yaml: [] as string[], search: [] as string[] });
   const [selectedModels, setSelectedModels] = useState<SelectedModelState>({ yaml: [], search: [] });
@@ -182,43 +181,6 @@ const HomeContent = () => {
     });
   };
 
-  // const handleUpload = async (
-  //   type: 'yaml' | 'data',
-  //   triggerFileDialog: boolean = false
-  // ): Promise<void> => {
-  //   handleMenuClose();
-  
-  //   if (triggerFileDialog) {
-  //     fileInputRef.current?.click();
-  //     return;
-  //   }
-  //   if (type === 'data') {
-  //     if (!selectedFile) {
-  //       toast.warn("Please select a file before uploading.", { position: 'top-right' });
-  //       return;
-  //     }
-  //     setIsUploading(true);
-  //     const formData = new FormData();
-  //     formData.append("file", selectedFile);
-  
-  //     try {
-  //       const response = await axios.post(config.ENDPOINTS.UPLOAD_URL, formData, {
-  //         headers: { "Content-Type": "multipart/form-data" },
-  //       });
-  //       const successMessage = response?.data?.message || "File uploaded successfully!";
-  //       toast.success(successMessage, { position: 'top-right' });
-  //       setSelectedFile(null);
-  //     } catch (error) {
-  //       console.error("Upload error:", error);
-  //       toast.error("Upload failed. Please try again.", { position: 'top-right' });
-  //     } finally {
-  //       setIsUploading(false);
-  //     }
-  //   } else if (type === 'yaml') {
-  //     toast.info("YAML upload is not yet implemented.", { position: 'top-right' });
-  //   }
-  // };
-  
   const handleUpload = async (
     type: 'yaml' | 'data',
     triggerFileDialog: boolean = false
@@ -232,7 +194,6 @@ const HomeContent = () => {
   
     if (type === 'data') {
       if (!selectedFile) {
-        // toast.warn("Please select a file before uploading.", { position: 'top-right' });
         return;
       }
   
@@ -268,11 +229,9 @@ const HomeContent = () => {
         setIsUploading(false);
       }
     } else if (type === 'yaml') {
-      toast.info("YAML upload is not yet implemented.", { position: 'top-right' });
+      window.location.href = "https://app.snowflake.com/carelon/eda_preprod/#/studio/analyst";
     }
   };
-
-  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
