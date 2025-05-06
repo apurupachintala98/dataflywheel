@@ -95,7 +95,7 @@ function Home() {
           {!collapsed ? (
             <>
               <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
-              <TagLine>Elevance Data Intelligence Platform Dashboard</TagLine>
+              <TagLine style={{ color: "#000" }}>Elevance Data Intelligence Platform Dashboard</TagLine>
               <ToggleContainer onClick={() => setSidebarType("mini")}>
                 <SidePanelClose size="20" />
               </ToggleContainer>
@@ -129,10 +129,10 @@ function Home() {
               </List>
             </SideBarContainer>
           </>
-        )} 
+        )}
         {!collapsed && (
           <NotificationFooter>
-            <List sx={{color: "#2761BB"}}>
+            <List sx={{ color: "#5d5d5d" }}>
               <ListItem>
                 <NotificationsIcon /> Notifications
               </ListItem>

@@ -90,8 +90,8 @@ const MainContent = ({
                                     <Box
                                         onClick={(e) => handleMenuClick(e, type)}
                                         sx={{
-                                            backgroundColor: '#2761BB',
-                                            color: '#FFFFFF',
+                                            // backgroundColor: '#2761BB',
+                                            color: '#000',
                                             px: 2,
                                             py: 1,
                                             borderRadius: '6px',
@@ -99,7 +99,7 @@ const MainContent = ({
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: 1,
-                                            minWidth: 150,
+                                            // minWidth: 150,
                                             justifyContent: 'space-between',
                                         }}
                                     >
@@ -132,18 +132,18 @@ const MainContent = ({
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                             <Typography>Welcome, Balaji!</Typography>
                             <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
-                                <circle cx="16.5" cy="16.5" r="16.5" fill="#A6C8FF" />
+                                <circle cx="16.5" cy="16.5" r="16.5" fill="#5d5d5d" />
                                 <g transform="translate(7.5, 7.5)">
                                     <path
                                         d="M14.2299 14.9418V13.5188C14.2299 12.764 13.9301 12.0401 13.3963 11.5063C12.8626 10.9726 12.1387 10.6727 11.3839 10.6727H5.69175C4.93693 10.6727 4.21303 10.9726 3.67929 11.5063C3.14555 12.0401 2.8457 12.764 2.8457 13.5188V14.9418"
-                                        stroke="#002D9C"
+                                        stroke="#ffffff"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
                                     />
                                     <path
                                         d="M8.53843 7.82662C10.1103 7.82662 11.3845 6.5524 11.3845 4.98057C11.3845 3.40874 10.1103 2.13452 8.53843 2.13452C6.9666 2.13452 5.69238 3.40874 5.69238 4.98057C5.69238 6.5524 6.9666 7.82662 8.53843 7.82662Z"
-                                        stroke="#002D9C"
+                                        stroke="#ffffff"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -228,7 +228,7 @@ const MainContent = ({
                             zIndex: 1200,
                         }}>
                             {messages.length === 0 && (
-                                <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#2761BB" }}>
+                                <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#373535" }}>
                                     Data at your Fingertips
                                 </Typography>
                             )}
@@ -323,7 +323,7 @@ const MainContent = ({
                                         }} />
 
                                     {messages.length !== 0 && (
-                                        <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
+                                        <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#5d5d5d", borderRadius: "50%" }}>
                                             <FaArrowUp color="#fff" />
                                         </IconButton>
                                     )}
@@ -348,10 +348,10 @@ const MainContent = ({
                                                 <IconButton
                                                     onClick={(e) => handleMenuClick(e, 'upload')}
                                                     sx={{
-                                                        border: '1px solid #002d9c',
+                                                        border: '1px solid #5d5d5d',
                                                         borderRadius: '50%',
                                                         padding: '8px',
-                                                        color: '#002d9c',
+                                                        color: '#5d5d5d',
                                                     }}
                                                 >
                                                     <svg
@@ -379,7 +379,7 @@ const MainContent = ({
                                                 >
                                                     <MenuItem onClick={() => handleUpload('yaml')}>Upload YAML</MenuItem>
                                                     <MenuItem onClick={() => handleUpload('data', true)}>Upload Data</MenuItem>
-                                                    </Menu>
+                                                </Menu>
                                             </Box>
                                             <Button
                                                 variant="outlined"
@@ -392,8 +392,8 @@ const MainContent = ({
                                                     textTransform: "none",
                                                     fontSize: "14px",
                                                     padding: "6px 12px",
-                                                    color: "#002d9c",
-                                                    borderColor: "#002d9c",
+                                                    color: "#5d5d5d",
+                                                    borderColor: "#5d5d5d",
                                                 }}
                                             >
                                                 Semantic Model
@@ -410,14 +410,14 @@ const MainContent = ({
                                                     textTransform: "none",
                                                     fontSize: "14px",
                                                     padding: "6px 12px",
-                                                    color: "#002d9c",
-                                                    borderColor: "#002d9c",
+                                                    color: "#5d5d5d",
+                                                    borderColor: "#5d5d5d",
                                                 }}
                                             >
                                                 Search Service
                                             </Button>
                                         </Box>
-                                            <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#2761BB", borderRadius: "50%" }}>
+                                            <IconButton onClick={handleSubmit} sx={{ backgroundColor: "#5d5d5d", borderRadius: "50%" }}>
                                                 <FaArrowUp color="#fff" />
                                             </IconButton></>
                                     </Box>
