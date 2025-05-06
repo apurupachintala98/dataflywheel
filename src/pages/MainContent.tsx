@@ -71,6 +71,14 @@ const MainContent = ({
     open,
 }: MainContentProps) => {
 
+    useEffect(() => {
+        const anchor = document.getElementById("scroll-anchor");
+        if (anchor) {
+          anchor.scrollIntoView({ behavior: "smooth" });
+        }
+      }, [messages]);
+      
+
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />
