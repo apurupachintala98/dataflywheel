@@ -281,41 +281,6 @@ const HomeContent = () => {
 
     let streamedText = '';
 
-    // await handleStream(stream, {
-    //   fromUser: false,
-    //   streaming: true,
-    //   onToken: (token: string) => {
-    //     streamedText += token;
-    //   },
-    //   onComplete: (response) => {
-    //     setMessages(prev => {
-    //       const updated = prev.map(msg => {
-    //         if (
-    //           msg.prompt === message.prompt &&
-    //           msg.executedResponse === message.executedResponse &&
-    //           msg.fromUser === false &&
-    //           msg.showSummarize
-    //         ) {
-    //           return { ...msg, showSummarize: false };
-    //         }
-    //         return msg;
-    //       });
-  
-    //       return [
-    //         ...updated,
-    //         {
-    //           text: streamedText || response.text,
-    //           fromUser: false,
-    //           type: "text",
-    //           streaming: false,
-    //           summarized: true,
-    //           showSummarize: false,
-    //           showFeedback: true,
-    //           isHTML: false,
-    //           prompt: message.prompt,
-    //         },
-    //       ];
-    //     });    
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
@@ -352,11 +317,13 @@ const HomeContent = () => {
       onComplete: () => {
         setMessages(prev =>
           prev.map(msg => {
+            const isSameResponse =
+              JSON.stringify(msg.executedResponse) === JSON.stringify(message.executedResponse);
+      
             if (
-              msg.prompt === message.prompt &&
-              msg.executedResponse === message.executedResponse &&
               msg.fromUser === false &&
-              msg.streaming
+              msg.showSummarize &&
+              isSameResponse
             ) {
               return {
                 ...msg,
