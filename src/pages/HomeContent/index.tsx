@@ -252,7 +252,7 @@ const HomeContent = () => {
       formData.append("files", selectedFile);
   
       try {
-        const response = await axios.post(config.ENDPOINTS.UPLOAD_URL, formData, {
+        const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.UPLOAD_URL}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },
