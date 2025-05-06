@@ -275,41 +275,94 @@ const HomeContent = () => {
 
     let streamedText = '';
 
+    // await handleStream(stream, {
+    //   fromUser: false,
+    //   streaming: true,
+    //   onToken: (token: string) => {
+    //     streamedText += token;
+    //   },
+    //   onComplete: (response) => {
+    //     setMessages(prev => {
+    //       const updated = prev.map(msg => {
+    //         if (
+    //           msg.prompt === message.prompt &&
+    //           msg.executedResponse === message.executedResponse &&
+    //           msg.fromUser === false &&
+    //           msg.showSummarize
+    //         ) {
+    //           return { ...msg, showSummarize: false };
+    //         }
+    //         return msg;
+    //       });
+  
+    //       return [
+    //         ...updated,
+    //         {
+    //           text: streamedText || response.text,
+    //           fromUser: false,
+    //           type: "text",
+    //           streaming: false,
+    //           summarized: true,
+    //           showSummarize: false,
+    //           showFeedback: true,
+    //           isHTML: false,
+    //           prompt: message.prompt,
+    //         },
+    //       ];
+    //     });    
     await handleStream(stream, {
       fromUser: false,
       streaming: true,
       onToken: (token: string) => {
-        streamedText += token;
+        const endIndex = token.indexOf("end_of_stream");
+        if (endIndex !== -1) {
+          token = token.substring(0, endIndex);
+        }
+    
+        if (token) {
+          streamedText += token;
+          setMessages(prev => {
+            const updated = [...prev];
+            const lastIndex = updated.length - 1;
+            if (lastIndex >= 0 && updated[lastIndex].streaming) {
+              updated[lastIndex] = {
+                ...updated[lastIndex],
+                text: streamedText,
+              };
+            } else {
+              updated.push({
+                text: token,
+                fromUser: false,
+                streaming: true,
+                type: "text",
+                showSummarize: false,
+                prompt: message.prompt,
+              });
+            }
+            return updated;
+          });
+        }
       },
-      onComplete: (response) => {
-        setMessages(prev => {
-          const updated = prev.map(msg => {
+      onComplete: () => {
+        setMessages(prev =>
+          prev.map(msg => {
             if (
               msg.prompt === message.prompt &&
               msg.executedResponse === message.executedResponse &&
               msg.fromUser === false &&
-              msg.showSummarize
+              msg.streaming
             ) {
-              return { ...msg, showSummarize: false };
+              return {
+                ...msg,
+                streaming: false,
+                summarized: true,
+                showSummarize: false,
+                showFeedback: true,
+              };
             }
             return msg;
-          });
-  
-          return [
-            ...updated,
-            {
-              text: streamedText || response.text,
-              fromUser: false,
-              type: "text",
-              streaming: false,
-              summarized: true,
-              showSummarize: false,
-              showFeedback: true,
-              isHTML: false,
-              prompt: message.prompt,
-            },
-          ];
-        });    
+          })
+        );
         setIsLoading(false);
       }
     });
