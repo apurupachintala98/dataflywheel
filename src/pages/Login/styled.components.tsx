@@ -50,7 +50,7 @@ export const RightContainer = styled.div`
       ${(props) => props.theme.space["0"]} ${(props) => props.theme.space["80"]};
   }
   .Toastify {
-    font-family: ${(props) => props.theme.fontFamily.Poppins},
+    font-family: ${(props) => props.theme.fontFamily["ZCOOL QingKe HuangYou"]},
       ${(props) => props.theme.fontFamily["sans-serif"]};
     font-size: ${(props) => props.theme.fontSize.sm};
     line-height: ${(props) => props.theme.lineHeight.md};
@@ -58,7 +58,7 @@ export const RightContainer = styled.div`
 `;
 
 export const DataGenie = styled.div`
-  font-family: ${(props) => props.theme.fontFamily.Poppins},
+  font-family: ${(props) => props.theme.fontFamily["ZCOOL QingKe HuangYou"]},
     ${(props) => props.theme.fontFamily["sans-serif"]};
   font-weight: ${(props) => props.theme.fontWeight.normal};
   font-size: ${(props) => props.theme.fontSize["30"]};

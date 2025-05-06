@@ -14,7 +14,9 @@ const theme = {
     pageSeactionHeader: "#a6c8ff",
   },
   fontFamily: {
-    "Poppins": "Poppins",
+    "IBM Plex Sans": "IBM Plex Sans",
+    "ZCOOL QingKe HuangYou": "ZCOOL QingKe HuangYou",
+    "sans-serif": "sans-serif",
   },
   fontSize: {
     xs: "12px",

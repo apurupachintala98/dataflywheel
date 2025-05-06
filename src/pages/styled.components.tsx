@@ -20,7 +20,7 @@ export const HeaderContainer = styled.div`
 `;
 
 export const PageTitle = styled.h2`
-  font-family: ${(props) => props.theme.fontFamily.Poppins},
+  font-family: ${(props) => props.theme.fontFamily["IBM Plex Sans"]},
     ${(props) => props.theme.fontFamily["sans-serif"]};
   font-weight: ${(props) => props.theme.fontWeight.normal};
   font-size: ${(props) => props.theme.fontSize["32"]};
