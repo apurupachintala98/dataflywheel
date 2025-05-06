@@ -186,20 +186,20 @@ const HomeContent = () => {
     triggerFileDialog: boolean = false
   ): Promise<void> => {
     handleMenuClose();
-  
+
     if (triggerFileDialog) {
       fileInputRef.current?.click();
       return;
     }
-  
+
     if (type === 'data') {
       if (!selectedFile) {
         return;
       }
-  
+
       setIsUploading(true);
       const formData = new FormData();
-  
+
       const query = {
         aplctn_cd: "aedl",
         app_id: "aedl",
@@ -208,17 +208,17 @@ const HomeContent = () => {
         app_lvl_prefix: "",
         session_id: 123
       };
-  
+
       formData.append("query", JSON.stringify(query));
       formData.append("files", selectedFile);
-  
+
       try {
         const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.UPLOAD_URL}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },
         });
-  
+
         const successMessage = response?.data?.message || "File uploaded successfully!";
         toast.success(successMessage, { position: 'top-right' });
         setSelectedFile(null);
@@ -229,7 +229,7 @@ const HomeContent = () => {
         setIsUploading(false);
       }
     } else if (type === 'yaml') {
-      window.location.href = "https://app.snowflake.com/carelon/eda_preprod/#/studio/analyst";
+      window.open("https://app.snowflake.com/carelon/eda_preprod/#/studio/analyst", "_blank");
     }
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -238,7 +238,7 @@ const HomeContent = () => {
     setSelectedFile(file);
     handleUpload('data');
   };
-  
+
 
   const executeSQL = async (sqlQuery: any) => {
     console.log(sqlQuery);
@@ -278,7 +278,7 @@ const HomeContent = () => {
       prev.map(msg => {
         const isSameResponse =
           JSON.stringify(msg.executedResponse) === JSON.stringify(message.executedResponse);
-  
+
         if (msg.fromUser === false && msg.showSummarize && isSameResponse) {
           return { ...msg, showSummarize: false };
         }
@@ -313,7 +313,7 @@ const HomeContent = () => {
         if (endIndex !== -1) {
           token = token.substring(0, endIndex);
         }
-    
+
         if (token) {
           streamedText += token;
           setMessages(prev => {
@@ -343,7 +343,7 @@ const HomeContent = () => {
           prev.map(msg => {
             const isSameResponse =
               JSON.stringify(msg.executedResponse) === JSON.stringify(message.executedResponse);
-      
+
             if (
               msg.fromUser === false &&
               msg.showSummarize &&
@@ -363,7 +363,7 @@ const HomeContent = () => {
         setIsLoading(false);
       }
     });
-      };
+  };
 
   useEffect(() => {
     const fetchData = async () => {
