@@ -28,7 +28,7 @@ const Feedback = ({ message }) => {
 
     const submitComment = async (text) => {
         try {
-            await axios.post('/api/comments', { comment: text });
+            // await axios.post('/api/comments', { comment: text });
             console.log("Comment submitted!");
         } catch (err) {
             console.error("Failed to submit comment", err);
