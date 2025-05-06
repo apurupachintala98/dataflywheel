@@ -76,7 +76,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         : 'bg-gray-200 text-black'
                     }`}
                 style={{
-                    fontFamily: 'ui-sans-serif,-apple-system,system-ui,Segoe UI,Helvetica,Arial,sans-serif',
+                    fontFamily: 'Poppins',
                     textAlign: 'left',
                     padding: isSQL ? '12px' : '8px',
                     borderRadius: '8px',
@@ -170,7 +170,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                             height: '200px',
                                             backgroundColor: '#1e1e1e',
                                             color: '#fff',
-                                            fontFamily: 'monospace',
+                                            fontFamily: 'Poppins',
                                             fontSize: '14px',
                                             border: 'none',
                                             outline: 'none',
