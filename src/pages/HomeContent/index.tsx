@@ -259,7 +259,7 @@ const HomeContent = () => {
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
-      prompt: message.prompt,
+      prompt: JSON.stringify(message.executedResponse),
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
