@@ -136,6 +136,7 @@ const HomeContent = () => {
                 text: html,
                 streaming: false,
                 isHTML: true,
+                type: "text",
               };
               return temp;
             });
@@ -146,6 +147,7 @@ const HomeContent = () => {
                 ...temp[temp.length - 1],
                 text: response.text,
                 streaming: false,
+                type: "text",
               };
               return temp;
             });
