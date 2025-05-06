@@ -39,6 +39,7 @@ const HomeContent = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
     account: null,
     chat: null,
@@ -119,6 +120,9 @@ const HomeContent = () => {
       fromUser: false,
       streaming: true,
       onComplete: async (response: any) => {
+        if (response.prompt) {
+          setStoredPrompt(response.prompt);
+        }
         if (response.type === "text") {
           if (response.citations?.length) {
             const html = renderTextWithCitations(response.text, response.citations);
@@ -224,9 +228,10 @@ const HomeContent = () => {
   
 
   const executeSQL = async (sqlQuery: any) => {
+    console.log(sqlQuery);
     setIsLoading(true);
     const payload = buildPayload({
-      prompt: sqlQuery.prompt || sqlQuery.text,
+      prompt: storedPrompt,
       execSQL: sqlQuery.sqlQuery,
       sessionId: "9df7d52d-da64-470c-8f4e-081be1dbbbfb",
       minimal: true,
@@ -254,12 +259,12 @@ const HomeContent = () => {
   };
 
   const apiCortex = async (message: any) => {
-    console.log("cortexmessage",message);
+    console.log(message);
     setIsLoading(true);
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
-      prompt: JSON.stringify(message.executedResponse),
+      prompt: storedPrompt,
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
       sessionId: "ad339c7f-feeb-49a3-a5b5-009152b47006"
