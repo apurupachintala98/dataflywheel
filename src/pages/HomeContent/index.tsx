@@ -346,12 +346,14 @@ const HomeContent = () => {
       onComplete: () => {
         setMessages(prev =>
           prev.map(msg => {
-            if (
+            const isMatching =
               msg.prompt === message.prompt &&
               msg.executedResponse === message.executedResponse &&
               msg.fromUser === false &&
-              msg.streaming
-            ) {
+              msg.type === "text" &&
+              (msg.streaming || msg.showSummarize);
+      
+            if (isMatching) {
               return {
                 ...msg,
                 streaming: false,
@@ -362,7 +364,7 @@ const HomeContent = () => {
             }
             return msg;
           })
-        );
+        );        
         setIsLoading(false);
       }
     });
