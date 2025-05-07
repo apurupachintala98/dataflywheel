@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import PaginatedTable from '../components/PaginatedTable';
 import SendIcon from '@mui/icons-material/Send';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const Feedback = ({ message }) => {
     const [showCommentBox, setShowCommentBox] = useState(false);
@@ -34,7 +35,7 @@ const Feedback = ({ message }) => {
             console.error("Failed to submit comment", err);
         }
     };
-    
+
 
     const handleCommentSubmit = () => {
         if (comment.trim()) {
@@ -71,8 +72,8 @@ const Feedback = ({ message }) => {
                     </svg>
                 </IconButton>
             </Tooltip>
-               {/* Conditional Comment Input */}
-               {showCommentBox && (
+            {/* Conditional Comment Input */}
+            {showCommentBox && (
                 <div className="flex items-center space-x-2">
                     <TextField
                         variant="outlined"
@@ -91,7 +92,7 @@ const Feedback = ({ message }) => {
     );
 };
 
-const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
+const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick }) => {
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
@@ -101,27 +102,18 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
         isEditing: false,
         editedSQL: message.text || ''
     });
-    const [sqlResult, setSqlResult] = useState([]);
-    const [executed, setExecuted] = useState(false);
+    // const [sqlResult, setSqlResult] = useState([]);
+    // const [executed, setExecuted] = useState(false);
     const isSQL = message.type === "sql";
-    // const shouldShowFeedback = !message.fromUser;    
-    // !message.fromUser;
-    // const shouldShowFeedback =
-    //     message.type === "text" &&
-    //     !message.fromUser &&
-    //     (message.summarized);
-    // message.type === "text" &&
-    // !message.fromUser &&
-    // !message.streaming &&
-    // (message.summarized || message.showFeedback);
-
+    const executedResponse = message.executedResponse;
+    const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : [];
+    const columns = Array.isArray(executedResponse?.columns) ? executedResponse.columns : [];
     const shouldShowFeedback =
-  !message.fromUser &&
-  (
-    message.type === "text" ||
-    (message.type === "sql" && message.summarized && message.showSummarize === false)
-  );
-
+        !message.fromUser &&
+        (
+            message.type === "text" ||
+            (message.type === "sql" && message.summarized && message.showSummarize === false)
+        );
 
     return (
         <div className="mb-4">
@@ -269,15 +261,26 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                         Execute SQL
                     </Button>
                 )}
-{message.showSummarize === true && (
-  <Button
-    variant="contained"
-    sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
-    onClick={() => apiCortex(message)}
-  >
-    Summarize
-  </Button>
-)}
+
+                {rows.length > 1 && columns.length > 1 && (
+                    <Button
+                        variant="contained"
+                        startIcon={<BarChartIcon />}
+                        sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
+                        onClick={() => handleGraphClick(executedResponse)}
+                    >
+                        Graph View
+                    </Button>
+                )}
+                {message.showSummarize === true && (
+                    <Button
+                        variant="contained"
+                        sx={{ marginTop: '10px', backgroundColor: '#000', color: '#fff' }}
+                        onClick={() => apiCortex(message)}
+                    >
+                        Summarize
+                    </Button>
+                )}
 
             </div>
             {shouldShowFeedback && <Feedback message={message} />}
@@ -320,5 +323,6 @@ MessageWithFeedback.propTypes = {
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,
     apiCortex: PropTypes.func.isRequired,
+    handleGraphClick: PropTypes.func, 
 };
 

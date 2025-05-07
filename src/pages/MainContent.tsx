@@ -41,6 +41,7 @@ interface MainContentProps {
     submitted: boolean;
     setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
     open: boolean;
+    handleGraphClick: () => void;
 }
 
 const MainContent = ({
@@ -61,6 +62,7 @@ const MainContent = ({
     handleFileChange,
     submitted,
     handleUpload,
+    handleGraphClick,
     isModalVisible,
     handleModalClose,
     data,
@@ -212,7 +214,7 @@ const MainContent = ({
                                                 <Typography variant="body1">{message.text}</Typography>
                                             </Box>
                                         ) : (
-                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} />
+                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} handleGraphClick={handleGraphClick} />
                                         )}
                                     </Box>
                                 </Box>

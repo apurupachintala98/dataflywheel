@@ -418,6 +418,7 @@ const HomeContent = () => {
       submitted={submitted}
       setSubmitted={setSubmitted}
       open={open}
+      handleGraphClick={handleGraphClick}
     />
   );
 };
