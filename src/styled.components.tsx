@@ -48,6 +48,25 @@ body {
   display: block;
 }
 
+.custom-scroll {
+  scrollbar-width: thin; 
+  scrollbar-color: #999 #eee; 
+}
+
+.custom-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+
 `;
 
 export default GlobalStyle;
