@@ -46,85 +46,85 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
       break;
     }
 
-    // case 'pie': {
-    //   options = {
-    //     chart: { type: 'pie' },
-    //     title: { text: 'Pie Chart' },
-    //     series: [{
-    //       type: 'pie',
-    //       name: yAxisKey,
-    //       data: limitedData.map((row) => ({
-    //         name: String(row[xAxisKey]),
-    //         y: Number(row[yAxisKey]) || 0,
-    //       }))
-    //     }],
-    //   };
-    //   break;
-    // }
+    case 'pie': {
+      options = {
+        chart: { type: 'pie' },
+        title: { text: 'Pie Chart' },
+        series: [{
+          type: 'pie',
+          name: yAxisKey,
+          data: limitedData.map((row) => ({
+            name: String(row[xAxisKey]),
+            y: Number(row[yAxisKey]) || 0,
+          }))
+        }],
+      };
+      break;
+    }
 
-    // case 'variablePie': {
-    //   options = {
-    //     chart: { type: 'variablepie' },
-    //     title: { text: 'Variable Pie Chart' },
-    //     tooltip: { pointFormat: '<b>{point.name}</b>: {point.y}' },
-    //     series: [{
-    //       type: 'variablepie',
-    //       minPointSize: 10,
-    //       innerSize: '40%',
-    //       zMin: 0,
-    //       name: yAxisKey,
-    //       data: limitedData.map((row, idx) => ({
-    //         name: String(row[xAxisKey]),
-    //         y: Number(row[yAxisKey]) || 0,
-    //         z: idx + 1,
-    //       }))
-    //     }]
-    //   };
-    //   break;
-    // }
+    case 'variablePie': {
+      options = {
+        chart: { type: 'variablepie' },
+        title: { text: 'Variable Pie Chart' },
+        tooltip: { pointFormat: '<b>{point.name}</b>: {point.y}' },
+        series: [{
+          type: 'variablepie',
+          minPointSize: 10,
+          innerSize: '40%',
+          zMin: 0,
+          name: yAxisKey,
+          data: limitedData.map((row, idx) => ({
+            name: String(row[xAxisKey]),
+            y: Number(row[yAxisKey]) || 0,
+            z: idx + 1,
+          }))
+        }]
+      };
+      break;
+    }
 
-    // case 'radialBar': {
-    //   options = {
-    //     chart: {
-    //       polar: true,
-    //       type: 'column',
-    //     },
-    //     title: { text: 'Radial Bar Chart' },
-    //     xAxis: {
-    //       categories,
-    //       tickmarkPlacement: 'on',
-    //       lineWidth: 0,
-    //     },
-    //     yAxis: { min: 0 },
-    //     series: [{
-    //       type: 'column',
-    //       name: yAxisKey,
-    //       data: values,
-    //       pointPlacement: 'on'
-    //     }]
-    //   };
-    //   break;
-    // }
+    case 'radialBar': {
+      options = {
+        chart: {
+          polar: true,
+          type: 'column',
+        },
+        title: { text: 'Radial Bar Chart' },
+        xAxis: {
+          categories,
+          tickmarkPlacement: 'on',
+          lineWidth: 0,
+        },
+        yAxis: { min: 0 },
+        series: [{
+          type: 'column',
+          name: yAxisKey,
+          data: values,
+          pointPlacement: 'on'
+        }]
+      };
+      break;
+    }
 
-    // case 'bubble': {
-    //   const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
-    //   options = {
-    //     chart: { type: 'bubble', plotBorderWidth: 1 },
-    //     title: { text: 'Bubble Chart' },
-    //     xAxis: { title: { text: xAxisKey } },
-    //     yAxis: { title: { text: yAxisKey } },
-    //     series: [{
-    //       type: 'bubble',
-    //       name: 'Bubble',
-    //       data: limitedData.map((row) => ([
-    //         Number(row[xAxisKey]) || 0,
-    //         Number(row[yAxisKey]) || 0,
-    //         Number(row[zAxisKey]) || 1,
-    //       ]))
-    //     }],
-    //   };
-    //   break;
-    // }
+    case 'bubble': {
+      const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
+      options = {
+        chart: { type: 'bubble', plotBorderWidth: 1 },
+        title: { text: 'Bubble Chart' },
+        xAxis: { title: { text: xAxisKey } },
+        yAxis: { title: { text: yAxisKey } },
+        series: [{
+          type: 'bubble',
+          name: 'Bubble',
+          data: limitedData.map((row) => ([
+            Number(row[xAxisKey]) || 0,
+            Number(row[yAxisKey]) || 0,
+            Number(row[zAxisKey]) || 1,
+          ]))
+        }],
+      };
+      break;
+    }
 
     default:
       return null;
