@@ -76,7 +76,7 @@ const PaginatedTable: React.FC<{ data: MyDataType[] }> = ({ data }) => {
     return (
         <div style={{ border: '1px solid #ccc', width: '100%' }}>
             {/* Table header stays fixed */}
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse',  minWidth: '600px' }}>
                 <thead>
                     <tr>
                         {Object.keys(data[0]).map((key) => (
