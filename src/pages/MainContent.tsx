@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Box, Typography, IconButton, Menu, MenuItem, Divider, TextField, Button, CircularProgress } from "@mui/material";
 import { FaArrowUp, FaUserCircle, FaAngleDown } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
@@ -66,12 +66,25 @@ const MainContent = ({
     open,
 }: MainContentProps) => {
 
+    const [chartOpen, setChartOpen] = useState(false);
+    const [chartData, setChartData] = useState<{ rows: any[]; columns: string[] }>({ rows: [], columns: [] });
+
     useEffect(() => {
         const anchor = document.getElementById("scroll-anchor");
         if (anchor) {
             anchor.scrollIntoView({ behavior: "smooth" });
         }
     }, [messages]);
+
+    const handleGraphClick = (executedResponse: any) => {
+        const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : executedResponse || [];
+        const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
+
+        if (rows.length > 1 && columns.length > 1) {
+            setChartData({ rows, columns });
+            setChartOpen(true);
+        }
+    };
 
     return (
         <>
@@ -208,7 +221,7 @@ const MainContent = ({
                                                 <Typography variant="body1">{message.text}</Typography>
                                             </Box>
                                         ) : (
-                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} />
+                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} handleGraphClick={handleGraphClick} />
                                         )}
                                     </Box>
                                 </Box>
@@ -428,6 +441,18 @@ const MainContent = ({
                         </Box>
                     </Box>
                 </Box>
+                <Chart
+                    open={chartOpen}
+                    onClose={() => setChartOpen(false)}
+                    rows={chartData.rows}
+                    columns={chartData.columns}
+                    shouldRender={chartData.rows.length > 1 && chartData.columns.length > 1}
+                />
+
+
+
+
+
             </Box>
         </>
     );

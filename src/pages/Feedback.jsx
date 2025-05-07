@@ -94,8 +94,7 @@ const Feedback = ({ message }) => {
     );
 };
 
-const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
-    const [chartOpen, setChartOpen] = useState(false);
+const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick }) => {
     if (!message?.text && message.type !== 'sql') {
         return null;
     }
@@ -244,27 +243,16 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 ) : message.type === 'table' ? (
                     <>
                         <PaginatedTable data={message.executedResponse} />
-                        <>
-                            {rows.length > 1 && columns.length > 1 && (
-                                <Button
-                                    variant="contained"
-                                    startIcon={<BarChartIcon />}
-                                    sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
-                                    onClick={() => setChartOpen(true)}
-                                >
-                                    Graph View
-                                </Button>
-                            )}
-                            {/* <Chart
-                                open={chartOpen}
-                                onClose={() => setChartOpen(false)}
-                                rows={rows}
-                                columns={columns}
-                                shouldRender={rows.length > 1 && columns.length > 1}
-                            /> */}
-                        </>
-
-
+                        {rows.length > 1 && columns.length > 1 && (
+                            <Button
+                                variant="contained"
+                                startIcon={<BarChartIcon />}
+                                sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
+                                onClick={() => handleGraphClick(executedResponse)}
+                            >
+                                Graph View
+                            </Button>
+                        )}
                     </>
                 ) : typeof message.text === 'string' ? (
                     <Typography sx={{ whiteSpace: 'pre-wrap' }}>{message.text}</Typography>

@@ -65,7 +65,6 @@ const HomeContent = () => {
       setAnchorEls(prev => ({ ...prev, [type]: target }));
     }
   };
-
   const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
   // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
@@ -294,7 +293,7 @@ const HomeContent = () => {
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
       sessionId
-      });
+    });
 
     const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
 
