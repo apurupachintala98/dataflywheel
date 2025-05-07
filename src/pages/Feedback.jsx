@@ -255,13 +255,13 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                     Graph View
                                 </Button>
                             )}
-                            <Chart
+                            {/* <Chart
                                 open={chartOpen}
                                 onClose={() => setChartOpen(false)}
                                 rows={rows}
                                 columns={columns}
                                 shouldRender={rows.length > 1 && columns.length > 1}
-                            />
+                            /> */}
                         </>
 
 
