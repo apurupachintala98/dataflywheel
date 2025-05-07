@@ -64,10 +64,10 @@ const MainContent = ({
     executeSQL,
     apiCortex,
     open,
+    data,
 }: MainContentProps) => {
 
     const [chartOpen, setChartOpen] = useState(false);
-    const [chartData, setChartData] = useState<any[]>([]);
 
     useEffect(() => {
         const anchor = document.getElementById("scroll-anchor");
@@ -76,14 +76,9 @@ const MainContent = ({
         }
     }, [messages]);
 
-    const handleGraphClick = (executedResponse: any[]) => {
-        if (Array.isArray(executedResponse) && executedResponse.length > 0) {
-          setChartData(executedResponse);
+    const handleGraphClick = () => {
           setChartOpen(true);
-        } else {
-          console.warn('Invalid or empty chart data', executedResponse);
-        }
-      };
+    };
 
     return (
         <>
@@ -443,7 +438,7 @@ const MainContent = ({
                 <Chart
                     open={chartOpen}
                     onClose={() => setChartOpen(false)}
-                    chartData={chartData || []}
+                    chartData={data || []}
                 />
             </Box>
         </>
