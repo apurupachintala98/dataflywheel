@@ -11,6 +11,7 @@ import PaginatedTable from '../components/PaginatedTable';
 import SendIcon from '@mui/icons-material/Send';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
+
 const Feedback = ({ message }) => {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
@@ -106,8 +107,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
     // const [executed, setExecuted] = useState(false);
     const isSQL = message.type === "sql";
     const executedResponse = message.executedResponse;
-    const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : [];
-    const columns = Array.isArray(executedResponse?.columns) ? executedResponse.columns : [];
+    const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : executedResponse || [];
+    const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
     const shouldShowFeedback =
         !message.fromUser &&
         (
@@ -239,7 +240,19 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                     </Box>
                     </>
                 ) : message.type === 'table' ? (
+                    <>
                     <PaginatedTable data={message.executedResponse} />
+                    {rows.length > 1 && columns.length > 1 && (
+                        <Button
+                            variant="contained"
+                            startIcon={<BarChartIcon />}
+                            sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
+                            onClick={handleGraphClick}
+                        >
+                            Graph View
+                        </Button>
+                    )}
+                    </>
                 ) : typeof message.text === 'string' ? (
                     <Typography sx={{ whiteSpace: 'pre-wrap' }}>{message.text}</Typography>
                 ) : (
@@ -259,17 +272,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
 
                     >
                         Execute SQL
-                    </Button>
-                )}
-
-                {rows.length > 1 && columns.length > 1 && (
-                    <Button
-                        variant="contained"
-                        startIcon={<BarChartIcon />}
-                        sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
-                        onClick={() => handleGraphClick(executedResponse)}
-                    >
-                        Graph View
                     </Button>
                 )}
                 {message.showSummarize === true && (
