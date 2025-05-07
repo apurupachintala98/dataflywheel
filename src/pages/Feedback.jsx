@@ -243,23 +243,27 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                     </>
                 ) : message.type === 'table' ? (
                     <>
-                    <PaginatedTable data={message.executedResponse} />
-                    {rows.length > 1 && columns.length > 1 && (
-                        <Button
-                            variant="contained"
-                            startIcon={<BarChartIcon />}
-                            sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
-                            onClick={() => setChartOpen(true)}
-                        >
-                            Graph View
-                        </Button>
-                    )}
-                    <Chart
-      open={chartOpen}
-      onClose={() => setChartOpen(false)}
-      rows={rows}
-      columns={columns}
-    />
+                        <PaginatedTable data={message.executedResponse} />
+                        {rows.length > 1 && columns.length > 1 && (
+                            <>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<BarChartIcon />}
+                                    sx={{ marginTop: '15px', fontSize: '0.875rem', fontWeight: 'bold', color: '#fff', backgroundColor: '#000' }}
+                                    onClick={() => setChartOpen(true)}
+                                >
+                                    Graph View
+                                </Button>
+
+                                <Chart
+                                    open={chartOpen}
+                                    onClose={() => setChartOpen(false)}
+                                    rows={rows}
+                                    columns={columns}
+                                />
+                            </>
+                        )}
+
                     </>
                 ) : typeof message.text === 'string' ? (
                     <Typography sx={{ whiteSpace: 'pre-wrap' }}>{message.text}</Typography>
@@ -333,6 +337,6 @@ MessageWithFeedback.propTypes = {
     }).isRequired,
     executeSQL: PropTypes.func.isRequired,
     apiCortex: PropTypes.func.isRequired,
-    handleGraphClick: PropTypes.func, 
+    handleGraphClick: PropTypes.func,
 };
 
