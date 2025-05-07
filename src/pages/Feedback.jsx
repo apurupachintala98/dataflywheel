@@ -244,8 +244,8 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                 ) : message.type === 'table' ? (
                     <>
                         <PaginatedTable data={message.executedResponse} />
-                        {rows.length > 1 && columns.length > 1 && (
-                            <>
+                        <>
+                            {rows.length > 1 && columns.length > 1 && (
                                 <Button
                                     variant="contained"
                                     startIcon={<BarChartIcon />}
@@ -254,15 +254,16 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex }) => {
                                 >
                                     Graph View
                                 </Button>
+                            )}
+                            {/* <Chart
+                                open={chartOpen}
+                                onClose={() => setChartOpen(false)}
+                                rows={rows}
+                                columns={columns}
+                                shouldRender={rows.length > 1 && columns.length > 1}
+                            /> */}
+                        </>
 
-                                <Chart
-                                    open={chartOpen}
-                                    onClose={() => setChartOpen(false)}
-                                    rows={rows}
-                                    columns={columns}
-                                />
-                            </>
-                        )}
 
                     </>
                 ) : typeof message.text === 'string' ? (

@@ -26,30 +26,35 @@ const CHART_OPTIONS = [
 type ChartModalProps = {
     open: boolean;
     onClose: () => void;
-    rows: Record<string, any>[];
+    rows: any[];
     columns: string[];
+    shouldRender: boolean;
   };
   
-  const Chart: React.FC<ChartModalProps> = ({ open, onClose, rows, columns }) => {  
-  const [selectedChart, setSelectedChart] = useState('line');
-
-  useEffect(() => {
-    const loadModules = async () => {
-      const HighchartsMore = await import('highcharts/highcharts-more');
-      const VariablePie = await import('highcharts/modules/variable-pie');
-      const Exporting = await import('highcharts/modules/exporting');
-      const Accessibility = await import('highcharts/modules/accessibility');
-      const Highcharts3D = await import('highcharts/highcharts-3d');
-
-      HighchartsMore.default(Highcharts);
-      VariablePie.default(Highcharts);
-      Exporting.default(Highcharts);
-      Accessibility.default(Highcharts);
-      Highcharts3D.default(Highcharts);
-    };
-
-    loadModules();
-  }, []);
+  
+  const Chart: React.FC<ChartModalProps> = ({ open, onClose, rows, columns, shouldRender }) => {
+    const [selectedChart, setSelectedChart] = useState('line');
+  
+    useEffect(() => {
+      if (!shouldRender) return;
+      const loadModules = async () => {
+        const HighchartsMore = await import('highcharts/highcharts-more');
+        const VariablePie = await import('highcharts/modules/variable-pie');
+        const Exporting = await import('highcharts/modules/exporting');
+        const Accessibility = await import('highcharts/modules/accessibility');
+        const Highcharts3D = await import('highcharts/highcharts-3d');
+  
+        HighchartsMore.default(Highcharts);
+        VariablePie.default(Highcharts);
+        Exporting.default(Highcharts);
+        Accessibility.default(Highcharts);
+        Highcharts3D.default(Highcharts);
+      };
+  
+      loadModules();
+    }, [shouldRender]);
+  
+    if (!shouldRender) return null;
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
