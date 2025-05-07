@@ -268,6 +268,7 @@ const HomeContent = () => {
     let modelReply: string | React.ReactNode = "";
     modelReply = typeof data === 'string' ? data : convertToString(data);
     setData(data);
+    console.log(data);
     setMessages(prev => [...prev, {
       text: modelReply,
       fromUser: false,
