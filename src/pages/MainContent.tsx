@@ -80,6 +80,8 @@ const MainContent = ({
           setChartOpen(true);
     };
 
+    console.log("data", data);
+
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />
