@@ -248,7 +248,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                                 variant="contained"
                                 startIcon={<BarChartIcon />}
                                 sx={{ marginTop: '15px', fontSize: '0.875rem', color: '#fff', backgroundColor: '#000', display: 'flex' }}
-                                onClick={() => handleGraphClick(executedResponse)}
+                                onClick={() => handleGraphClick(message.executedResponse)}
                             >
                                 Graph View
                             </Button>

@@ -67,7 +67,7 @@ const MainContent = ({
 }: MainContentProps) => {
 
     const [chartOpen, setChartOpen] = useState(false);
-    const [chartData, setChartData] = useState<{ rows: any[]; columns: string[] }>({ rows: [], columns: [] });
+    const [chartData, setChartData] = useState<any[]>([]);
 
     useEffect(() => {
         const anchor = document.getElementById("scroll-anchor");
@@ -76,15 +76,13 @@ const MainContent = ({
         }
     }, [messages]);
 
-    const handleGraphClick = (executedResponse: any) => {
-        const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : executedResponse || [];
-        const columns = rows.length > 0 ? Object.keys(rows[0]) : [];
-
-        if (rows.length > 1 && columns.length > 1) {
-            setChartData({ rows, columns });
-            setChartOpen(true);
+    const handleGraphClick = (executedResponse: any[]) => {
+        if (executedResponse && Array.isArray(executedResponse) && executedResponse.length > 1) {
+          setChartData(executedResponse);
+          setChartOpen(true);
         }
-    };
+      };
+      
 
     return (
         <>
@@ -444,15 +442,8 @@ const MainContent = ({
                 <Chart
                     open={chartOpen}
                     onClose={() => setChartOpen(false)}
-                    rows={chartData.rows}
-                    columns={chartData.columns}
-                    shouldRender={chartData.rows.length > 1 && chartData.columns.length > 1}
+                    chartData={chartData || []}
                 />
-
-
-
-
-
             </Box>
         </>
     );
