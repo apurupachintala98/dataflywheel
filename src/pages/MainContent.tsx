@@ -77,12 +77,13 @@ const MainContent = ({
     }, [messages]);
 
     const handleGraphClick = (executedResponse: any[]) => {
-        if (executedResponse && Array.isArray(executedResponse) && executedResponse.length > 1) {
+        if (Array.isArray(executedResponse) && executedResponse.length > 0) {
           setChartData(executedResponse);
           setChartOpen(true);
+        } else {
+          console.warn('Invalid or empty chart data', executedResponse);
         }
       };
-      
 
     return (
         <>

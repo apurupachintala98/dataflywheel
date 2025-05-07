@@ -248,7 +248,13 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                                 variant="contained"
                                 startIcon={<BarChartIcon />}
                                 sx={{ marginTop: '15px', fontSize: '0.875rem', color: '#fff', backgroundColor: '#000', display: 'flex' }}
-                                onClick={() => handleGraphClick(message.executedResponse)}
+                                onClick={() => {
+                                    if (message.executedResponse) {
+                                      handleGraphClick(message.executedResponse);
+                                    } else {
+                                      console.warn("No executed response to render chart");
+                                    }
+                                  }}
                             >
                                 Graph View
                             </Button>
