@@ -1,117 +1,261 @@
+// // HighchartRenderer.tsx
+// import React from 'react';
+// import HighchartsReact from 'highcharts-react-official';
+// import Highcharts from 'highcharts';
+
+// interface Props {
+//   type: string;
+//   rows: Record<string, any>[];
+//   columns: string[];
+//   xAxisKey: string;
+//   yAxisKey: string;
+// }
+
+// const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAxisKey }) => {
+//   const validData = Array.isArray(rows) ? rows : [];
+//   const dataKeys = validData.length > 0 ? Object.keys(validData[0]) : [];
+//   const limitedData = validData.slice(0, 50);
+//   const hasSufficientData = limitedData.length > 0 && xAxisKey && yAxisKey;
+
+//   if (!hasSufficientData) {
+//     return (
+//       <p style={{ marginTop: '20px', color: 'red' }}>
+//         No sufficient data to display the chart. Please provide valid data and select valid axes.
+//       </p>
+//     );
+//   }
+
+//   let options: Highcharts.Options = {
+//     title: { text: `${type.charAt(0).toUpperCase() + type.slice(1)} Chart` },
+//   };
+
+//   const categories = limitedData.map(row => row[xAxisKey]);
+//   const values = limitedData.map(row => Number(row[yAxisKey]) || 0);
+
+//   switch (type) {
+//     case 'line':
+//     case 'area':
+//     case 'column':
+//       options = {
+//         chart: { type },
+//         title: { text: `${type} chart` },
+//         xAxis: { categories, title: { text: xAxisKey } },
+//         yAxis: { title: { text: yAxisKey } },
+//         series: [{ name: yAxisKey, data: values }],
+//       };
+//       break;
+
+//     case 'pie':
+//       options = {
+//         chart: { type: 'pie' },
+//         title: { text: 'Pie Chart' },
+//         series: [{
+//           type: 'pie',
+//           name: yAxisKey,
+//           colorByPoint: true,
+//           data: limitedData.map((row) => ({
+//             name: String(row[xAxisKey]),
+//             y: Number(row[yAxisKey]) || 0,
+//           }))
+//         }],
+//       };
+//       break;
+
+//     case 'variablePie':
+//       options = {
+//         chart: { type: 'variablepie' },
+//         title: { text: 'Variable Pie Chart' },
+//         tooltip: { pointFormat: '<b>{point.name}</b>: {point.y}' },
+//         series: [{
+//           type: 'variablepie',
+//           minPointSize: 10,
+//           innerSize: '40%',
+//           zMin: 0,
+//           name: yAxisKey,
+//           data: limitedData.map((row, idx) => ({
+//             name: String(row[xAxisKey]),
+//             y: Number(row[yAxisKey]) || 0,
+//             z: idx + 1,
+//           }))
+//         }]
+//       };
+//       break;
+
+//     case 'radialBar':
+//       options = {
+//         chart: {
+//           polar: true,
+//           type: 'column',
+//         },
+//         title: { text: 'Radial Bar Chart' },
+//         xAxis: {
+//           categories: limitedData.map(row => row[xAxisKey]),
+//           tickmarkPlacement: 'on',
+//           lineWidth: 0,
+//         },
+//         yAxis: { min: 0 },
+//         series: [{
+//           name: yAxisKey,
+//           data: limitedData.map(row => Number(row[yAxisKey]) || 0),
+//           pointPlacement: 'on'
+//         }]
+//       };
+//       break;
+
+//     case 'bubble':
+//       const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
+//       options = {
+//         chart: { type: 'bubble', plotBorderWidth: 1, zoomType: 'xy' },
+//         title: { text: 'Bubble Chart' },
+//         xAxis: { title: { text: xAxisKey } },
+//         yAxis: { title: { text: yAxisKey } },
+//         series: [{
+//           type: 'bubble',
+//           name: 'Bubble',
+//           data: limitedData.map((row) => ([
+//             Number(row[xAxisKey]) || 0,
+//             Number(row[yAxisKey]) || 0,
+//             Number(row[zAxisKey]) || 1,
+//           ]))
+//         }],
+//       };
+//       break;
+
+//     default:
+//       return null;
+//   }
+
+//   return <HighchartsReact highcharts={Highcharts} options={options} />;
+// };
+
+// export default HighchartRenderer;
 import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 
-type Props = {
-    type: string;
-    rows: Record<string, any>[];
-    columns: string[];
+interface Props {
+  type: string;
+  rows: Record<string, any>[];
+  columns: string[];
+  xAxisKey: string;
+  yAxisKey: string;
+}
+
+const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAxisKey }) => {
+  const validData = Array.isArray(rows) ? rows : [];
+  const dataKeys = validData.length > 0 ? Object.keys(validData[0]) : [];
+  const limitedData = validData.slice(0, 50);
+  const hasSufficientData = limitedData.length > 0 && xAxisKey && yAxisKey;
+
+  if (!hasSufficientData) {
+    return (
+      <p style={{ marginTop: '20px', color: 'red' }}>
+        No sufficient data to display the chart. Please provide valid data and select valid axes.
+      </p>
+    );
+  }
+
+  let options: Highcharts.Options = {
+    title: { text: `${type.charAt(0).toUpperCase() + type.slice(1)} Chart` },
+    series: [],
   };
-  
-  const HighchartRenderer: React.FC<Props> = ({ type, rows, columns }) => {  
-  if (!rows || rows.length === 0 || columns.length === 0) return null;
 
-  const categories = rows.map((row) => row[columns[0]]);
-  const dataSeries = columns.slice(1).map((col) => ({
-    name: col,
-    data: rows.map((row) => Number(row[col]) || 0),
-  }));
-
-  let options = {};
+  const categories = limitedData.map(row => row[xAxisKey]);
+  const values = limitedData.map(row => Number(row[yAxisKey]) || 0);
 
   switch (type) {
     case 'line':
     case 'area':
+    case 'column': {
       options = {
         chart: { type },
-        title: { text: `${type.charAt(0).toUpperCase() + type.slice(1)} Chart` },
-        xAxis: { categories },
-        yAxis: { title: { text: columns[1] } },
-        series: dataSeries,
+        title: { text: `${type} chart` },
+        xAxis: { categories, title: { text: xAxisKey } },
+        yAxis: { title: { text: yAxisKey } },
+        series: [{ type, name: yAxisKey, data: values }],
       };
       break;
+    }
 
-    case 'column':
-      options = {
-        chart: { type: 'column' },
-        title: { text: 'Column Chart' },
-        xAxis: { categories },
-        yAxis: { title: { text: columns[1] } },
-        series: dataSeries,
-      };
-      break;
-
-    case 'pie':
+    case 'pie': {
       options = {
         chart: { type: 'pie' },
-        title: { text: 'Pie Chart (First Row)' },
+        title: { text: 'Pie Chart' },
         series: [{
-          name: 'Value',
-          colorByPoint: true,
-          data: columns.slice(1).map((col) => ({
-            name: col,
-            y: Number(rows[0][col]) || 0,
+          type: 'pie',
+          name: yAxisKey,
+          data: limitedData.map((row) => ({
+            name: String(row[xAxisKey]),
+            y: Number(row[yAxisKey]) || 0,
           }))
-        }]
+        }],
       };
       break;
+    }
 
-    case 'variablePie':
+    case 'variablePie': {
       options = {
         chart: { type: 'variablepie' },
-        title: { text: 'Variable Pie Chart (First Row)' },
+        title: { text: 'Variable Pie Chart' },
         tooltip: { pointFormat: '<b>{point.name}</b>: {point.y}' },
         series: [{
+          type: 'variablepie',
           minPointSize: 10,
           innerSize: '40%',
           zMin: 0,
-          name: 'values',
-          data: columns.slice(1).map((col, idx) => ({
-            name: col,
-            y: Number(rows[0][col]) || 0,
-            z: idx + 1
+          name: yAxisKey,
+          data: limitedData.map((row, idx) => ({
+            name: String(row[xAxisKey]),
+            y: Number(row[yAxisKey]) || 0,
+            z: idx + 1,
           }))
         }]
       };
       break;
+    }
 
-    case 'radialBar':
+    case 'radialBar': {
       options = {
         chart: {
           polar: true,
-          type: 'column'
+          type: 'column',
         },
         title: { text: 'Radial Bar Chart' },
         xAxis: {
-          categories: columns.slice(1),
+          categories,
           tickmarkPlacement: 'on',
-          lineWidth: 0
+          lineWidth: 0,
         },
         yAxis: { min: 0 },
-        series: rows.map((row, idx) => ({
-          name: row[columns[0]],
-          data: columns.slice(1).map((col) => Number(row[col]) || 0),
-          pointPlacement: 'on'
-        }))
-      };
-      break;
-
-    case 'bubble':
-      options = {
-        chart: { type: 'bubble', plotBorderWidth: 1, zoomType: 'xy' },
-        title: { text: 'Bubble Chart' },
-        xAxis: { title: { text: columns[1] } },
-        yAxis: { title: { text: columns[2] } },
         series: [{
-          name: 'Bubble',
-          data: rows.map((row) => [
-            Number(row[columns[1]]) || 0,
-            Number(row[columns[2]]) || 0,
-            Number(row[columns[3]]) || 1,
-          ])
+          type: 'column',
+          name: yAxisKey,
+          data: values,
+          pointPlacement: 'on'
         }]
       };
       break;
+    }
+
+    case 'bubble': {
+      const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
+      options = {
+        chart: { type: 'bubble', plotBorderWidth: 1 },
+        title: { text: 'Bubble Chart' },
+        xAxis: { title: { text: xAxisKey } },
+        yAxis: { title: { text: yAxisKey } },
+        series: [{
+          type: 'bubble',
+          name: 'Bubble',
+          data: limitedData.map((row) => ([
+            Number(row[xAxisKey]) || 0,
+            Number(row[yAxisKey]) || 0,
+            Number(row[zAxisKey]) || 1,
+          ]))
+        }],
+      };
+      break;
+    }
 
     default:
       return null;
