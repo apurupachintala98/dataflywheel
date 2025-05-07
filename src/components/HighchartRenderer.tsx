@@ -237,25 +237,25 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
       break;
     }
 
-    case 'bubble': {
-      const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
-      options = {
-        chart: { type: 'bubble', plotBorderWidth: 1 },
-        title: { text: 'Bubble Chart' },
-        xAxis: { title: { text: xAxisKey } },
-        yAxis: { title: { text: yAxisKey } },
-        series: [{
-          type: 'bubble',
-          name: 'Bubble',
-          data: limitedData.map((row) => ([
-            Number(row[xAxisKey]) || 0,
-            Number(row[yAxisKey]) || 0,
-            Number(row[zAxisKey]) || 1,
-          ]))
-        }],
-      };
-      break;
-    }
+    // case 'bubble': {
+    //   const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
+    //   options = {
+    //     chart: { type: 'bubble', plotBorderWidth: 1 },
+    //     title: { text: 'Bubble Chart' },
+    //     xAxis: { title: { text: xAxisKey } },
+    //     yAxis: { title: { text: yAxisKey } },
+    //     series: [{
+    //       type: 'bubble',
+    //       name: 'Bubble',
+    //       data: limitedData.map((row) => ([
+    //         Number(row[xAxisKey]) || 0,
+    //         Number(row[yAxisKey]) || 0,
+    //         Number(row[zAxisKey]) || 1,
+    //       ]))
+    //     }],
+    //   };
+    //   break;
+    // }
 
     default:
       return null;
