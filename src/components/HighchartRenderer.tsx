@@ -33,20 +33,20 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
   const values = limitedData.map(row => Number(row[yAxisKey]) || 0);
 
   switch (type) {
-    case 'Line':
-    case 'Area':
-    case 'Column': {
+    case 'line':
+    case 'area':
+    case 'column': {
       options = {
         chart: { type },
         title: { text: `${type} chart` },
         xAxis: { categories, title: { text: xAxisKey } },
         yAxis: { title: { text: yAxisKey } },
-        series: [{ type: type.toLowerCase() as any, name: yAxisKey, data: values }],
+        series: [{ type: type as any, name: yAxisKey, data: values }],
       };
       break;
     }
 
-    case 'Pie': {
+    case 'pie': {
       options = {
         chart: { type: 'pie' },
         title: { text: 'Pie Chart' },
@@ -62,7 +62,7 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
       break;
     }
 
-    case 'VariablePie': {
+    case 'variablePie': {
       options = {
         chart: { type: 'variablepie' },
         title: { text: 'Variable Pie Chart' },
@@ -83,7 +83,7 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
       break;
     }
 
-    case 'RadialBar': {
+    case 'radialBar': {
       options = {
         chart: {
           polar: true,
@@ -106,7 +106,7 @@ const HighchartRenderer: React.FC<Props> = ({ type, rows, columns, xAxisKey, yAx
       break;
     }
 
-    case 'Bubble': {
+    case 'bubble': {
       const zAxisKey = dataKeys.find(key => key !== xAxisKey && key !== yAxisKey) || yAxisKey;
       options = {
         chart: { type: 'bubble', plotBorderWidth: 1 },
