@@ -139,7 +139,6 @@ import {
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-// ✅ Correct static imports (no `.default`, no `require`)
 import HighchartsMore from 'highcharts/highcharts-more';
 import VariablePie from 'highcharts/modules/variable-pie';
 import Exporting from 'highcharts/modules/exporting';
@@ -148,7 +147,6 @@ import Highcharts3D from 'highcharts/highcharts-3d';
 
 import HighchartRenderer from '../components/HighchartRenderer';
 
-// ✅ Safe one-time registration outside component
 if (typeof HighchartsMore === 'function') HighchartsMore(Highcharts);
 if (typeof VariablePie === 'function') VariablePie(Highcharts);
 if (typeof Exporting === 'function') Exporting(Highcharts);
@@ -156,13 +154,13 @@ if (typeof Accessibility === 'function') Accessibility(Highcharts);
 if (typeof Highcharts3D === 'function') Highcharts3D(Highcharts);
 
 const CHART_OPTIONS = [
-  'line',
-  'area',
-  'radialBar',
-  'column',
-  'pie',
-  'variablePie',
-  'bubble',
+  'Line',
+  'Area',
+  'RadialBar',
+  'Column',
+  'Pie',
+  'VariablePie',
+  'Bubble',
 ];
 
 interface ChartModalProps {
