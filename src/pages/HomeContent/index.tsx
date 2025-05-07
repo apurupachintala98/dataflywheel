@@ -39,10 +39,8 @@ const HomeContent = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
-
 
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
     account: null,
@@ -68,7 +66,6 @@ const HomeContent = () => {
     }
   };
 
-  const handleGraphClick = () => setIsModalVisible(true);
   const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
   // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
@@ -80,7 +77,6 @@ const HomeContent = () => {
     }));
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
-  const handleModalClose = () => setIsModalVisible(false);
 
   const handleSubmit = async () => {
     if (selectedFile) {
@@ -409,8 +405,6 @@ const HomeContent = () => {
       isUploading={isUploading}
       handleFileChange={handleFileChange}
       handleUpload={handleUpload}
-      isModalVisible={isModalVisible}
-      handleModalClose={handleModalClose}
       data={data}
       setSelectedFile={setSelectedFile}
       executeSQL={executeSQL}
@@ -418,7 +412,6 @@ const HomeContent = () => {
       submitted={submitted}
       setSubmitted={setSubmitted}
       open={open}
-      handleGraphClick={handleGraphClick}
     />
   );
 };

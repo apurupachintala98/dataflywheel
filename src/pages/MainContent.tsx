@@ -7,6 +7,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
 import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from '../types/message.types';
+import Chart from '../components/Chart';
 
 interface MainContentProps {
     messages: MessageType[];
@@ -32,8 +33,6 @@ interface MainContentProps {
     isUploading: boolean;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpload: (type: 'yaml' | 'data', triggerFileDialog?: boolean) => void;
-    isModalVisible: boolean;
-    handleModalClose: () => void;
     data: any;
     setSelectedFile: (file: File | null) => void;
     executeSQL: (sqlQuery: any) => Promise<void>;
@@ -41,7 +40,6 @@ interface MainContentProps {
     submitted: boolean;
     setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
     open: boolean;
-    handleGraphClick: () => void;
 }
 
 const MainContent = ({
@@ -62,10 +60,6 @@ const MainContent = ({
     handleFileChange,
     submitted,
     handleUpload,
-    handleGraphClick,
-    isModalVisible,
-    handleModalClose,
-    data,
     setSelectedFile,
     executeSQL,
     apiCortex,
@@ -214,7 +208,7 @@ const MainContent = ({
                                                 <Typography variant="body1">{message.text}</Typography>
                                             </Box>
                                         ) : (
-                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} handleGraphClick={handleGraphClick} />
+                                            <MessageWithFeedback message={message} executeSQL={executeSQL} apiCortex={apiCortex} />
                                         )}
                                     </Box>
                                 </Box>
