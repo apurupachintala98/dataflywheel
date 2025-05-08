@@ -128,8 +128,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
         isEditing: false,
         editedSQL: message.text || ''
     });
-    // const [sqlResult, setSqlResult] = useState([]);
-    // const [executed, setExecuted] = useState(false);
     const isSQL = message.type === "sql";
     const executedResponse = message.executedResponse;
     const rows = Array.isArray(executedResponse?.rows) ? executedResponse.rows : executedResponse || [];

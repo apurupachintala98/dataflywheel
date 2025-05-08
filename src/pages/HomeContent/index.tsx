@@ -154,7 +154,16 @@ const HomeContent = () => {
         } else if (response.type === "sql") {
           const rawText = response.text;
           const [interpretationPart, sqlPart] = rawText.split('end_of_interpretation');
-          const interpretation = (interpretationPart || '').trim();
+          // const interpretation = (interpretationPart || '').trim();
+          const interpretationRaw = (interpretationPart || '').trim();
+          const INTERPRETATION_PREFIX = "This is our interpretation of your question:";
+          let interpretation = interpretationRaw;
+
+          if (interpretationRaw.startsWith(INTERPRETATION_PREFIX)) {
+            const remaining = interpretationRaw.slice(INTERPRETATION_PREFIX.length).trim();
+            interpretation = `<strong>${INTERPRETATION_PREFIX}</strong><br/>${remaining}`;
+          }
+
           const sql = (sqlPart || '').trim();
           const sqlMessage: MessageType = {
             text: sql,
@@ -164,6 +173,7 @@ const HomeContent = () => {
             sqlQuery: sql,
             type: "sql",
             interpretation,
+            isHTML: true,
             streaming: false,
             fdbck_id: response.fdbck_id,
             session_id: response.session_id

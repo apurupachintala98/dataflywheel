@@ -57,35 +57,6 @@ const ApiService = {
     }
   },
 
-  // sendTextToSQL: async (payload: any) => {
-  //   try {
-  //     const response = await axiosInstance.post(ENDPOINTS.TEXT_TO_SQL, payload);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('Error processing text-to-SQL request:', error);
-  //     throw error;
-  //   }
-  // },
-
-  // runExeSql: async (payload: any) => {
-  //   try {
-  //     const response = await axiosInstance.post(ENDPOINTS.RUN_SQL_QUERY, payload);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('Error processing request:', error);
-  //     throw error;
-  //   }
-  // },
-
-  // postCortexPrompt: async (payload: any) => {
-  //   try {
-  //     const response = await axiosInstance.post(ENDPOINTS.CORTEX_COMPLETE, payload);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error sending cortex prompt:", error);
-  //     throw error;
-  //   }
-  // }
 };
 
 export default ApiService;
