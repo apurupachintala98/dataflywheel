@@ -97,11 +97,9 @@ function Home() {
               <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                 <img src={LogoImg} alt="Logo" style={{ height: '40px', width: 'auto' }} />
                 <TagLine style={{ color: '#000', marginLeft: '10px' }}>
-                  Elevance Data Intelligence Platform Dashboard
+                  Data Intelligence Platform
                 </TagLine>
               </Link>
-              {/* <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
-              <TagLine style={{ color: "#000" }}>Elevance Data Intelligence Platform Dashboard</TagLine> */}
               <ToggleContainer onClick={() => setSidebarType("mini")}>
                 <SidePanelClose size="20" />
               </ToggleContainer>
