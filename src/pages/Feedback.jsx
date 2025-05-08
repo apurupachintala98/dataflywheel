@@ -126,7 +126,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
         collapsed: false,
         hidden: false,
         isEditing: false,
-        editedSQL: message.text || ''
+        editedSQL: message.sqlQuery || ''
     });
     const isSQL = message.type === "sql";
     const executedResponse = message.executedResponse;
@@ -162,7 +162,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                              sx={{ mt: 1, mb: 1, whiteSpace: 'pre-line' }}
                              dangerouslySetInnerHTML={{ __html: message.interpretation }}
                            />
-                            // <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
                         )}
                         <Box sx={{
                             position: 'absolute',
