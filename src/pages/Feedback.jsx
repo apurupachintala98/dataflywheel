@@ -158,19 +158,23 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                 {message.type === 'sql' && !sqlState.hidden ? (
                     <><Box sx={{ position: 'relative', mb: 2 }}>
                         {message.interpretation && (
-                    //     <Box
-                    //     sx={{
-                    //       mt: 1,
-                    //       mb: 1,
-                    //       whiteSpace: 'pre-line',
-                    //       width: '100%',
-                    //     }}
-                    //     dangerouslySetInnerHTML={{ __html: message.interpretation }}
-                    //   />
-                    <Typography
-                    sx={{ mt: 1, mb: 1, whiteSpace: 'pre-line', width: "100% !important" }}
-                    dangerouslySetInnerHTML={{ __html: message.interpretation }}
-                  />
+                  
+                //     <Typography
+                //     sx={{ mt: 1, mb: 1, whiteSpace: 'pre-line', width: "100% !important" }}
+                //     dangerouslySetInnerHTML={{ __html: message.interpretation }}
+                //   />
+                <Typography
+  component="div"
+  sx={{
+    mt: 1,
+    mb: 1,
+    whiteSpace: 'normal',
+    width: '100%',
+    wordBreak: 'break-word',
+  }}
+  dangerouslySetInnerHTML={{ __html: message.interpretation }}
+/>
+
                         // <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
                         )}
                         <Box sx={{
