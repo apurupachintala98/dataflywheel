@@ -345,6 +345,7 @@ MessageWithFeedback.propTypes = {
         interpretation: PropTypes.string,
         showFeedback: PropTypes.bool,
         sql: PropTypes.string,
+        sqlQuery: PropTypes.string,
         executedResponse: PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.object),
             PropTypes.object,
