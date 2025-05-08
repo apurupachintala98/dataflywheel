@@ -14,6 +14,7 @@ import axios from 'axios';
 import config from '../utils/config.json';
 
 const Feedback = ({ message }) => {
+    console.log(message);
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
 

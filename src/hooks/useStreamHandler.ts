@@ -60,10 +60,13 @@ export const useStreamHandler = (
           .split(/(?<=})\s*(?={)/g)
           .map(json => JSON.parse(json));
 
-        const enriched = jsons.find(j => j.type || j.citations);
-        if (enriched) {
-          parsed = { ...parsed, ...enriched };
-        }
+        // const enriched = jsons.find(j => j.type || j.citations);
+        // if (enriched) {
+        //   parsed = { ...parsed, ...enriched };
+        // }
+        jsons.forEach((j: any) => {
+          parsed = { ...parsed, ...j };
+        });
       } catch (e) {
         console.warn('Could not parse trailing metadata:', meta);
       }
