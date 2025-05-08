@@ -230,7 +230,7 @@ const HomeContent = () => {
         setIsUploading(false);
       }
     } else if (type === 'yaml') {
-      window.open("https://app.snowflake.com/carelon/eda_preprod/#/studio/analyst", "_blank");
+      window.open("https://app.snowflake.com/carelon/eda_preprod/#/data/databases/POC_SPC_SNOWPARK_DB/schemas/HEDIS_SCHEMA/stage/HEDIS_STAGE_FULL", "_blank");
     }
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

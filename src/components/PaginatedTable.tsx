@@ -4,12 +4,14 @@ interface MyDataType {
     data: Record<string, any>[];
 }
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 15;
 
 const PaginatedTable: React.FC<{ data: MyDataType[] }> = ({ data }) => {
     const [visibleData, setVisibleData] = useState<MyDataType[]>([]);
     const [page, setPage] = useState(1);
     const tableRef = useRef<HTMLDivElement>(null);
+
+    const columns = data.length > 0 ? Object.keys(data[0]) : [];
 
     useEffect(() => {
         const loadMore = () => {
@@ -37,7 +39,7 @@ const PaginatedTable: React.FC<{ data: MyDataType[] }> = ({ data }) => {
             ref={tableRef}
             onScroll={handleScroll}
             className="custom-scroll"
-            style={{ height: '430px', overflow: 'auto', border: '1px solid #ccc' }}
+            style={{ height: 'auto', overflowY: 'auto', width:'100%', border: '1px solid #ccc', overflowX: columns.length > 5 ? 'auto' : 'hidden' }}
         >
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
