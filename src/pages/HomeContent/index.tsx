@@ -165,6 +165,8 @@ const HomeContent = () => {
             type: "sql",
             interpretation,
             streaming: false,
+            fdbck_id: response.fdbck_id,
+            session_id: response.session_id
           };
           console.log("sqlMessage", sqlMessage);
 
