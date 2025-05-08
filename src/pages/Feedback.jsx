@@ -12,6 +12,7 @@ import SendIcon from '@mui/icons-material/Send';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import axios from 'axios';
 import config from '../utils/config.json';
+import { toast } from 'react-toastify';
 
 const Feedback = ({ message }) => {
     console.log(message);
