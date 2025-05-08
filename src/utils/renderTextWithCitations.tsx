@@ -15,7 +15,7 @@ export const renderTextWithCitations = (
       const citationText = citationMap.get(sourceId);
       console.log(citationText);
       return (
-        <Tooltip key={i} title={citationText || ''} arrow placement="top" enterDelay={100}>
+        <Tooltip key={i} title={citationText || ''} arrow placement="top" enterDelay={100} sx={{fontSize: '14px'}}>
           <span style={{ color: "blue", cursor: "pointer" }}>{part}</span>
         </Tooltip>
       );
