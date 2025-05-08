@@ -168,7 +168,7 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
                     //     dangerouslySetInnerHTML={{ __html: message.interpretation }}
                     //   />
                     <Typography
-                    sx={{ mt: 1, mb: 1, whiteSpace: 'pre-line' }}
+                    sx={{ mt: 1, mb: 1, whiteSpace: 'pre-line', width: "100% !important" }}
                     dangerouslySetInnerHTML={{ __html: message.interpretation }}
                   />
                         // <Typography sx={{ mb: 1 }}>{message.interpretation}</Typography>
