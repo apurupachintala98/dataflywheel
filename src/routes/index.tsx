@@ -9,8 +9,8 @@ import Spinner from "components/Spinner";
 function ReactRoute() {
   return (
     <BrowserRouter>
-      <Helmet defaultTitle="Data Flywheel">
-        <meta name="description" content="Data Flywheel" />
+      <Helmet defaultTitle="Data FlyWheel">
+        <meta name="description" content="Data FlyWheel" />
       </Helmet>
       <Suspense fallback={<Spinner />}>
         <Routes>

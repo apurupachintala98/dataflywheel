@@ -104,6 +104,7 @@ const Feedback = ({ message }) => {
 };
 
 const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick }) => {
+    console.log("msg", message);
     if (!message?.text && message.type !== 'sql') {
         return null;
     }

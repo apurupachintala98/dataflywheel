@@ -1,6 +1,6 @@
 {
   "name": "edagenai-portal",
-  "description": "Data Flywheel",
+  "description": "Data FlyWheel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
