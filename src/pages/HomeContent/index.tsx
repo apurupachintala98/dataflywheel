@@ -373,8 +373,8 @@ const HomeContent = () => {
                 summarized: true,
                 showSummarize: false,
                 showFeedback: true,
-                fdbck_id: message.fdbck_id,
-                session_id: message.session_id
+                fdbck_id: msg.fdbck_id,
+                session_id: msg.session_id
               };
             }
             return msg;
