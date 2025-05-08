@@ -18,7 +18,7 @@ const Feedback = ({ message }) => {
     console.log(message);
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
-    const [thumb, setThumb] = useState < 'up' | 'down' | null > (null);
+    const [thumb, setThumb] = useState(null);
 
 
     const handleCopy = async () => {
