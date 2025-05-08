@@ -8,7 +8,7 @@ import {
 } from "@carbon/react/icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import {
   Button,
@@ -28,7 +28,7 @@ import {
 } from "../styled.components";
 import { CopyrightText } from "./styled.components";
 import Header from "components/Header";
-import dfwLogo from "../../assests/images/dfwLogo.svg";
+import dfwLogo from "../../assests/images/DFWLogo.png";
 import PlusIcon from "@mui/icons-material/Add";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
@@ -94,8 +94,14 @@ function Home() {
         >
           {!collapsed ? (
             <>
-              <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
-              <TagLine style={{ color: "#000" }}>Elevance Data Intelligence Platform Dashboard</TagLine>
+              <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <img src={LogoImg} alt="Logo" style={{ height: '40px', width: 'auto' }} />
+                <TagLine style={{ color: '#000', marginLeft: '10px' }}>
+                  Elevance Data Intelligence Platform Dashboard
+                </TagLine>
+              </Link>
+              {/* <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
+              <TagLine style={{ color: "#000" }}>Elevance Data Intelligence Platform Dashboard</TagLine> */}
               <ToggleContainer onClick={() => setSidebarType("mini")}>
                 <SidePanelClose size="20" />
               </ToggleContainer>
@@ -116,7 +122,7 @@ function Home() {
                   padding: "0",
                 }}
               >
-                <img src={dfwLogo} alt="" />
+                <img src={dfwLogo} alt="" style={{ width: '100%', height: 'auto' }}/>
               </List>
               <List>
                 <InputSearchContainer>
