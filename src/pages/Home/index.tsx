@@ -122,7 +122,7 @@ function Home() {
                   padding: "0",
                 }}
               >
-                <img src={dfwLogo} alt="" style={{ width: '100%', height: 'auto' }}/>
+                <img src={dfwLogo} alt="" style={{ width: '83%', height: 'auto' }}/>
               </List>
               <List>
                 <InputSearchContainer>
