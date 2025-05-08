@@ -312,6 +312,8 @@ Feedback.propTypes = {
         showExecute: PropTypes.bool,
         showSummarize: PropTypes.bool,
         showFeedback: PropTypes.bool,
+        fdbck_id: PropTypes.string,
+        session_id: PropTypes.string,
     }).isRequired,
 };
 
