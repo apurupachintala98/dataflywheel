@@ -132,6 +132,8 @@ const HomeContent = () => {
                 streaming: false,
                 isHTML: true,
                 type: "text",
+                fdbck_id: response.fdbck_id,
+                session_id: response.session_id
               };
               return temp;
             });
@@ -143,6 +145,8 @@ const HomeContent = () => {
                 text: response.text,
                 streaming: false,
                 type: "text",
+                fdbck_id: response.fdbck_id,
+                session_id: response.session_id
               };
               return temp;
             });
@@ -342,6 +346,8 @@ const HomeContent = () => {
                 type: "text",
                 showSummarize: false,
                 prompt: message.prompt,
+                fdbck_id: message.fdbck_id,
+                session_id: message.session_id
               });
             }
             return updated;
@@ -365,6 +371,8 @@ const HomeContent = () => {
                 summarized: true,
                 showSummarize: false,
                 showFeedback: true,
+                fdbck_id: message.fdbck_id,
+                session_id: message.session_id
               };
             }
             return msg;

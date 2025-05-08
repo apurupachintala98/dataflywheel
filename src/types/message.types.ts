@@ -13,4 +13,6 @@ export interface MessageType {
   interpretation?: string;
   showFeedback?: boolean;
   type?: "text" | "sql" | "table";
+  fdbck_id?: string;      
+  session_id?: string;
 }
