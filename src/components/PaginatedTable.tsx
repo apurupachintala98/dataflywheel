@@ -39,7 +39,7 @@ const PaginatedTable: React.FC<{ data: MyDataType[] }> = ({ data }) => {
             ref={tableRef}
             onScroll={handleScroll}
             className="custom-scroll"
-            style={{ height: 'auto', overflowY: 'auto', width:'100%', border: '1px solid #ccc', overflowX: columns.length > 5 ? 'auto' : 'hidden' }}
+            style={{ maxHeight: '430px', overflowY: 'auto', width:'100%', border: '1px solid #ccc', overflowX: columns.length > 5 ? 'auto' : 'hidden' }}
         >
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
