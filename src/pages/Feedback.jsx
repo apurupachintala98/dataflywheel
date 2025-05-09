@@ -36,20 +36,18 @@ const Feedback = ({ message }) => {
     const sendFeedback = async ({ action = null, commentText = '' }) => {
         const fdbck_id = message.fdbck_id || '';
         const session_id = message.session_id || '';
-
-        const payload = {
-            feedbk_actn_txt: action,
-            feedbk_cmnt_txt: commentText
-        };
+        feedbk_actn_txt= action,
+        feedbk_cmnt_txt= commentText
 
         try {
             const response = await axios.post(
                 `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
-                payload,
                 {
                     params: {
                         fdbck_id,
-                        session_id
+                        session_id,
+                        feedbk_actn_txt,
+                        feedbk_cmnt_txt
                     }
                 }
             );
@@ -83,7 +81,7 @@ const Feedback = ({ message }) => {
                 </IconButton>
             </Tooltip>
             <Tooltip title="Good Response">
-                <IconButton onClick={() => handleThumbClick(true)} sx={{
+                <IconButton onClick={() => handleThumbClick(True)} sx={{
                     backgroundColor: thumb === 'up' ? '#000' : 'transparent',
                     color: thumb === 'up' ? '#fff' : 'inherit',
                 }}>
@@ -91,7 +89,7 @@ const Feedback = ({ message }) => {
                 </IconButton>
             </Tooltip>
             <Tooltip title="Bad Response">
-                <IconButton onClick={() => handleThumbClick(false)} sx={{
+                <IconButton onClick={() => handleThumbClick(False)} sx={{
                     backgroundColor: thumb === 'down' ? '#000' : 'transparent',
                     color: thumb === 'down' ? '#fff' : 'inherit',
                 }}>
