@@ -63,10 +63,11 @@ const Feedback = ({ message }) => {
 
     const handleCommentSubmit = () => {
         const trimmedComment = comment.trim();
-        sendFeedback({ commentText: trimmedComment || '' });
+        sendFeedback({ commentText: trimmedComment || '', action: thumb === 'up' ? true : thumb === 'down' ? false : null });
         setComment('');
         setShowCommentBox(false);
     };
+    
 
     return (
         <div className="flex space-x-4 p-2 border-t" style={{ textAlign: "left", marginTop: "10px" }}>
