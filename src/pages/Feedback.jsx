@@ -19,6 +19,8 @@ const Feedback = ({ message }) => {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState('');
     const [thumb, setThumb] = useState(null);
+    const [lastSubmittedComment, setLastSubmittedComment] = useState('');
+
 
 
     const handleCopy = async () => {
@@ -37,7 +39,7 @@ const Feedback = ({ message }) => {
         const fdbck_id = message.fdbck_id || '';
         const session_id = message.session_id || '';
         const feedbk_actn_txt = typeof action === 'boolean' ? (action ? "True" : "False") : action;
-        const feedbk_cmnt_txt= commentText;
+        const feedbk_cmnt_txt = commentText !== null ? commentText : lastSubmittedComment;
 
         const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
         `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
@@ -50,6 +52,10 @@ const Feedback = ({ message }) => {
             toast.success('Feedback submitted successfully!', { position: 'top-right' });
             if (action === true) setThumb('up');
             else if (action === false) setThumb('down');
+            if (commentText !== null) {
+                setLastSubmittedComment(commentText);
+            }
+    
         } catch (err) {
             console.error("Failed to send feedback", err);
             toast.error("Failed to submit feedback", { position: 'top-right' });
@@ -63,12 +69,14 @@ const Feedback = ({ message }) => {
 
     const handleCommentSubmit = () => {
         const trimmedComment = comment.trim();
-        sendFeedback({ commentText: trimmedComment || '', action: thumb === 'up' ? true : thumb === 'down' ? false : null });
+        sendFeedback({
+            commentText: trimmedComment || '',
+            action: thumb === 'up' ? true : thumb === 'down' ? false : null
+        });
         setComment('');
         setShowCommentBox(false);
     };
     
-
     return (
         <div className="flex space-x-4 p-2 border-t" style={{ textAlign: "left", marginTop: "10px" }}>
             <Tooltip title="Copy">
