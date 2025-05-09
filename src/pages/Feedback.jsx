@@ -33,68 +33,32 @@ const Feedback = ({ message }) => {
         }
     };
 
-    // const sendFeedback = async ({ action = null, commentText = null }) => {
-    //     const fdbck_id = message.fdbck_id || '';
-    //     const session_id = message.session_id || '';
-    //     const feedbk_actn_txt = typeof action === 'boolean' ? (action ? "True" : "False") : action;
-    //     const feedbk_cmnt_txt = commentText !== undefined ? commentText : lastSubmittedComment;
-    //     const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
-    //     `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
-    //     `session_id=${encodeURIComponent(session_id)}&` +
-    //     `feedbk_actn_txt=${encodeURIComponent(feedbk_actn_txt)}&` +
-    //     `feedbk_cmnt_txt=${encodeURIComponent(feedbk_cmnt_txt)}`;
-    //     try {
-    //         const response = await axios.post(url); 
-    //         console.log("Feedback sent successfully:", response.data);
-    //         toast.success('Feedback submitted successfully!', { position: 'top-right' });
-    //         if (action === true) setThumb('up');
-    //         else if (action === false) setThumb('down');
-    //         if (commentText !== undefined) {
-    //             setLastSubmittedComment(commentText);
-    //         }
-    
-    //     } catch (err) {
-    //         console.error("Failed to send feedback", err);
-    //         toast.error("Failed to submit feedback", { position: 'top-right' });
-    //     }
-    // };
     const sendFeedback = async ({ action = null, commentText = null }) => {
         const fdbck_id = message.fdbck_id || '';
         const session_id = message.session_id || '';
-    
-        // Construct query params only for non-null fields
-        const params = new URLSearchParams();
-        params.append("fdbck_id", fdbck_id);
-        params.append("session_id", session_id);
-    
-        if (action !== null) {
-            params.append("feedbk_actn_txt", action ? "True" : "False");
-        }
-    
-        if (commentText !== null) {
-            params.append("feedbk_cmnt_txt", commentText);
-        }
-    
-        const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?${params.toString()}`;
-    
+        const feedbk_actn_txt = typeof action === 'boolean' ? (action ? "True" : "False") : action;
+        const feedbk_cmnt_txt = commentText !== undefined ? commentText : lastSubmittedComment;
+        const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
+        `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
+        `session_id=${encodeURIComponent(session_id)}&` +
+        `feedbk_actn_txt=${encodeURIComponent(feedbk_actn_txt)}&` +
+        `feedbk_cmnt_txt=${encodeURIComponent(feedbk_cmnt_txt)}`;
         try {
-            const response = await axios.post(url);
+            const response = await axios.post(url); 
             console.log("Feedback sent successfully:", response.data);
             toast.success('Feedback submitted successfully!', { position: 'top-right' });
-    
-            if (action !== null) {
-                setThumb(action ? 'up' : 'down');
-            }
-    
-            if (commentText !== null) {
+            if (action === true) setThumb('up');
+            else if (action === false) setThumb('down');
+            if (commentText !== undefined) {
                 setLastSubmittedComment(commentText);
             }
+    
         } catch (err) {
             console.error("Failed to send feedback", err);
             toast.error("Failed to submit feedback", { position: 'top-right' });
         }
     };
-    
+
 
     const handleThumbClick = (isPositive) => {
         sendFeedback({ action: isPositive });
