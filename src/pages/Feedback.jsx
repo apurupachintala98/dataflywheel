@@ -33,26 +33,57 @@ const Feedback = ({ message }) => {
         }
     };
 
+    // const sendFeedback = async ({ action = null, commentText = '' }) => {
+    //     const payload = {
+    //         fdbck_id: message.fdbck_id || '',
+    //         session_id: message.session_id || '',
+    //         feedbk_actn_txt: action,
+    //         feedbk_cmnt_txt: commentText
+    //     };
+
+    //     try {
+    //         const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`, payload);
+    //         console.log("Feedback sent successfully:", response.data);
+    //         toast.success('Feedback submitted successfully!', { position: 'top-right' });
+    //         if (action === true) setThumb('up');
+    //         else if (action === false) setThumb('down');
+    //     } catch (err) {
+    //         console.error("Failed to send feedback", err);
+    //         toast.error("Failed to submit feedback", { position: 'top-right' });
+    //     }
+    // };
+
     const sendFeedback = async ({ action = null, commentText = '' }) => {
+        const fdbck_id = message.fdbck_id || '';
+        const session_id = message.session_id || '';
+      
         const payload = {
-            fdbck_id: message.fdbck_id || '',
-            session_id: message.session_id || '',
-            feedbk_actn_txt: action,
-            feedbk_cmnt_txt: commentText
+          feedbk_actn_txt: action,
+          feedbk_cmnt_txt: commentText
         };
-
+      
         try {
-            const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`, payload);
-            console.log("Feedback sent successfully:", response.data);
-            toast.success('Feedback submitted successfully!', { position: 'top-right' });
-            if (action === true) setThumb('up');
-            else if (action === false) setThumb('down');
+          const response = await axios.post(
+            `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
+            payload,
+            {
+              params: {
+                fdbck_id,
+                session_id
+              }
+            }
+          );
+          console.log("Feedback sent successfully:", response.data);
+          toast.success('Feedback submitted successfully!', { position: 'top-right' });
+          if (action === true) setThumb('up');
+          else if (action === false) setThumb('down');
         } catch (err) {
-            console.error("Failed to send feedback", err);
-            toast.error("Failed to submit feedback", { position: 'top-right' });
+          console.error("Failed to send feedback", err);
+          toast.error("Failed to submit feedback", { position: 'top-right' });
         }
-    };
+      };
 
+      
     const handleThumbClick = (isPositive) => {
         sendFeedback({ action: isPositive });
     };
