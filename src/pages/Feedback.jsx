@@ -33,57 +33,37 @@ const Feedback = ({ message }) => {
         }
     };
 
-    // const sendFeedback = async ({ action = null, commentText = '' }) => {
-    //     const payload = {
-    //         fdbck_id: message.fdbck_id || '',
-    //         session_id: message.session_id || '',
-    //         feedbk_actn_txt: action,
-    //         feedbk_cmnt_txt: commentText
-    //     };
-
-    //     try {
-    //         const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`, payload);
-    //         console.log("Feedback sent successfully:", response.data);
-    //         toast.success('Feedback submitted successfully!', { position: 'top-right' });
-    //         if (action === true) setThumb('up');
-    //         else if (action === false) setThumb('down');
-    //     } catch (err) {
-    //         console.error("Failed to send feedback", err);
-    //         toast.error("Failed to submit feedback", { position: 'top-right' });
-    //     }
-    // };
-
     const sendFeedback = async ({ action = null, commentText = '' }) => {
         const fdbck_id = message.fdbck_id || '';
         const session_id = message.session_id || '';
-      
-        const payload = {
-          feedbk_actn_txt: action,
-          feedbk_cmnt_txt: commentText
-        };
-      
-        try {
-          const response = await axios.post(
-            `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
-            payload,
-            {
-              params: {
-                fdbck_id,
-                session_id
-              }
-            }
-          );
-          console.log("Feedback sent successfully:", response.data);
-          toast.success('Feedback submitted successfully!', { position: 'top-right' });
-          if (action === true) setThumb('up');
-          else if (action === false) setThumb('down');
-        } catch (err) {
-          console.error("Failed to send feedback", err);
-          toast.error("Failed to submit feedback", { position: 'top-right' });
-        }
-      };
 
-      
+        const payload = {
+            feedbk_actn_txt: action,
+            feedbk_cmnt_txt: commentText
+        };
+
+        try {
+            const response = await axios.post(
+                `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
+                payload,
+                {
+                    params: {
+                        fdbck_id,
+                        session_id
+                    }
+                }
+            );
+            console.log("Feedback sent successfully:", response.data);
+            toast.success('Feedback submitted successfully!', { position: 'top-right' });
+            if (action === true) setThumb('up');
+            else if (action === false) setThumb('down');
+        } catch (err) {
+            console.error("Failed to send feedback", err);
+            toast.error("Failed to submit feedback", { position: 'top-right' });
+        }
+    };
+
+
     const handleThumbClick = (isPositive) => {
         sendFeedback({ action: isPositive });
     };
@@ -98,7 +78,7 @@ const Feedback = ({ message }) => {
     return (
         <div className="flex space-x-4 p-2 border-t" style={{ textAlign: "left", marginTop: "10px" }}>
             <Tooltip title="Copy">
-                <IconButton onClick={handleCopy}>
+                <IconButton onClick={handleCopy} sx={{ backgroundColor: '#000' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="icon-md-heavy"><path fillRule="evenodd" clipRule="evenodd" d="M7 5C7 3.34315 8.34315 2 10 2H19C20.6569 2 22 3.34315 22 5V14C22 15.6569 20.6569 17 19 17H17V19C17 20.6569 15.6569 22 14 22H5C3.34315 22 2 20.6569 2 19V10C2 8.34315 3.34315 7 5 7H7V5ZM9 7H14C15.6569 7 17 8.34315 17 10V15H19C19.5523 15 20 14.5523 20 14V5C20 4.44772 19.5523 4 19 4H10C9.44772 4 9 4.44772 9 5V7ZM5 9C4.44772 9 4 9.44772 4 10V19C4 19.5523 4.44772 20 5 20H14C14.5523 20 15 19.5523 15 19V10C15 9.44772 14.5523 9 14 9H5Z" fill="currentColor"></path></svg>
                 </IconButton>
             </Tooltip>
@@ -119,7 +99,7 @@ const Feedback = ({ message }) => {
                 </IconButton>
             </Tooltip>
             <Tooltip title="Comment">
-                <IconButton onClick={() => setShowCommentBox(prev => !prev)}>
+                <IconButton onClick={() => setShowCommentBox(prev => !prev)} sx={{ backgroundColor: '#000' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg" className="icon-md-heavy">
                         <path fillRule="evenodd" clipRule="evenodd"
@@ -129,7 +109,7 @@ const Feedback = ({ message }) => {
                 </IconButton>
             </Tooltip>
             {/* Conditional Comment Input */}
-            {showCommentBox && (
+            {/* {showCommentBox && (
                 <div className="flex items-center space-x-2">
                     <TextField
                         variant="outlined"
@@ -143,7 +123,41 @@ const Feedback = ({ message }) => {
                         <SendIcon />
                     </IconButton>
                 </div>
+            )} */}
+            {showCommentBox && (
+                <div className="flex items-center gap-2 mt-3">
+                    <TextField
+                        variant="outlined"
+                        size="small"
+                        placeholder="Add a comment..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        sx={{
+                            width: 240,
+                            backgroundColor: '#f9f9f9',
+                            '& .MuiOutlinedInput-root': {
+                                padding: '6px 8px',
+                            },
+                            '& input': {
+                                padding: '10px',
+                            }
+                        }}
+                    />
+                    <IconButton
+                        onClick={handleCommentSubmit}
+                        sx={{
+                            backgroundColor: '#e0e0e0',
+                            padding: '6px',
+                            '&:hover': {
+                                backgroundColor: '#c2c2c2'
+                            }
+                        }}
+                    >
+                        <SendIcon />
+                    </IconButton>
+                </div>
             )}
+
         </div>
     );
 };
