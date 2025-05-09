@@ -43,12 +43,10 @@ const Feedback = ({ message }) => {
             const response = await axios.post(
                 `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
                 {
-                    params: {
                         fdbck_id,
                         session_id,
                         feedbk_actn_txt,
                         feedbk_cmnt_txt
-                    }
                 }
             );
             console.log("Feedback sent successfully:", response.data);
