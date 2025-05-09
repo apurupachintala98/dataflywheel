@@ -21,8 +21,6 @@ const Feedback = ({ message }) => {
     const [thumb, setThumb] = useState(null);
     const [lastSubmittedComment, setLastSubmittedComment] = useState('');
 
-
-
     const handleCopy = async () => {
         if (!message?.text) {
             console.error("Message is undefined or empty");
@@ -39,8 +37,7 @@ const Feedback = ({ message }) => {
         const fdbck_id = message.fdbck_id || '';
         const session_id = message.session_id || '';
         const feedbk_actn_txt = typeof action === 'boolean' ? (action ? "True" : "False") : action;
-        const feedbk_cmnt_txt = commentText !== null ? commentText : lastSubmittedComment;
-
+        const feedbk_cmnt_txt = commentText !== undefined ? commentText : lastSubmittedComment;
         const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
         `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
         `session_id=${encodeURIComponent(session_id)}&` +
@@ -52,7 +49,7 @@ const Feedback = ({ message }) => {
             toast.success('Feedback submitted successfully!', { position: 'top-right' });
             if (action === true) setThumb('up');
             else if (action === false) setThumb('down');
-            if (commentText !== null) {
+            if (commentText !== undefined) {
                 setLastSubmittedComment(commentText);
             }
     
