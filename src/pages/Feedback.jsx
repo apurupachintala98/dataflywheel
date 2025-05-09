@@ -39,16 +39,13 @@ const Feedback = ({ message }) => {
         const feedbk_actn_txt = typeof action === 'boolean' ? (action ? "True" : "False") : action;
         const feedbk_cmnt_txt= commentText;
 
+        const url = `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
+        `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
+        `session_id=${encodeURIComponent(session_id)}&` +
+        `feedbk_actn_txt=${encodeURIComponent(feedbk_actn_txt)}&` +
+        `feedbk_cmnt_txt=${encodeURIComponent(feedbk_cmnt_txt)}`;
         try {
-            const response = await axios.post(
-                `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}`,
-                {
-                        fdbck_id,
-                        session_id,
-                        feedbk_actn_txt,
-                        feedbk_cmnt_txt
-                }
-            );
+            const response = await axios.post(url); 
             console.log("Feedback sent successfully:", response.data);
             toast.success('Feedback submitted successfully!', { position: 'top-right' });
             if (action === true) setThumb('up');
