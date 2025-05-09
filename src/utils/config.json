@@ -1,5 +1,5 @@
 {
-    "API_BASE_URL": "http://10.126.192.122:8342",
+    "API_BASE_URL": "http://10.126.192.122:8341",
     "ENDPOINTS": {
       "LOGIN": "/login",
       "USER_INFO": "/user-info",
