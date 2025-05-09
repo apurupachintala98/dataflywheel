@@ -366,7 +366,7 @@ const HomeContent = () => {
           });
         }
       },
-      onComplete: () => {
+      onComplete: (response: any) => {
         setMessages(prev =>
           prev.map(msg => {
             const isSameResponse =
@@ -383,8 +383,9 @@ const HomeContent = () => {
                 summarized: true,
                 showSummarize: false,
                 showFeedback: true,
-                fdbck_id: msg.fdbck_id,
-                session_id: msg.session_id
+                fdbck_id: response.fdbck_id,
+                session_id: response.session_id
+
               };
             }
             return msg;
