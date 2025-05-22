@@ -1,5 +1,15 @@
 {
     "API_BASE_URL": "http://10.126.192.122:8341",
+    "APP_CONFIG": {
+    "APLCTN_CD": "aedl",
+    "APP_ID": "aedl",
+    "API_KEY": "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
+    "DEFAULT_MODEL": "llama3.1-70b",
+    "APP_NM": "app_nm",
+    "DATABASE_NAME": "database_nm",
+    "SCHEMA_NAME": "schema_nm",
+    "STAGE_NAME": ""
+  },
     "ENDPOINTS": {
       "LOGIN": "/login",
       "USER_INFO": "/user-info",

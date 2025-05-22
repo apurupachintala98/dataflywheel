@@ -1,3 +1,5 @@
+import { APP_CONFIG } from '../utils/config.json';
+
 type MinimalPayloadParams = {
   prompt: string;
   execSQL: string;
@@ -22,13 +24,24 @@ type FullPayloadParams = {
 };
 
 export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) => {
+  const {
+    APLCTN_CD,
+    APP_ID,
+    API_KEY,
+    DEFAULT_MODEL,
+    APP_NM,
+    DATABASE_NAME,
+    SCHEMA_NAME,
+    STAGE_NAME
+  } = APP_CONFIG;
+
   if ('minimal' in params && params.minimal) {
     const { prompt, execSQL, sessionId } = params;
     return {
       query: {
-        aplctn_cd: "aedl",
-        app_id: "aedl",
-        api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
+        aplctn_cd: APLCTN_CD,
+        app_id: APP_ID,
+        api_key: API_KEY,
         prompt: {
           messages: [
             {
@@ -44,9 +57,8 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     };
   }
 
-  // full-mode payload
   const {
-    model = "llama3.1-70b",
+    model = DEFAULT_MODEL,
     prompt,
     semanticModel = [],
     searchModel = [],
@@ -55,16 +67,16 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     method,
     responseData,
     sessionId = "default-session-id",
-    database_nm = "",
-    schema_nm = "",
-    stage_nm = "",
+    database_nm = DATABASE_NAME,
+    schema_nm = SCHEMA_NAME,
+    stage_nm = STAGE_NAME,
   } = params;
 
   return {
     query: {
-      aplctn_cd: "aedl",
-      app_id: "aedl",
-      api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
+      aplctn_cd: APLCTN_CD,
+      app_id: APP_ID,
+      api_key: API_KEY,
       model,
       method,
       semantic_model: semanticModel,
@@ -88,3 +100,4 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     },
   };
 };
+

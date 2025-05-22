@@ -42,6 +42,17 @@ const HomeContent = () => {
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
 
+const { APP_CONFIG } = config;
+const {
+    APLCTN_CD,
+    APP_ID,
+    API_KEY,
+    DEFAULT_MODEL,
+    APP_NM,
+    DATABASE_NAME,
+    SCHEMA_NAME,
+  } = APP_CONFIG;
+
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
     account: null,
     chat: null,
@@ -95,10 +106,10 @@ const HomeContent = () => {
       prompt: inputValue,
       semanticModel: selectedModels.yaml,
       searchModel: selectedModels.search,
-      model: "llama3.1-70b",
+      model: DEFAULT_MODEL,
       sessionId,
-      database_nm: "POC_SPC_SNOWPARK_DB",
-      schema_nm: "HEDIS_SCHEMA"
+      database_nm: DATABASE_NAME,
+      schema_nm: SCHEMA_NAME
     });
 
     const endpoint = config.ENDPOINTS.AGENT
@@ -218,10 +229,10 @@ const HomeContent = () => {
       const formData = new FormData();
 
       const query = {
-        aplctn_cd: "aedl",
-        app_id: "aedl",
-        api_key: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
-        app_nm: "sample2",
+        aplctn_cd: APLCTN_CD,
+        app_id: APP_ID,
+        api_key: API_KEY,
+        app_nm: APP_NM,
         app_lvl_prefix: "",
         session_id: sessionId
       };
