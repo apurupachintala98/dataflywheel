@@ -1,4 +1,5 @@
-import { APP_CONFIG } from '../utils/config.json';
+import config from '../utils/config.json';
+const { APP_CONFIG } = config;
 
 type MinimalPayloadParams = {
   prompt: string;
