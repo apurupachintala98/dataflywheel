@@ -114,7 +114,7 @@ const MainContent = ({
       // Handle success (e.g., close dialog)
       setOpenLoginDialog(false);
     } else {
-      setError(data.message || "Validation failed.");
+      setError(data || "Validation failed.");
     }
   } catch (err) {
     setError("Network or server error.");
