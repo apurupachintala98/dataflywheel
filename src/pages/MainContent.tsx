@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Box, Typography, IconButton, Menu, MenuItem, Divider, TextField, Button, CircularProgress } from "@mui/material";
+import { Box, Typography, IconButton, Menu, MenuItem, Divider, TextField, Button, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, } from "@mui/material";
+import LockIcon from '@mui/icons-material/Lock';
 import { FaArrowUp, FaUserCircle, FaAngleDown } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import { HashLoader } from "react-spinners";
@@ -66,8 +67,15 @@ const MainContent = ({
     open,
     data,
 }: MainContentProps) => {
-
+    const [openLoginDialog, setOpenLoginDialog] = useState(false);
+    const [error, setError] = useState('');
     const [chartOpen, setChartOpen] = useState(false);
+    const [validating, setValidating] = useState(false);
+    const [credentials, setCredentials] = useState({
+        anthemId: '',
+        password: '',
+    });
+
 
     useEffect(() => {
         const anchor = document.getElementById("scroll-anchor");
@@ -77,10 +85,44 @@ const MainContent = ({
     }, [messages]);
 
     const handleGraphClick = () => {
-          setChartOpen(true);
+        setChartOpen(true);
     };
 
     console.log("data", data);
+
+    const handleValidateLogin = async () => {
+  setValidating(true);
+  setError('');
+
+  try {
+    const response = await fetch("https://pbee9gz5pe-vpce-0bd9a454888e84407.execute-api.us-east-1.amazonaws.com/prod/validateldapcredentials", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: credentials.anthemId,
+        usrval: credentials.password,
+        env: "prod",
+        app_id: "Metadata",
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Handle success (e.g., close dialog)
+      setOpenLoginDialog(false);
+    } else {
+      setError(data.message || "Validation failed.");
+    }
+  } catch (err) {
+    setError("Network or server error.");
+  } finally {
+    setValidating(false);
+  }
+};
+
 
     return (
         <>
@@ -140,28 +182,72 @@ const MainContent = ({
                             ))}
                         </Box>
 
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                            <Typography>Welcome, Balaji!</Typography>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
-                                <circle cx="16.5" cy="16.5" r="16.5" fill="#5d5d5d" />
-                                <g transform="translate(7.5, 7.5)">
-                                    <path
-                                        d="M14.2299 14.9418V13.5188C14.2299 12.764 13.9301 12.0401 13.3963 11.5063C12.8626 10.9726 12.1387 10.6727 11.3839 10.6727H5.69175C4.93693 10.6727 4.21303 10.9726 3.67929 11.5063C3.14555 12.0401 2.8457 12.764 2.8457 13.5188V14.9418"
-                                        stroke="#ffffff"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                    <path
-                                        d="M8.53843 7.82662C10.1103 7.82662 11.3845 6.5524 11.3845 4.98057C11.3845 3.40874 10.1103 2.13452 8.53843 2.13452C6.9666 2.13452 5.69238 3.40874 5.69238 4.98057C5.69238 6.5524 6.9666 7.82662 8.53843 7.82662Z"
-                                        stroke="#ffffff"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </g>
-                            </svg>
+                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
+                                    You are in read-only mode. <br />Login to know more details.
+                                </Typography>
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        backgroundColor: '#000',
+                                        textTransform: "none",
+                                        fontWeight: 500,
+                                        fontSize: 14,
+                                        px: 2.5,
+                                        py: 0.75,
+                                        borderRadius: "6px",
+                                        '&:hover': {
+                                            backgroundColor: "#7d7878",
+                                        },
+                                    }}
+                                    onClick={() => setOpenLoginDialog(true)}        >
+                                    ADMIN LOGIN
+                                </Button>
+                            </Box>
                         </Box>
+
+                        <Dialog open={openLoginDialog} onClose={() => setOpenLoginDialog(false)}>
+                            <DialogTitle>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: 1 }}>
+                                    <LockIcon sx={{ fontSize: 20, color: '#000', position: 'relative', top: '2px' }} />
+                                    <Typography variant="h6" sx={{ fontWeight: 600, fontSize: "1.0rem" }}>LOGIN</Typography>
+                                </Box>
+                            </DialogTitle>
+
+                            <DialogContent sx={{ px: 5, pb: 3 }}>
+                                <TextField
+                                    label="AnthemID *"
+                                    fullWidth
+                                    margin="normal"
+                                    value={credentials.anthemId}
+                                    onChange={(e) => setCredentials({ ...credentials, anthemId: e.target.value })}
+                                />
+                                <TextField
+                                    label="Password *"
+                                    type="password"
+                                    fullWidth
+                                    margin="normal"
+                                    value={credentials.password}
+                                    onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                                />
+                                {error && (
+                                    <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                                        {error}
+                                    </Typography>
+                                )}
+                            </DialogContent>
+                            <DialogActions sx={{ px: 5, pb: 3 }}>
+                                <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }}  onClick={handleValidateLogin}>
+                                   {validating ? "Validating..." : "VALIDATE"}
+                                </Button>
+                                <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }} onClick={() => setOpenLoginDialog(false)}>
+                                    CANCEL
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
+
                     </Box>
                 </Box>
 
