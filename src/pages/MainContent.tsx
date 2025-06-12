@@ -75,6 +75,11 @@ const MainContent = ({
         anthemId: '',
         password: '',
     });
+    const [appIds, setAppIds] = useState<string[]>([]);
+    const [selectedAppId, setSelectedAppId] = useState('');
+    const [showLoginButton, setShowLoginButton] = useState(false);
+    const [loginInfo, setLoginInfo] = useState<string | null>(null);
+
 
 
     useEffect(() => {
@@ -91,36 +96,60 @@ const MainContent = ({
     console.log("data", data);
 
     const handleValidateLogin = async () => {
-  setValidating(true);
-  setError('');
+        setValidating(true);
+        setError('');
 
-  try {
-    const response = await fetch("https://9gw2c50g75-vpce-076e779fef63877dd.execute-api.us-east-2.amazonaws.com/dev/validateldapcredentials", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: credentials.anthemId,
-        usrval: credentials.password,
-        env: "dev",
-        app_id: "dataframework",
-      }),
-    });
+        try {
+            const response = await fetch("https://9gw2c50g75-vpce-076e779fef63877dd.execute-api.us-east-2.amazonaws.com/dev/validateldapcredentials", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: credentials.anthemId,
+                    usrval: credentials.password,
+                    env: "dev",
+                    app_id: "dataframework",
+                }),
+            });
 
-    const data = await response.json();
+            const result = await response.json();
 
-    if (response.ok) {
-      setOpenLoginDialog(false);
-    } else {
-      setError(data || "Validation failed.");
-    }
-  } catch (err) {
-    setError("Network or server error.");
-  } finally {
-    setValidating(false);
-  }
-};
+            if (response.ok && result.body?.app_cd?.length) {
+                setAppIds(result.body.app_cd);  // Store app_cd list
+            } else {
+                setError("Validation failed or no apps found.");
+            }
+        } catch {
+            setError("Network or server error.");
+        } finally {
+            setValidating(false);
+        }
+    };
+
+    const handleFinalLogin = async () => {
+        try {
+            const response = await fetch('YOUR_FINAL_LOGIN_API', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: credentials.anthemId,
+                    app_id: selectedAppId,
+                    env: "dev",
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setOpenLoginDialog(false);
+                setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+            } else {
+                setError(data?.message || "Login failed.");
+            }
+        } catch {
+            setError("Final login API error.");
+        }
+    };
+
 
 
     return (
@@ -184,25 +213,49 @@ const MainContent = ({
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
-                                    You are in read-only mode. <br />Login to know more details.
+                                    {loginInfo ? `Logged in as ${loginInfo}` : "You are in read-only mode. Login to know more details."}
                                 </Typography>
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: '#000',
-                                        textTransform: "none",
-                                        fontWeight: 500,
-                                        fontSize: 14,
-                                        px: 2.5,
-                                        py: 0.75,
-                                        borderRadius: "6px",
-                                        '&:hover': {
-                                            backgroundColor: "#7d7878",
-                                        },
-                                    }}
-                                    onClick={() => setOpenLoginDialog(true)}        >
-                                    ADMIN LOGIN
-                                </Button>
+                                {loginInfo ? (
+                                    <Button
+                                        variant="outlined"
+                                        sx={{
+                                            color: "#000",
+                                            borderColor: "#000",
+                                            textTransform: "none",
+                                            fontSize: 14,
+                                            px: 2,
+                                            py: 0.5,
+                                            borderRadius: "6px",
+                                        }}
+                                        onClick={() => {
+                                            setLoginInfo(null);
+                                            setCredentials({ anthemId: "", password: "" });
+                                            setAppIds([]);
+                                            setSelectedAppId('');
+                                            setShowLoginButton(false);
+                                        }}
+                                    >
+                                        Logout
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            backgroundColor: '#000',
+                                            textTransform: "none",
+                                            fontWeight: 500,
+                                            fontSize: 14,
+                                            px: 2.5,
+                                            py: 0.75,
+                                            borderRadius: "6px",
+                                            '&:hover': {
+                                                backgroundColor: "#7d7878",
+                                            },
+                                        }}
+                                        onClick={() => setOpenLoginDialog(true)}        >
+                                        ADMIN LOGIN
+                                    </Button>
+                                )}
                             </Box>
                         </Box>
 
@@ -230,6 +283,27 @@ const MainContent = ({
                                     value={credentials.password}
                                     onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                                 />
+
+                                {appIds.length > 0 && (
+                                    <TextField
+                                        select
+                                        label="Select App ID"
+                                        fullWidth
+                                        margin="normal"
+                                        value={selectedAppId}
+                                        onChange={(e) => {
+                                            setSelectedAppId(e.target.value);
+                                            setShowLoginButton(true);
+                                        }}
+                                    >
+                                        {appIds.map((id) => (
+                                            <MenuItem key={id} value={id}>
+                                                {id}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                )}
+
                                 {error && (
                                     <Typography color="error" variant="body2" sx={{ mt: 1 }}>
                                         {error}
@@ -237,9 +311,15 @@ const MainContent = ({
                                 )}
                             </DialogContent>
                             <DialogActions sx={{ px: 5, pb: 3 }}>
-                                <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }}  onClick={handleValidateLogin}>
-                                   {validating ? "Validating..." : "VALIDATE"}
+                                <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }} onClick={handleValidateLogin}>
+                                    {validating ? "Validating..." : "VALIDATE"}
                                 </Button>
+                                {showLoginButton && (
+                                    <Button variant="contained" onClick={handleFinalLogin} disabled={!selectedAppId}>
+                                        LOGIN
+                                    </Button>
+                                )}
+
                                 <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }} onClick={() => setOpenLoginDialog(false)}>
                                     CANCEL
                                 </Button>
