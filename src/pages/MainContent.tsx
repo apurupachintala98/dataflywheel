@@ -112,7 +112,7 @@ const MainContent = ({
             });
 
             const result = await response.json();
-
+console.log("result", result);
             if (response.ok && result.body?.app_cd?.length) {
                 setAppIds(result.body.app_cd);  // Store app_cd list
             } else {
