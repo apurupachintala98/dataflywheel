@@ -42,8 +42,8 @@ const HomeContent = () => {
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
 
-const { APP_CONFIG } = config;
-const {
+  const { APP_CONFIG } = config;
+  const {
     APLCTN_CD,
     APP_ID,
     API_KEY,

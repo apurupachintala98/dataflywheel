@@ -161,9 +161,7 @@ const Feedback = ({ message }) => {
     />
   </div>
 )}
-
-
-        </div>
+    </div>
     );
 };
 

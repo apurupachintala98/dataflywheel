@@ -103,8 +103,8 @@ const MainContent = ({
       body: JSON.stringify({
         userId: credentials.anthemId,
         usrval: credentials.password,
-        env: "prod",
-        app_id: "Metadata",
+        env: "dev",
+        app_id: "dataframework",
       }),
     });
 
