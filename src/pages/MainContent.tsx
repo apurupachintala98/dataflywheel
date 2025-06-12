@@ -95,7 +95,7 @@ const MainContent = ({
   setError('');
 
   try {
-    const response = await fetch("https://pbee9gz5pe-vpce-0bd9a454888e84407.execute-api.us-east-1.amazonaws.com/prod/validateldapcredentials", {
+    const response = await fetch("https://9gw2c50g75-vpce-076e779fef63877dd.execute-api.us-east-2.amazonaws.com/dev/validateldapcredentials", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +111,6 @@ const MainContent = ({
     const data = await response.json();
 
     if (response.ok) {
-      // Handle success (e.g., close dialog)
       setOpenLoginDialog(false);
     } else {
       setError(data || "Validation failed.");
