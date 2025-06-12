@@ -112,7 +112,7 @@ const MainContent = ({
             });
 
             const result = await response.json();
-console.log("result", result);
+            console.log("result", result);
             if (response.ok && result?.app_cd?.length) {
                 setAppIds(result.app_cd);  // Store app_cd list
             } else {
@@ -311,9 +311,11 @@ console.log("result", result);
                                 )}
                             </DialogContent>
                             <DialogActions sx={{ px: 5, pb: 3 }}>
-                                <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }} onClick={handleValidateLogin}>
-                                    {validating ? "Validating..." : "VALIDATE"}
-                                </Button>
+                                {!showLoginButton && (
+                                    <Button variant="outlined" sx={{ color: "#000", borderColor: "#000" }} onClick={handleValidateLogin}>
+                                        {validating ? "Validating..." : "VALIDATE"}
+                                    </Button>
+                                )}
                                 {showLoginButton && (
                                     <Button variant="contained" onClick={handleFinalLogin} disabled={!selectedAppId}>
                                         LOGIN
