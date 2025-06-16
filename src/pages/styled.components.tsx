@@ -63,10 +63,9 @@ export const TagLine = styled.span`
 
 export const ToggleContainer = styled.div`
   background: #fff;
-  border-right: 1px solid #b2b2b2;
+  border: 1px solid transparent;
   width: 40px;
   height: 40px;
-  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,6 +73,9 @@ export const ToggleContainer = styled.div`
   right: -20px;
   top: 50px;
   cursor: pointer;
+  border-image-source: linear-gradient(90deg, #FFFFFF 51.25%, #B2B2B2 52.5%);
+  border-image-slice: 1; 
+  border-image-repeat: stretch;
 `;
 
 export const InputSearchContainer = styled.div`
