@@ -137,6 +137,8 @@ function Home() {
                   type="button"
                   onClick={() => {
                     setIsReset(true);
+                    setPromptValue("");
+                    setRecentValue("");
                   }}
                 >
                   <img src={newChat} /> New Chat
