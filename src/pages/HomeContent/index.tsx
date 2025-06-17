@@ -14,6 +14,7 @@ import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
 import { MessageType } from '../../types/message.types';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelectedApp } from '../../components/ SelectedAppContext';
 
 interface SelectedModelState {
   yaml: string[];
@@ -41,10 +42,13 @@ const HomeContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
+  const { selectedAppId, setSelectedAppId } = useSelectedApp();
+const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+
+
 
   const { APP_CONFIG } = config;
   const {
-    APLCTN_CD,
     APP_ID,
     API_KEY,
     DEFAULT_MODEL,
@@ -229,7 +233,7 @@ const HomeContent = () => {
       const formData = new FormData();
 
       const query = {
-        aplctn_cd: APLCTN_CD,
+        aplctn_cd: selectedAppId,
         app_id: APP_ID,
         api_key: API_KEY,
         app_nm: APP_NM,
@@ -410,8 +414,16 @@ const HomeContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const yaml = await ApiService.getCortexAnalystDetails();
-        const search = await ApiService.getCortexSearchDetails();
+const yaml = await ApiService.getCortexAnalystDetails({
+  database_nm: dbDetails.database_nm,
+  schema_nm: dbDetails.schema_nm,
+});
+const search = await ApiService.getCortexSearchDetails({
+  database_nm: dbDetails.database_nm,
+  schema_nm: dbDetails.schema_nm,
+});
+
+
         setFileLists({ yaml: yaml || [], search: search || [] });
       } catch {
         setFileLists({ yaml: [], search: [] });
@@ -452,6 +464,8 @@ const HomeContent = () => {
       submitted={submitted}
       setSubmitted={setSubmitted}
       open={open}
+      dbDetails={dbDetails}
+  setDbDetails={setDbDetails}
     />
   );
 };

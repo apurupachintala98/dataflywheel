@@ -44,6 +44,14 @@ interface MainContentProps {
     submitted: boolean;
     setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
     open: boolean;
+    dbDetails: {
+    database_nm: string;
+    schema_nm: string;
+  };
+  setDbDetails: React.Dispatch<React.SetStateAction<{
+    database_nm: string;
+    schema_nm: string;
+  }>>;
 }
 
 const MainContent = ({
@@ -83,11 +91,10 @@ const MainContent = ({
     const [showLoginButton, setShowLoginButton] = useState(false);
     const [loginInfo, setLoginInfo] = useState<string | null>(null);
      const [sessionId] = useState(() => uuidv4());
-     const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
 
   const { APP_CONFIG } = config;
   const {
-    APLCTN_CD,
     APP_ID,
     API_KEY,
     DEFAULT_MODEL,
@@ -144,7 +151,7 @@ const MainContent = ({
    const handleFinalLogin = async () => {
   const payload = {
     query: {
-      aplctn_cd: APLCTN_CD,
+      aplctn_cd: selectedAppId,
       app_id:APP_ID,
       api_key: API_KEY,
       app_lvl_prefix: "",
@@ -166,10 +173,8 @@ const MainContent = ({
     console.log("API Response:", response.data);
 
    if (response.status === 200) {
-      setDbDetails({
-        database_nm: data.database_nm,
-        schema_nm: data.schema_nm,
-      });
+      const { database_nm, schema_nm } = response.data;
+  setDbDetails({ database_nm, schema_nm });
 
       setOpenLoginDialog(false);
       setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);

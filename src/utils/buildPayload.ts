@@ -1,5 +1,7 @@
 import config from '../utils/config.json';
+import { useSelectedApp } from '../components/ SelectedAppContext';
 const { APP_CONFIG } = config;
+const { selectedAppId, setSelectedAppId } = useSelectedApp();
 
 type MinimalPayloadParams = {
   prompt: string;
@@ -26,7 +28,6 @@ type FullPayloadParams = {
 
 export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) => {
   const {
-    APLCTN_CD,
     APP_ID,
     API_KEY,
     DEFAULT_MODEL,
@@ -40,7 +41,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     const { prompt, execSQL, sessionId } = params;
     return {
       query: {
-        aplctn_cd: APLCTN_CD,
+        aplctn_cd: selectedAppId,
         app_id: APP_ID,
         api_key: API_KEY,
         prompt: {
@@ -75,7 +76,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
 
   return {
     query: {
-      aplctn_cd: APLCTN_CD,
+      aplctn_cd: selectedAppId,
       app_id: APP_ID,
       api_key: API_KEY,
       model,
