@@ -493,7 +493,6 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
   };
 
   useEffect(() => {
-    console.log(isReset);
     handleReset();
   }, [isReset]);
 
