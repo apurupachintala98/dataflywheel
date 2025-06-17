@@ -493,15 +493,13 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
   };
 
   useEffect(() => {
-    if (isReset) {
-      handleReset();
-    }
+    console.log(isReset);
+    handleReset();
   }, [isReset]);
 
   useEffect(() => {
-    if (promptValue) {
-      setInputValue(promptValue);
-    }
+    const InputVal = promptValue ? promptValue : "";
+    setInputValue(InputVal);
   }, [promptValue]);
 
   useEffect(() => {

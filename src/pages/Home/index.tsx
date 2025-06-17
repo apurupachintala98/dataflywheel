@@ -136,7 +136,7 @@ function Home() {
                 <Button
                   type="button"
                   onClick={() => {
-                    setIsReset(true);
+                    setIsReset(!isReset);
                     setPromptValue("");
                     setRecentValue("");
                   }}
