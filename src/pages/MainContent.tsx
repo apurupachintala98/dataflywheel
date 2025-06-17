@@ -88,11 +88,11 @@ const MainContent = ({
         password: '',
     });
     const [appIds, setAppIds] = useState<string[]>([]);
-    const [selectedAppId, setSelectedAppId] = useState('');
     const [showLoginButton, setShowLoginButton] = useState(false);
     const [loginInfo, setLoginInfo] = useState<string | null>(null);
      const [sessionId] = useState(() => uuidv4());
 const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+  const { selectedAppId, setSelectedAppId } = useSelectedApp();
   const { APP_CONFIG } = config;
   const {
     APP_ID,
