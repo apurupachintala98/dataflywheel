@@ -15,6 +15,8 @@ function ReactRoute() {
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/:title" element={<Home />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>

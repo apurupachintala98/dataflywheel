@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface SpinnerProps {
   zIndex?: string;
@@ -54,6 +54,13 @@ export interface RecentHistoryProps {
   isDotVisible: boolean;
   list: {
     title: string,
-    isActive: boolean
+    isActive: boolean,
+    onTitleClick: Dispatch<SetStateAction<string>>
   }[]
+}
+
+export interface HomeContentProps {
+  isReset: boolean,
+  promptValue: string,
+  recentValue: string
 }

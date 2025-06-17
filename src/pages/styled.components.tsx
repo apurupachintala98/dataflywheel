@@ -109,8 +109,7 @@ export const Button = styled.button`
   align-items: center;
   font-size: 16px;
   cursor: pointer;
-  svg {
-    width: 18px;
+  img {
     margin-right: 5px;
   }
 `;

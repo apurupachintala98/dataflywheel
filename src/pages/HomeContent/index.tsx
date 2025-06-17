@@ -5,16 +5,26 @@ import ApiService from "../../services/index";
 import MainContent from "../MainContent";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import BarChartIcon from '@mui/icons-material/BarChart';
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import BarChartIcon from "@mui/icons-material/BarChart";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import { useStreamHandler } from "../../hooks/useStreamHandler";
 import { buildPayload } from "../../utils/buildPayload";
 import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
-import { MessageType } from '../../types/message.types';
-import { v4 as uuidv4 } from 'uuid';
-import { useSelectedApp } from '../../components/ SelectedAppContext';
+import { MessageType } from "../../types/message.types";
+import { v4 as uuidv4 } from "uuid";
+import { useSelectedApp } from "../../components/ SelectedAppContext";
+import { HomeContentProps } from "interface";
 
 interface SelectedModelState {
   yaml: string[];
@@ -28,9 +38,9 @@ interface AnchorElState {
   upload: HTMLElement | null;
 }
 
-const HomeContent = () => {
+const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const toggleSidebar = () => setCollapsed(prev => !prev);
+  const toggleSidebar = () => setCollapsed((prev) => !prev);
   const [inputValue, setInputValue] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { sendRequest } = useApiRequest();
@@ -45,17 +55,8 @@ const HomeContent = () => {
   const { selectedAppId, setSelectedAppId } = useSelectedApp();
   const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
 
-
-
   const { APP_CONFIG } = config;
-  const {
-    APP_ID,
-    API_KEY,
-    DEFAULT_MODEL,
-    APP_NM,
-    DATABASE_NAME,
-    SCHEMA_NAME,
-  } = APP_CONFIG;
+  const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
     account: null,
@@ -64,8 +65,14 @@ const HomeContent = () => {
     upload: null,
   });
   const open = Boolean(anchorEls.upload);
-const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({ yaml: [], search: [] });
-  const [selectedModels, setSelectedModels] = useState<SelectedModelState>({ yaml: [], search: [] });
+  const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({
+    yaml: [],
+    search: [],
+  });
+  const [selectedModels, setSelectedModels] = useState<SelectedModelState>({
+    yaml: [],
+    search: [],
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleMenuClick = (e: React.MouseEvent<HTMLElement>, type: keyof AnchorElState) => {
@@ -74,27 +81,29 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
       if (anchorEls.upload === target) {
         handleMenuClose();
       } else {
-        setAnchorEls(prev => ({ ...prev, upload: target as HTMLElement }));
+        setAnchorEls((prev) => ({ ...prev, upload: target as HTMLElement }));
       }
     } else {
-      setAnchorEls(prev => ({ ...prev, [type]: target }));
+      setAnchorEls((prev) => ({ ...prev, [type]: target }));
     }
   };
-  const handleMenuClose = () => setAnchorEls({ account: null, chat: null, search: null, upload: null });
+  const handleMenuClose = () =>
+    setAnchorEls({ account: null, chat: null, search: null, upload: null });
   // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
-    setSelectedModels(prev => ({
+    setSelectedModels((prev) => ({
       ...prev,
-      [type]: prev[type as keyof SelectedModelState].includes(file) ?
-        prev[type as keyof SelectedModelState].filter(f => f !== file) :
-        [...prev[type as keyof SelectedModelState], file]
+      [type]: prev[type as keyof SelectedModelState].includes(file)
+        ? prev[type as keyof SelectedModelState].filter((f) => f !== file)
+        : [...prev[type as keyof SelectedModelState], file],
     }));
   };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setInputValue(e.target.value);
 
   const handleSubmit = async () => {
     if (selectedFile) {
-      await handleUpload('data');
+      await handleUpload("data");
       return;
     }
     if (!inputValue.trim()) return;
@@ -102,10 +111,9 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
     const userMessage = { text: inputValue, fromUser: true };
     const assistantPlaceholder = { text: "", fromUser: false, streaming: true };
 
-    setMessages(prev => [...prev, userMessage, assistantPlaceholder]);
+    setMessages((prev) => [...prev, userMessage, assistantPlaceholder]);
     setInputValue("");
     setSubmitted(true);
-
 
     const payload = buildPayload({
       prompt: inputValue,
@@ -126,7 +134,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
 
     if (!stream || error) {
       toast.error("Something went wrong.");
-      setMessages(prev => [...prev, { text: "An error occurred.", fromUser: false }]);
+      setMessages((prev) => [...prev, { text: "An error occurred.", fromUser: false }]);
       setIsLoading(false);
       return;
     }
@@ -141,7 +149,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
         if (response.type === "text") {
           if (response.citations?.length) {
             const html = renderTextWithCitations(response.text, response.citations);
-            setMessages(prev => {
+            setMessages((prev) => {
               const temp = [...prev];
               temp[temp.length - 1] = {
                 ...temp[temp.length - 1],
@@ -150,12 +158,12 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
                 isHTML: true,
                 type: "text",
                 fdbck_id: response.fdbck_id,
-                session_id: response.session_id
+                session_id: response.session_id,
               };
               return temp;
             });
           } else {
-            setMessages(prev => {
+            setMessages((prev) => {
               const temp = [...prev];
               temp[temp.length - 1] = {
                 ...temp[temp.length - 1],
@@ -163,16 +171,16 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
                 streaming: false,
                 type: "text",
                 fdbck_id: response.fdbck_id,
-                session_id: response.session_id
+                session_id: response.session_id,
               };
               return temp;
             });
           }
         } else if (response.type === "sql") {
           const rawText = response.text;
-          const [interpretationPart, sqlPart] = rawText.split('end_of_interpretation');
+          const [interpretationPart, sqlPart] = rawText.split("end_of_interpretation");
           // const interpretation = (interpretationPart || '').trim();
-          const interpretationRaw = (interpretationPart || '').trim();
+          const interpretationRaw = (interpretationPart || "").trim();
           const INTERPRETATION_PREFIX = "This is our interpretation of your question:";
           let interpretation = interpretationRaw;
 
@@ -181,7 +189,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
             interpretation = `<strong>${INTERPRETATION_PREFIX}</strong><br/>${remaining}`;
           }
 
-          const sql = (sqlPart || '').trim();
+          const sql = (sqlPart || "").trim();
           const sqlMessage: MessageType = {
             text: sql,
             fromUser: false,
@@ -193,11 +201,11 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
             isHTML: true,
             streaming: false,
             fdbck_id: response.fdbck_id,
-            session_id: response.session_id
+            session_id: response.session_id,
           };
           console.log("sqlMessage", sqlMessage);
 
-          setMessages(prev => {
+          setMessages((prev) => {
             const temp = [...prev];
             const last = temp[temp.length - 1];
 
@@ -211,13 +219,13 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
           });
         }
         setIsLoading(false);
-      }
+      },
     });
   };
 
   const handleUpload = async (
-    type: 'yaml' | 'data',
-    triggerFileDialog: boolean = false
+    type: "yaml" | "data",
+    triggerFileDialog: boolean = false,
   ): Promise<void> => {
     handleMenuClose();
 
@@ -226,7 +234,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
       return;
     }
 
-    if (type === 'data') {
+    if (type === "data") {
       if (!selectedFile) {
         return;
       }
@@ -240,39 +248,45 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
         api_key: API_KEY,
         app_nm: APP_NM,
         app_lvl_prefix: "",
-        session_id: sessionId
+        session_id: sessionId,
       };
 
       formData.append("query", JSON.stringify(query));
       formData.append("files", selectedFile);
 
       try {
-        const response = await axios.post(`${config.API_BASE_URL}${config.ENDPOINTS.UPLOAD_URL}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
+        const response = await axios.post(
+          `${config.API_BASE_URL}${config.ENDPOINTS.UPLOAD_URL}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           },
-        });
+        );
 
         const successMessage = response?.data?.message || "File uploaded successfully!";
-        toast.success(successMessage, { position: 'top-right' });
+        toast.success(successMessage, { position: "top-right" });
         setSelectedFile(null);
       } catch (error) {
         console.error("Upload error:", error);
-        toast.error("Upload failed. Please try again.", { position: 'top-right' });
+        toast.error("Upload failed. Please try again.", { position: "top-right" });
       } finally {
         setIsUploading(false);
       }
-    } else if (type === 'yaml') {
-      window.open("https://app.snowflake.com/carelon/eda_preprod/#/data/databases/POC_SPC_SNOWPARK_DB/schemas/HEDIS_SCHEMA/stage/HEDIS_STAGE_FULL", "_blank");
+    } else if (type === "yaml") {
+      window.open(
+        "https://app.snowflake.com/carelon/eda_preprod/#/data/databases/POC_SPC_SNOWPARK_DB/schemas/HEDIS_SCHEMA/stage/HEDIS_STAGE_FULL",
+        "_blank",
+      );
     }
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setSelectedFile(file);
-    handleUpload('data');
+    handleUpload("data");
   };
-
 
   const executeSQL = async (sqlQuery: any) => {
     console.log(sqlQuery);
@@ -285,42 +299,59 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
       minimal: true,
       selectedAppId,
     });
-    const { data, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`, payload);
+    const { data, error } = await sendRequest(
+      `${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`,
+      payload,
+    );
     if (error || !data) {
-      setMessages(prev => [...prev, { text: "Error communicating with backend.", fromUser: false, showExecute: false, showSummarize: false }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "Error communicating with backend.",
+          fromUser: false,
+          showExecute: false,
+          showSummarize: false,
+        },
+      ]);
       console.error("Error:", error);
       setIsLoading(false);
       return;
     }
 
     const convertToString = (input: any): string => {
-      if (input === null || input === undefined) return '';
-      if (typeof input === 'string') return input;
-      if (Array.isArray(input)) return input.map(convertToString).join(', ');
-      if (typeof input === 'object') return Object.entries(input).map(([k, v]) => `${k}: ${convertToString(v)}`).join(', ');
+      if (input === null || input === undefined) return "";
+      if (typeof input === "string") return input;
+      if (Array.isArray(input)) return input.map(convertToString).join(", ");
+      if (typeof input === "object")
+        return Object.entries(input)
+          .map(([k, v]) => `${k}: ${convertToString(v)}`)
+          .join(", ");
       return String(input);
     };
     let modelReply: string | React.ReactNode = "";
-    modelReply = typeof data === 'string' ? data : convertToString(data);
+    modelReply = typeof data === "string" ? data : convertToString(data);
     setData(data);
     console.log(data);
-    setMessages(prev => [...prev, {
-      text: modelReply,
-      fromUser: false,
-      executedResponse: data,
-      type: "table",
-      showExecute: false,
-      showSummarize: true,
-      prompt: sqlQuery.prompt
-    }]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: modelReply,
+        fromUser: false,
+        executedResponse: data,
+        type: "table",
+        showExecute: false,
+        showSummarize: true,
+        prompt: sqlQuery.prompt,
+      },
+    ]);
     setIsLoading(false);
   };
 
   const apiCortex = async (message: any) => {
     console.log(message);
     setIsLoading(true);
-    setMessages(prev =>
-      prev.map(msg => {
+    setMessages((prev) =>
+      prev.map((msg) => {
         const isSameResponse =
           JSON.stringify(msg.executedResponse) === JSON.stringify(message.executedResponse);
 
@@ -328,30 +359,38 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
           return { ...msg, showSummarize: false };
         }
         return msg;
-      })
+      }),
     );
 
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
       prompt: storedPrompt,
-      sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
+      sysMsg:
+        "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
       sessionId,
       selectedAppId,
     });
 
-
-    const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
+    const { stream, error } = await sendRequest(
+      `${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`,
+      payload,
+      undefined,
+      true,
+    );
 
     if (!stream || error) {
       console.error("Streaming error:", error);
-      setMessages(prev => [...prev, { text: "An error occurred while summarizing.", fromUser: false }]);
+      setMessages((prev) => [
+        ...prev,
+        { text: "An error occurred while summarizing.", fromUser: false },
+      ]);
       setIsLoading(false);
       return;
     }
 
-    let streamedText = '';
+    let streamedText = "";
 
     await handleStream(stream, {
       fromUser: false,
@@ -364,7 +403,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
 
         if (token) {
           streamedText += token;
-          setMessages(prev => {
+          setMessages((prev) => {
             const updated = [...prev];
             const lastIndex = updated.length - 1;
             if (lastIndex >= 0 && updated[lastIndex].streaming) {
@@ -381,7 +420,7 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
                 showSummarize: false,
                 prompt: message.prompt,
                 fdbck_id: message.fdbck_id,
-                session_id: message.session_id
+                session_id: message.session_id,
               });
             }
             return updated;
@@ -389,16 +428,12 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
         }
       },
       onComplete: (response: any) => {
-        setMessages(prev =>
-          prev.map(msg => {
+        setMessages((prev) =>
+          prev.map((msg) => {
             const isSameResponse =
               JSON.stringify(msg.executedResponse) === JSON.stringify(message.executedResponse);
 
-            if (
-              msg.fromUser === false &&
-              msg.showSummarize &&
-              isSameResponse
-            ) {
+            if (msg.fromUser === false && msg.showSummarize && isSameResponse) {
               return {
                 ...msg,
                 streaming: false,
@@ -406,15 +441,14 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
                 showSummarize: false,
                 showFeedback: true,
                 fdbck_id: response.fdbck_id,
-                session_id: response.session_id
-
+                session_id: response.session_id,
               };
             }
             return msg;
-          })
+          }),
         );
         setIsLoading(false);
-      }
+      },
     });
   };
 
@@ -433,7 +467,6 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
           schema_nm: dbDetails.schema_nm,
         });
 
-
         setFileLists({ yaml: yaml || [], search: search || [] });
       } catch {
         setFileLists({ yaml: [], search: [] });
@@ -447,6 +480,36 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
     if (anchor) anchor.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
 
+  const handleReset = () => {
+    setInputValue("");
+    setMessages([]);
+    setSubmitted(false);
+    setData(null);
+    setSelectedFile(null);
+    setIsUploading(false);
+    setIsLoading(false);
+    setStoredPrompt("");
+    setDbDetails({ database_nm: "", schema_nm: "" });
+  };
+
+  useEffect(() => {
+    if (isReset) {
+      handleReset();
+    }
+  }, [isReset]);
+
+  useEffect(() => {
+    if (promptValue) {
+      setInputValue(promptValue);
+    }
+  }, [promptValue]);
+
+  useEffect(() => {
+    if (recentValue) {
+      /** Recent code flow will come here */
+    }
+  }, [recentValue]);
+
   return (
     <MainContent
       collapsed={collapsed}
@@ -454,8 +517,8 @@ const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>
       inputValue={inputValue}
       messages={messages}
       anchorEls={anchorEls}
-     fileLists={fileLists}
-  setFileLists={setFileLists}
+      fileLists={fileLists}
+      setFileLists={setFileLists}
       selectedModels={selectedModels}
       handleMenuClick={handleMenuClick}
       handleMenuClose={handleMenuClose}

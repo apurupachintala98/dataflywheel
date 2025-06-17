@@ -45,10 +45,16 @@ function RecentHistory({ title, isDotVisible, list }: RecentHistoryProps) {
     <List>
       <ChatContainer>
         <ChatHeading>{title}</ChatHeading>
-        {list.map((listItem: {title: string, isActive: boolean}, index) => (
-          <ChatItem key={index} className={listItem.isActive ? "active": "notActive"}>
+        {list.map((listItem: { title: string; isActive: boolean; onTitleClick: any }, index) => (
+          <ChatItem
+            key={index}
+            className={listItem.isActive ? "active" : "notActive"}
+            onClick={() => {
+              listItem.onTitleClick(listItem.title);
+            }}
+          >
             <ChatLeftItem>
-              <ChatTitle className={listItem.isActive ? "active": "notActive"}>
+              <ChatTitle className={listItem.isActive ? "active" : "notActive"}>
                 {cropString(listItem.title)}
               </ChatTitle>
             </ChatLeftItem>

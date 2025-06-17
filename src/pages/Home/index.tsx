@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, Link } from "react-router-dom";
+import newChat from "assests/images/newChat.svg";
 
 import {
   Button,
@@ -36,7 +37,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Search from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
-import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 
 import {
   AppBar,
@@ -67,6 +68,9 @@ function Home() {
   const [sidebarType, setSidebarType] = useState<SizeKey>("full");
 
   const collapsed = sidebarType === "mini";
+  const [isReset, setIsReset] = useState(false);
+  const [promptValue, setPromptValue] = useState("");
+  const [recentValue, setRecentValue] = useState("");
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -129,9 +133,14 @@ function Home() {
                 <img src={dfwLogo} alt="" style={{ width: "60%", height: "auto" }} />
               </List>
               <List>
-                <Button type="button">
-                  <EditNoteOutlinedIcon /> New Chat
-                </Button>  
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setIsReset(true);
+                  }}
+                >
+                  <img src={newChat} /> New Chat
+                </Button>
               </List>
               {/* <History />     */}
               <RecentHistory
@@ -140,11 +149,13 @@ function Home() {
                 list={[
                   {
                     title: "Prompt I",
-                    isActive: false,
+                    isActive: promptValue === "Prompt I" ? true : false,
+                    onTitleClick: setPromptValue,
                   },
                   {
                     title: "Prompt II",
-                    isActive: false,
+                    isActive: promptValue === "Prompt II" ? true : false,
+                    onTitleClick: setPromptValue,
                   },
                 ]}
               />
@@ -154,11 +165,13 @@ function Home() {
                 list={[
                   {
                     title: "What is the FMC denominator based on in HEDIS?",
-                    isActive: true,
+                    isActive: false,
+                    onTitleClick: setRecentValue,
                   },
                   {
                     title: "What is considered continuous enrollment for FMC in HEDIS?",
                     isActive: false,
+                    onTitleClick: setRecentValue,
                   },
                 ]}
               />
@@ -194,7 +207,7 @@ function Home() {
           marginTop: 0,
         }}
       >
-        <HomeContent />
+        <HomeContent isReset={isReset} promptValue={promptValue} recentValue={recentValue} />
       </Box>
     </Box>
   );
