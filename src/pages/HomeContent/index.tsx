@@ -415,10 +415,13 @@ const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
     const fetchData = async () => {
       try {
 const yaml = await ApiService.getCortexAnalystDetails({
+  aplctn_cd: selectedAppId,
   database_nm: dbDetails.database_nm,
   schema_nm: dbDetails.schema_nm,
 });
+
 const search = await ApiService.getCortexSearchDetails({
+  aplctn_cd: selectedAppId,
   database_nm: dbDetails.database_nm,
   schema_nm: dbDetails.schema_nm,
 });

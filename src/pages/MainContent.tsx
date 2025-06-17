@@ -12,6 +12,7 @@ import Chart from '../components/Chart';
 import axios from "axios";
 import config from "../utils/config.json";
 import { v4 as uuidv4 } from 'uuid';
+import { useSelectedApp } from "components/ SelectedAppContext";
 
 interface MainContentProps {
     messages: MessageType[];
@@ -92,7 +93,6 @@ const MainContent = ({
     const [loginInfo, setLoginInfo] = useState<string | null>(null);
      const [sessionId] = useState(() => uuidv4());
 const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
-
   const { APP_CONFIG } = config;
   const {
     APP_ID,

@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../utils/config.json";
-import { useSelectedApp } from '../components/ SelectedAppContext';
 
 interface QueryOverrides {
   database_nm?: string;
@@ -16,7 +15,6 @@ const {
   DATABASE_NAME,
   SCHEMA_NAME
 } = APP_CONFIG;
-const { selectedAppId, setSelectedAppId } = useSelectedApp();
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -29,7 +27,7 @@ const axiosInstance = axios.create({
 
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const params = {
-    aplctn_cd: selectedAppId,
+     aplctn_cd: overrides.aplctn_cd,
     app_id: APP_ID,
     api_key: API_KEY,
     session_id: overrides.session_id || "0c508184-5da9-4bfe-9651-bb56e8bbf2ee",
@@ -45,27 +43,37 @@ const buildQueryParams = (overrides: QueryOverrides = {}) => {
 
 const ApiService = {
  
- getCortexSearchDetails: async ({ database_nm, schema_nm }: { database_nm?: string; schema_nm?: string }) => {
-  try {
-    const queryParams = buildQueryParams({ database_nm, schema_nm });
-    const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching cortex search details:", error);
-    throw error;
-  }
-},
+getCortexSearchDetails: async ({
+    aplctn_cd,
+    database_nm,
+    schema_nm,
+    session_id,
+  }: QueryOverrides) => {
+    try {
+      const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
+      const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching cortex search details:", error);
+      throw error;
+    }
+  },
 
-getCortexAnalystDetails: async ({ database_nm, schema_nm }: { database_nm?: string; schema_nm?: string }) => {
-  try {
-    const queryParams = buildQueryParams({ database_nm, schema_nm });
-    const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching cortex analyst details:", error);
-    throw error;
-  }
-},
+  getCortexAnalystDetails: async ({
+    aplctn_cd,
+    database_nm,
+    schema_nm,
+    session_id,
+  }: QueryOverrides) => {
+    try {
+      const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
+      const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching cortex analyst details:", error);
+      throw error;
+    }
+  },
 
 
 };

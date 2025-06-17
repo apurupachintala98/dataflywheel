@@ -1,16 +1,16 @@
-// SelectedAppContext.tsx
-import React, { createContext, useContext, useState } from "react";
+// src/components/SelectedAppContext.tsx
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export const SelectedAppContext = createContext<{
+interface SelectedAppContextType {
   selectedAppId: string;
   setSelectedAppId: (id: string) => void;
-}>({
-  selectedAppId: '',
-  setSelectedAppId: () => {},
-});
+}
 
-export const SelectedAppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selectedAppId, setSelectedAppId] = useState('');
+const SelectedAppContext = createContext<SelectedAppContextType | undefined>(undefined);
+
+export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
+  const [selectedAppId, setSelectedAppId] = useState("");
+
   return (
     <SelectedAppContext.Provider value={{ selectedAppId, setSelectedAppId }}>
       {children}
@@ -18,4 +18,10 @@ export const SelectedAppProvider = ({ children }: { children: React.ReactNode })
   );
 };
 
-export const useSelectedApp = () => useContext(SelectedAppContext);
+export const useSelectedApp = (): SelectedAppContextType => {
+  const context = useContext(SelectedAppContext);
+  if (!context) {
+    throw new Error("useSelectedApp must be used within a SelectedAppProvider");
+  }
+  return context;
+};
