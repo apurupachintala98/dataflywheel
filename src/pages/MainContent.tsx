@@ -28,7 +28,7 @@ interface MainContentProps {
         upload: HTMLElement | null;
     };
     fileLists: { yaml: string[]; search: string[] };
-setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
+    setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
     selectedModels: { yaml: string[]; search: string[] };
     handleMenuClick: (e: React.MouseEvent<HTMLElement>, type: keyof MainContentProps["anchorEls"]) => void;
     handleMenuClose: () => void;
@@ -155,7 +155,7 @@ const MainContent = ({
     const handleFinalLogin = async () => {
         const payload = {
             query: {
-                aplctn_cd: selectedAppId,
+                aplctn_cd: selectedAppId.toLowerCase(),
                 app_id: APP_ID,
                 api_key: API_KEY,
                 app_lvl_prefix: "",
@@ -177,32 +177,32 @@ const MainContent = ({
             console.log("API Response:", response.data);
 
             if (response.status === 200) {
-  const { database_nm, schema_nm } = response.data;
+                const { database_nm, schema_nm } = response.data;
 
-  const selectedDatabase = database_nm;
-  const selectedSchema = schema_nm[0];
+                const selectedDatabase = database_nm;
+                const selectedSchema = schema_nm[0];
 
-  setDbDetails({ database_nm: selectedDatabase, schema_nm: selectedSchema });
+                setDbDetails({ database_nm: selectedDatabase, schema_nm: selectedSchema });
 
-  const yamlFiles = await ApiService.getCortexSearchDetails({
-    database_nm: selectedDatabase,
-    schema_nm: selectedSchema,
-    aplctn_cd: selectedAppId,
-    session_id: sessionId,
-  });
+                const yamlFiles = await ApiService.getCortexSearchDetails({
+                    database_nm: selectedDatabase,
+                    schema_nm: selectedSchema,
+                    aplctn_cd: selectedAppId.toLowerCase(),
+                    session_id: sessionId,
+                });
 
-  const searchFiles = await ApiService.getCortexAnalystDetails({
-    database_nm: selectedDatabase,
-    schema_nm: selectedSchema,
-    aplctn_cd: selectedAppId,
-    session_id: sessionId,
-  });
+                const searchFiles = await ApiService.getCortexAnalystDetails({
+                    database_nm: selectedDatabase,
+                    schema_nm: selectedSchema,
+                    aplctn_cd: selectedAppId.toLowerCase(),
+                    session_id: sessionId,
+                });
 
-  setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
+                setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
 
-  setOpenLoginDialog(false);
-  setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
-} else {
+                setOpenLoginDialog(false);
+                setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+            } else {
                 setError(response.data?.message || "Login failed.");
             }
         } catch (error: any) {
