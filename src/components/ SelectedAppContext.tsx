@@ -1,4 +1,3 @@
-// src/components/SelectedAppContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface SelectedAppContextType {
@@ -12,7 +11,8 @@ export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
   const [selectedAppId, _setSelectedAppId] = useState("");
 
   const setSelectedAppId = (id: string) => {
-    _setSelectedAppId(id.toLowerCase());
+    const lowercaseId = id?.trim().toLowerCase(); 
+    _setSelectedAppId(lowercaseId);
   };
 
   return (
