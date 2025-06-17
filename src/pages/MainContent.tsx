@@ -9,6 +9,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from '../types/message.types';
 import Chart from '../components/Chart';
+import axios from "axios";
+import config from "../utils/config.json";
+import { v4 as uuidv4 } from 'uuid';
+import { useSelectedApp } from "components/ SelectedAppContext";
+import ApiService from "../services/index";
+
 
 interface MainContentProps {
     messages: MessageType[];
@@ -22,6 +28,7 @@ interface MainContentProps {
         upload: HTMLElement | null;
     };
     fileLists: { yaml: string[]; search: string[] };
+setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
     selectedModels: { yaml: string[]; search: string[] };
     handleMenuClick: (e: React.MouseEvent<HTMLElement>, type: keyof MainContentProps["anchorEls"]) => void;
     handleMenuClose: () => void;
@@ -41,6 +48,14 @@ interface MainContentProps {
     submitted: boolean;
     setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
     open: boolean;
+    dbDetails: {
+        database_nm: string;
+        schema_nm: string;
+    };
+    setDbDetails: React.Dispatch<React.SetStateAction<{
+        database_nm: string;
+        schema_nm: string;
+    }>>;
 }
 
 const MainContent = ({
@@ -48,6 +63,7 @@ const MainContent = ({
     messages,
     anchorEls,
     fileLists,
+    setFileLists,
     selectedModels,
     handleMenuClick,
     handleMenuClose,
@@ -76,9 +92,20 @@ const MainContent = ({
         password: '',
     });
     const [appIds, setAppIds] = useState<string[]>([]);
-    const [selectedAppId, setSelectedAppId] = useState('');
     const [showLoginButton, setShowLoginButton] = useState(false);
     const [loginInfo, setLoginInfo] = useState<string | null>(null);
+    const [sessionId] = useState(() => uuidv4());
+    const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+    const { selectedAppId, setSelectedAppId } = useSelectedApp();
+    const { APP_CONFIG } = config;
+    const {
+        APP_ID,
+        API_KEY,
+        DEFAULT_MODEL,
+        APP_NM,
+        DATABASE_NAME,
+        SCHEMA_NAME,
+    } = APP_CONFIG;
 
 
 
@@ -126,32 +153,63 @@ const MainContent = ({
     };
 
     const handleFinalLogin = async () => {
+        const payload = {
+            query: {
+                aplctn_cd: selectedAppId,
+                app_id: APP_ID,
+                api_key: API_KEY,
+                app_lvl_prefix: "",
+                session_id: sessionId
+            },
+        };
+
         try {
-            const response = await fetch('YOUR_FINAL_LOGIN_API', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: credentials.anthemId,
-                    app_id: selectedAppId,
-                    env: "dev",
-                }),
-            });
+            const response = await axios.post(
+                `${config.API_BASE_URL}${config.ENDPOINTS.DB_SCHEMA_LIST}`,
+                payload,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
-            const data = await response.json();
+            console.log("API Response:", response.data);
 
-            if (response.ok) {
-                setOpenLoginDialog(false);
-                setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
-            } else {
-                setError(data?.message || "Login failed.");
+            if (response.status === 200) {
+  const { database_nm, schema_nm } = response.data;
+
+  const selectedDatabase = database_nm;
+  const selectedSchema = schema_nm[0];
+
+  setDbDetails({ database_nm: selectedDatabase, schema_nm: selectedSchema });
+
+  const yamlFiles = await ApiService.getCortexSearchDetails({
+    database_nm: selectedDatabase,
+    schema_nm: selectedSchema,
+    aplctn_cd: selectedAppId,
+    session_id: sessionId,
+  });
+
+  const searchFiles = await ApiService.getCortexAnalystDetails({
+    database_nm: selectedDatabase,
+    schema_nm: selectedSchema,
+    aplctn_cd: selectedAppId,
+    session_id: sessionId,
+  });
+
+  setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
+
+  setOpenLoginDialog(false);
+  setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+} else {
+                setError(response.data?.message || "Login failed.");
             }
-        } catch {
+        } catch (error: any) {
+            console.error("Final login API error:", error);
             setError("Final login API error.");
         }
     };
-
-
-
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />

@@ -1,8 +1,7 @@
 {
-    "API_BASE_URL": "http://10.126.192.122:8341",
+    "API_BASE_URL": "https://sfassist.edagenaisit.awsdns.internal.das/api/cortex/",
     "APP_CONFIG": {
-    "APLCTN_CD": "aedl",
-    "APP_ID": "aedl",
+    "APP_ID": "edadip",
     "API_KEY": "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
     "DEFAULT_MODEL": "llama3.1-70b",
     "APP_NM": "app_nm",
@@ -13,14 +12,15 @@
     "ENDPOINTS": {
       "LOGIN": "/login",
       "USER_INFO": "/user-info",
-      "CORTEX_SEARCH": "/api/cortex/search_details",
-      "CORTEX_ANALYST": "/api/cortex/analyst_details",
-      "TEXT_TO_SQL": "/api/cortex/txt2sql",
-      "AGENT": "/api/cortex/agent",
-      "RUN_SQL_QUERY": "/api/cortex/txt2sql/run_sql_query",
-      "CORTEX_COMPLETE": "/api/cortex/complete",
-      "UPLOAD_URL": "/api/cortex/upload_file/",
-      "FEEDBACK": "/api/cortex/update_feedback/"
+      "CORTEX_SEARCH": "search_details",
+      "CORTEX_ANALYST": "analyst_details",
+      "TEXT_TO_SQL": "txt2sql",
+      "AGENT": "agent",
+      "RUN_SQL_QUERY": "txt2sql/run_sql_query",
+      "CORTEX_COMPLETE": "complete",
+      "UPLOAD_URL": "upload_file/",
+      "FEEDBACK": "update_feedback/",
+      "DB_SCHEMA_LIST": "get_app_db_schm_lst"
     }
   }
   

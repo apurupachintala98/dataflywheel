@@ -14,6 +14,7 @@ import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
 import { MessageType } from '../../types/message.types';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelectedApp } from '../../components/ SelectedAppContext';
 
 interface SelectedModelState {
   yaml: string[];
@@ -41,10 +42,13 @@ const HomeContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
+  const { selectedAppId, setSelectedAppId } = useSelectedApp();
+  const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+
+
 
   const { APP_CONFIG } = config;
   const {
-    APLCTN_CD,
     APP_ID,
     API_KEY,
     DEFAULT_MODEL,
@@ -60,7 +64,7 @@ const HomeContent = () => {
     upload: null,
   });
   const open = Boolean(anchorEls.upload);
-  const [fileLists, setFileLists] = useState({ yaml: [] as string[], search: [] as string[] });
+const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({ yaml: [], search: [] });
   const [selectedModels, setSelectedModels] = useState<SelectedModelState>({ yaml: [], search: [] });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -102,14 +106,16 @@ const HomeContent = () => {
     setInputValue("");
     setSubmitted(true);
 
+
     const payload = buildPayload({
       prompt: inputValue,
       semanticModel: selectedModels.yaml,
       searchModel: selectedModels.search,
       model: DEFAULT_MODEL,
       sessionId,
-      database_nm: DATABASE_NAME,
-      schema_nm: SCHEMA_NAME
+      selectedAppId,
+      database_nm: dbDetails.database_nm,
+      schema_nm: dbDetails.schema_nm,
     });
 
     const endpoint = config.ENDPOINTS.AGENT
@@ -229,7 +235,7 @@ const HomeContent = () => {
       const formData = new FormData();
 
       const query = {
-        aplctn_cd: APLCTN_CD,
+        aplctn_cd: selectedAppId,
         app_id: APP_ID,
         api_key: API_KEY,
         app_nm: APP_NM,
@@ -271,11 +277,13 @@ const HomeContent = () => {
   const executeSQL = async (sqlQuery: any) => {
     console.log(sqlQuery);
     setIsLoading(true);
+
     const payload = buildPayload({
       prompt: storedPrompt,
       execSQL: sqlQuery.sqlQuery,
       sessionId,
       minimal: true,
+      selectedAppId,
     });
     const { data, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`, payload);
     if (error || !data) {
@@ -322,14 +330,17 @@ const HomeContent = () => {
         return msg;
       })
     );
+
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
       prompt: storedPrompt,
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
-      sessionId
+      sessionId,
+      selectedAppId,
     });
+
 
     const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
 
@@ -410,8 +421,19 @@ const HomeContent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const yaml = await ApiService.getCortexAnalystDetails();
-        const search = await ApiService.getCortexSearchDetails();
+        const yaml = await ApiService.getCortexAnalystDetails({
+          aplctn_cd: selectedAppId,
+          database_nm: dbDetails.database_nm,
+          schema_nm: dbDetails.schema_nm,
+        });
+
+        const search = await ApiService.getCortexSearchDetails({
+          aplctn_cd: selectedAppId,
+          database_nm: dbDetails.database_nm,
+          schema_nm: dbDetails.schema_nm,
+        });
+
+
         setFileLists({ yaml: yaml || [], search: search || [] });
       } catch {
         setFileLists({ yaml: [], search: [] });
@@ -432,7 +454,8 @@ const HomeContent = () => {
       inputValue={inputValue}
       messages={messages}
       anchorEls={anchorEls}
-      fileLists={fileLists}
+     fileLists={fileLists}
+  setFileLists={setFileLists}
       selectedModels={selectedModels}
       handleMenuClick={handleMenuClick}
       handleMenuClose={handleMenuClose}
@@ -452,6 +475,8 @@ const HomeContent = () => {
       submitted={submitted}
       setSubmitted={setSubmitted}
       open={open}
+      dbDetails={dbDetails}
+      setDbDetails={setDbDetails}
     />
   );
 };

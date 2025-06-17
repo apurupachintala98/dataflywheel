@@ -1,9 +1,15 @@
 import axios from "axios";
 import config from "../utils/config.json";
 
+interface QueryOverrides {
+  database_nm?: string;
+  schema_nm?: string;
+  session_id?: string;
+  [key: string]: any; // allows for future overrides without error
+}
+
 const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config;
 const {
-  APLCTN_CD,
   APP_ID,
   API_KEY,
   DATABASE_NAME,
@@ -17,54 +23,35 @@ const axiosInstance = axios.create({
   },
 });
 
-const buildQueryParams = (overrides = {}) => {
+
+
+const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const params = {
-    aplctn_cd: APLCTN_CD,
+    aplctn_cd: overrides.aplctn_cd, // now passed explicitly
     app_id: APP_ID,
     api_key: API_KEY,
-    session_id: "0c508184-5da9-4bfe-9651-bb56e8bbf2ee",
-    database_nm: DATABASE_NAME,
-    schema_nm: SCHEMA_NAME,
-    ...overrides
+    session_id: overrides.session_id || "default-session-id",
+    database_nm: overrides.database_nm || DATABASE_NAME,
+    schema_nm: overrides.schema_nm || SCHEMA_NAME,
+    ...overrides,
   };
 
   return Object.entries(params)
+    .filter(([, val]) => val !== undefined) // remove undefined keys
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join("&");
 };
 
 const ApiService = {
-  // login: async (email: string, password: string) => {
-  //   try {
-  //     const response = await axiosInstance.post(ENDPOINTS.LOGIN, {});
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error logging in:", error);
-  //     throw error;
-  //   }
-  // },
-
-  // fetchUserInfo: async (token: string) => {
-  //   try {
-  //     const response = await axiosInstance.post(
-  //       ENDPOINTS.USER_INFO,
-  //       {},
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       }
-  //     );
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error fetching user info:", error);
-  //     throw error;
-  //   }
-  // },
-
-
-
-  getCortexSearchDetails: async () => {
+ 
+getCortexSearchDetails: async ({
+    aplctn_cd,
+    database_nm,
+    schema_nm,
+    session_id,
+  }: QueryOverrides) => {
     try {
-      const queryParams = buildQueryParams();
+      const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
       const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
       return response.data;
     } catch (error) {
@@ -73,16 +60,22 @@ const ApiService = {
     }
   },
 
-  getCortexAnalystDetails: async () => {
+  getCortexAnalystDetails: async ({
+    aplctn_cd,
+    database_nm,
+    schema_nm,
+    session_id,
+  }: QueryOverrides) => {
     try {
-      const queryParams = buildQueryParams();
+      const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
       const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching cortex analyst details:', error);
+      console.error("Error fetching cortex analyst details:", error);
       throw error;
     }
   },
+
 
 };
 
