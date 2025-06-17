@@ -120,8 +120,6 @@ const MainContent = ({
         setChartOpen(true);
     };
 
-    console.log("data", data);
-
     const handleValidateLogin = async () => {
         setValidating(true);
         setError('');
