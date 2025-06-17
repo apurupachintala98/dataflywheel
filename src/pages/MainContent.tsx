@@ -242,7 +242,7 @@ const MainContent = ({
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
-                                    {loginInfo ? `Logged in as ${loginInfo}` : "You are in read-only mode. Login to know more details."}
+                                    {loginInfo ? `Logged in as ${loginInfo}` : <div dangerouslySetInnerHTML={{ __html: "You are in read-only mode. <br/> Login to know more details." }} />}
                                 </Typography>
                                 {loginInfo ? (
                                     <Button
