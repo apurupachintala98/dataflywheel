@@ -10,6 +10,15 @@ export function validateEmail(email: string) {
   return emailPattern.test(email);
 }
 
+export function cropString(str: string) {
+  const maxLength = 37;
+  if (str.length > maxLength) {
+    return `${str.substring(0, maxLength)} ...`;
+  } else {
+    return str;
+  }
+}
+
 export const size = {
   mobile: "320px",
   tablet: "768px",

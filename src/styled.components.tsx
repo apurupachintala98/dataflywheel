@@ -66,7 +66,13 @@ body {
   background-color: #eee;
 }
 
-
+.gradientText{
+background-image: linear-gradient(45deg, #1a949f, #002d9c); 
+-webkit-background-clip: text; 
+background-clip: text; 
+-webkit-text-fill-color: transparent;
+color: #000;
+}
 `;
 
 export default GlobalStyle;

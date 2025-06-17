@@ -101,15 +101,13 @@ export const SideBarContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  color: #fff;
-  background-color: #2761bb;
-  padding: 8px 16px;
+  color: #000000;
+  background-color: transparent;
+  padding: 8px 0px;
   border: 0 none;
-  border-radius: 10px;
   display: flex;
   align-items: center;
   font-size: 16px;
-  margin-top: 10px;
   cursor: pointer;
   svg {
     width: 18px;

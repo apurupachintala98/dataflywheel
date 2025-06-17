@@ -48,3 +48,12 @@ export interface AuthContextType {
 export interface AuthProviderProps {
   children: ReactNode;
 }
+
+export interface RecentHistoryProps {
+  title: string;
+  isDotVisible: boolean;
+  list: {
+    title: string,
+    isActive: boolean
+  }[]
+}

@@ -36,6 +36,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Search from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+
 import {
   AppBar,
   Box,
@@ -50,7 +52,7 @@ import {
 import LogoImg from "assests/images/Logo.svg";
 import { TypeProps } from "interface";
 import HomeContent from "pages/HomeContent";
-import History from "components/History";
+import RecentHistory from "components/RecentHistory";
 
 const drawerWidth = {
   full: 400,
@@ -95,9 +97,12 @@ function Home() {
         >
           {!collapsed ? (
             <>
-              <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                <img src={LogoImg} alt="Logo" style={{ height: '40px', width: 'auto' }} />
-                <TagLine style={{ color: '#000', marginLeft: '10px' }}>
+              <Link
+                to="/"
+                style={{ display: "flex", alignItems: "center", textDecoration: "none" }}
+              >
+                <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
+                <TagLine style={{ color: "#000", marginLeft: "10px" }}>
                   Data Intelligence Platform
                 </TagLine>
               </Link>
@@ -121,18 +126,42 @@ function Home() {
                   padding: "0",
                 }}
               >
-                <img src={dfwLogo} alt="" style={{ width: '83%', height: 'auto' }}/>
+                <img src={dfwLogo} alt="" style={{ width: "60%", height: "auto" }} />
               </List>
               <List>
-                <InputSearchContainer>
-                  <Search sx={{ width: "20px", position: "absolute", left: "5px" }} />
-                  <Input type="text" name="" placeholder="Ask me anything!" />
-                </InputSearchContainer>
-                {/* <Button type="button">
-                  <PlusIcon /> New Chat
-                </Button> */}
+                <Button type="button">
+                  <EditNoteOutlinedIcon /> New Chat
+                </Button>  
               </List>
-              <History />    
+              {/* <History />     */}
+              <RecentHistory
+                title={"Prompt"}
+                isDotVisible={false}
+                list={[
+                  {
+                    title: "Prompt I",
+                    isActive: false,
+                  },
+                  {
+                    title: "Prompt II",
+                    isActive: false,
+                  },
+                ]}
+              />
+              <RecentHistory
+                title={"Recent"}
+                isDotVisible={true}
+                list={[
+                  {
+                    title: "What is the FMC denominator based on in HEDIS?",
+                    isActive: true,
+                  },
+                  {
+                    title: "What is considered continuous enrollment for FMC in HEDIS?",
+                    isActive: false,
+                  },
+                ]}
+              />
             </SideBarContainer>
           </>
         )}

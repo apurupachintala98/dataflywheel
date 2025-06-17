@@ -406,7 +406,7 @@ const MainContent = ({
                             zIndex: 1200,
                         }}>
                             {messages.length === 0 && (
-                                <Typography variant="h5" sx={{ marginBottom: '20px', fontWeight: "600", fontSize: "28px", textAlign: "center", bottom: '57%', position: 'absolute', color: "#373535" }}>
+                                <Typography className="gradientText" variant="h5" sx={{ marginBottom: '30px', fontWeight: "600", fontSize: "28px", lineHeight: "36px", textAlign: "center", bottom: '60%', position: 'absolute', color: "#373535" }}>
                                     Data at your Fingertips
                                 </Typography>
                             )}
