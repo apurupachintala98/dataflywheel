@@ -43,7 +43,7 @@ const HomeContent = () => {
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
   const { selectedAppId, setSelectedAppId } = useSelectedApp();
-const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+  const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
 
 
 
@@ -106,14 +106,16 @@ const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
     setInputValue("");
     setSubmitted(true);
 
+
     const payload = buildPayload({
       prompt: inputValue,
       semanticModel: selectedModels.yaml,
       searchModel: selectedModels.search,
       model: DEFAULT_MODEL,
       sessionId,
-      database_nm: DATABASE_NAME,
-      schema_nm: SCHEMA_NAME
+      selectedAppId,
+      database_nm: dbDetails.database_nm,
+      schema_nm: dbDetails.schema_nm,
     });
 
     const endpoint = config.ENDPOINTS.AGENT
@@ -275,11 +277,13 @@ const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   const executeSQL = async (sqlQuery: any) => {
     console.log(sqlQuery);
     setIsLoading(true);
+
     const payload = buildPayload({
       prompt: storedPrompt,
       execSQL: sqlQuery.sqlQuery,
       sessionId,
       minimal: true,
+      selectedAppId,
     });
     const { data, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`, payload);
     if (error || !data) {
@@ -326,14 +330,17 @@ const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
         return msg;
       })
     );
+
     const payload = buildPayload({
       method: "cortex",
       model: "llama3.1-70b-elevance",
       prompt: storedPrompt,
       sysMsg: "You are powerful AI assistant in providing accurate answers always. Be Concise in providing answers based on context.",
       responseData: message.executedResponse,
-      sessionId
+      sessionId,
+      selectedAppId,
     });
+
 
     const { stream, error } = await sendRequest(`${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`, payload, undefined, true);
 
@@ -414,17 +421,17 @@ const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   useEffect(() => {
     const fetchData = async () => {
       try {
-const yaml = await ApiService.getCortexAnalystDetails({
-  aplctn_cd: selectedAppId,
-  database_nm: dbDetails.database_nm,
-  schema_nm: dbDetails.schema_nm,
-});
+        const yaml = await ApiService.getCortexAnalystDetails({
+          aplctn_cd: selectedAppId,
+          database_nm: dbDetails.database_nm,
+          schema_nm: dbDetails.schema_nm,
+        });
 
-const search = await ApiService.getCortexSearchDetails({
-  aplctn_cd: selectedAppId,
-  database_nm: dbDetails.database_nm,
-  schema_nm: dbDetails.schema_nm,
-});
+        const search = await ApiService.getCortexSearchDetails({
+          aplctn_cd: selectedAppId,
+          database_nm: dbDetails.database_nm,
+          schema_nm: dbDetails.schema_nm,
+        });
 
 
         setFileLists({ yaml: yaml || [], search: search || [] });
@@ -468,7 +475,7 @@ const search = await ApiService.getCortexSearchDetails({
       setSubmitted={setSubmitted}
       open={open}
       dbDetails={dbDetails}
-  setDbDetails={setDbDetails}
+      setDbDetails={setDbDetails}
     />
   );
 };

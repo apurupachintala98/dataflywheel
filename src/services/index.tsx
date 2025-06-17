@@ -27,16 +27,17 @@ const axiosInstance = axios.create({
 
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const params = {
-     aplctn_cd: overrides.aplctn_cd,
+    aplctn_cd: overrides.aplctn_cd, // now passed explicitly
     app_id: APP_ID,
     api_key: API_KEY,
-    session_id: overrides.session_id || "0c508184-5da9-4bfe-9651-bb56e8bbf2ee",
+    session_id: overrides.session_id || "default-session-id",
     database_nm: overrides.database_nm || DATABASE_NAME,
     schema_nm: overrides.schema_nm || SCHEMA_NAME,
     ...overrides,
   };
 
   return Object.entries(params)
+    .filter(([, val]) => val !== undefined) // remove undefined keys
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join("&");
 };
