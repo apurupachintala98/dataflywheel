@@ -50,6 +50,7 @@ import {
 import LogoImg from "assests/images/Logo.svg";
 import { TypeProps } from "interface";
 import HomeContent from "pages/HomeContent";
+import History from "components/History";
 
 const drawerWidth = {
   full: 400,
@@ -131,6 +132,7 @@ function Home() {
                   <PlusIcon /> New Chat
                 </Button> */}
               </List>
+              <History />    
             </SideBarContainer>
           </>
         )}
