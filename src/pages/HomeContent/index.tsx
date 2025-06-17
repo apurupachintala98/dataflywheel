@@ -64,7 +64,7 @@ const HomeContent = () => {
     upload: null,
   });
   const open = Boolean(anchorEls.upload);
-  const [fileLists, setFileLists] = useState({ yaml: [] as string[], search: [] as string[] });
+const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({ yaml: [], search: [] });
   const [selectedModels, setSelectedModels] = useState<SelectedModelState>({ yaml: [], search: [] });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -454,7 +454,8 @@ const HomeContent = () => {
       inputValue={inputValue}
       messages={messages}
       anchorEls={anchorEls}
-      fileLists={fileLists}
+     fileLists={fileLists}
+  setFileLists={setFileLists}
       selectedModels={selectedModels}
       handleMenuClick={handleMenuClick}
       handleMenuClose={handleMenuClose}
