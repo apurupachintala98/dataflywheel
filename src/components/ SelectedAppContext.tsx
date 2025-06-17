@@ -9,7 +9,11 @@ interface SelectedAppContextType {
 const SelectedAppContext = createContext<SelectedAppContextType | undefined>(undefined);
 
 export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedAppId, setSelectedAppId] = useState("");
+  const [selectedAppId, _setSelectedAppId] = useState("");
+
+  const setSelectedAppId = (id: string) => {
+    _setSelectedAppId(id.toLowerCase());
+  };
 
   return (
     <SelectedAppContext.Provider value={{ selectedAppId, setSelectedAppId }}>
