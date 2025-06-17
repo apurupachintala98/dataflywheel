@@ -34,34 +34,7 @@ const buildQueryParams = (overrides = {}) => {
 };
 
 const ApiService = {
-  // login: async (email: string, password: string) => {
-  //   try {
-  //     const response = await axiosInstance.post(ENDPOINTS.LOGIN, {});
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error logging in:", error);
-  //     throw error;
-  //   }
-  // },
-
-  // fetchUserInfo: async (token: string) => {
-  //   try {
-  //     const response = await axiosInstance.post(
-  //       ENDPOINTS.USER_INFO,
-  //       {},
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       }
-  //     );
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Error fetching user info:", error);
-  //     throw error;
-  //   }
-  // },
-
-
-
+ 
   getCortexSearchDetails: async () => {
     try {
       const queryParams = buildQueryParams();

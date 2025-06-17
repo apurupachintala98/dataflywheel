@@ -9,6 +9,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from '../types/message.types';
 import Chart from '../components/Chart';
+import axios from "axios";
+import config from "../utils/config.json";
+import { v4 as uuidv4 } from 'uuid';
 
 interface MainContentProps {
     messages: MessageType[];
@@ -79,6 +82,19 @@ const MainContent = ({
     const [selectedAppId, setSelectedAppId] = useState('');
     const [showLoginButton, setShowLoginButton] = useState(false);
     const [loginInfo, setLoginInfo] = useState<string | null>(null);
+     const [sessionId] = useState(() => uuidv4());
+     const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+
+  const { APP_CONFIG } = config;
+  const {
+    APLCTN_CD,
+    APP_ID,
+    API_KEY,
+    DEFAULT_MODEL,
+    APP_NM,
+    DATABASE_NAME,
+    SCHEMA_NAME,
+  } = APP_CONFIG;
 
 
 
@@ -125,33 +141,46 @@ const MainContent = ({
         }
     };
 
-    const handleFinalLogin = async () => {
-        try {
-            const response = await fetch('YOUR_FINAL_LOGIN_API', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: credentials.anthemId,
-                    app_id: selectedAppId,
-                    env: "dev",
-                }),
-            });
+   const handleFinalLogin = async () => {
+  const payload = {
+    query: {
+      aplctn_cd: APLCTN_CD,
+      app_id:APP_ID,
+      api_key: API_KEY,
+      app_lvl_prefix: "",
+      session_id: sessionId
+    },
+  };
 
-            const data = await response.json();
+  try {
+    const response = await axios.post(
+      `${config.API_BASE_URL}${config.ENDPOINTS.DB_SCHEMA_LIST}`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-            if (response.ok) {
-                setOpenLoginDialog(false);
-                setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
-            } else {
-                setError(data?.message || "Login failed.");
-            }
-        } catch {
-            setError("Final login API error.");
-        }
-    };
+    console.log("API Response:", response.data);
 
+   if (response.status === 200) {
+      setDbDetails({
+        database_nm: data.database_nm,
+        schema_nm: data.schema_nm,
+      });
 
-
+      setOpenLoginDialog(false);
+      setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+    } else {
+      setError(response.data?.message || "Login failed.");
+    }
+  } catch (error: any) {
+    console.error("Final login API error:", error);
+    setError("Final login API error.");
+  }
+};
     return (
         <>
             <ToastContainer position="top-right" autoClose={3000} />
@@ -213,7 +242,7 @@ const MainContent = ({
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
-                                    {loginInfo ? `Logged in as ${loginInfo}` : "You are in read-only mode. <br />Login to know more details."}
+                                    {loginInfo ? `Logged in as ${loginInfo}` : "You are in read-only mode. Login to know more details."}
                                 </Typography>
                                 {loginInfo ? (
                                     <Button
