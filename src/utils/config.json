@@ -1,5 +1,5 @@
 {
-    "API_BASE_URL": "https://sfassist.edagenaisit.awsdns.internal.das/api/cortex/",
+    "API_BASE_URL": "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/",
     "APP_CONFIG": {
     "APP_ID": "edadip",
     "API_KEY": "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",

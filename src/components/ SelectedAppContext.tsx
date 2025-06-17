@@ -11,8 +11,9 @@ export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
   const [selectedAppId, _setSelectedAppId] = useState("");
 
   const setSelectedAppId = (id: string) => {
-    const lowercaseId = id?.trim().toLowerCase(); 
-    _setSelectedAppId(lowercaseId);
+    // const lowercaseId = id?.trim().toLowerCase(); 
+    // _setSelectedAppId(lowercaseId);
+    _setSelectedAppId(id?.trim());
   };
 
   return (

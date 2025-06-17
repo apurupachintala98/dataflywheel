@@ -243,7 +243,7 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
       const formData = new FormData();
 
       const query = {
-        aplctn_cd: selectedAppId,
+        aplctn_cd: selectedAppId.toLowerCase(),
         app_id: APP_ID,
         api_key: API_KEY,
         app_nm: APP_NM,
@@ -456,13 +456,13 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
     const fetchData = async () => {
       try {
         const yaml = await ApiService.getCortexAnalystDetails({
-          aplctn_cd: selectedAppId,
+          aplctn_cd: selectedAppId.toLowerCase(),
           database_nm: dbDetails.database_nm,
           schema_nm: dbDetails.schema_nm,
         });
 
         const search = await ApiService.getCortexSearchDetails({
-          aplctn_cd: selectedAppId,
+          aplctn_cd: selectedAppId.toLowerCase(),
           database_nm: dbDetails.database_nm,
           schema_nm: dbDetails.schema_nm,
         });

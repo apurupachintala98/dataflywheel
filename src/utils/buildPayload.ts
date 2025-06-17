@@ -161,7 +161,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     const { prompt, execSQL } = params;
     return {
       query: {
-        aplctn_cd: selectedAppId,
+        aplctn_cd: selectedAppId.toLowerCase(),
         app_id: APP_ID,
         api_key: API_KEY,
         prompt: {
@@ -187,7 +187,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
 
   return {
     query: {
-      aplctn_cd: selectedAppId,
+      aplctn_cd: selectedAppId.toLowerCase(),
       app_id: APP_ID,
       api_key: API_KEY,
       model,
