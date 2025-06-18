@@ -41,6 +41,7 @@ interface MainContentProps {
         chat: HTMLElement | null;
         search: HTMLElement | null;
         upload: HTMLElement | null;
+        schema: HTMLElement | null;
     };
     fileLists: { yaml: string[]; search: string[] };
     setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
@@ -196,23 +197,6 @@ const MainContent = ({
                 const selectedDatabase = database_nm;
                 setAvailableSchemas(schema_nm);
                 setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
-
-                const yamlFiles = await ApiService.getCortexSearchDetails({
-                    database_nm: selectedDatabase,
-                    schema_nm: selectedSchema,
-                    aplctn_cd: selectedAppId.toLowerCase(),
-                    session_id: sessionId,
-                });
-
-                const searchFiles = await ApiService.getCortexAnalystDetails({
-                    database_nm: selectedDatabase,
-                    schema_nm: selectedSchema,
-                    aplctn_cd: selectedAppId.toLowerCase(),
-                    session_id: sessionId,
-                });
-
-                setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
-
                 setOpenLoginDialog(false);
                 setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
             } else {
@@ -238,42 +222,62 @@ const MainContent = ({
                 <Box sx={{ flexShrink: 0, px: 3, py: 2 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         {availableSchemas.length > 0 && (
-                            <TextField
-                                select
-                                label="Select Schema"
-                                fullWidth
-                                margin="normal"
-                                value={selectedSchema}
-                                onChange={async (e) => {
-                                    const schema = e.target.value;
-                                    setSelectedSchema(schema);
-                                    setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
+                            <Box sx={{ display: "inline-block" }}>
+                                <Box
+                                    onClick={(e) => handleMenuClick(e, "schema")}
+                                    sx={{
+                                        color: "#000",
+                                        px: 2,
+                                        py: 1,
+                                        borderRadius: "6px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 1,
+                                        justifyContent: "space-between",
+                                    }}
+                                >
+                                    {selectedSchema || "Select Schema"} <FaAngleDown />
+                                </Box>
+                                <Menu
+                                    anchorEl={anchorEls["schema"]}
+                                    open={Boolean(anchorEls["schema"])}
+                                    onClose={handleMenuClose}
+                                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                                    transformOrigin={{ vertical: "top", horizontal: "left" }}
+                                >
+                                    {availableSchemas.map((schema) => (
+                                        <MenuItem
+                                            key={schema}
+                                            onClick={async () => {
+                                                setSelectedSchema(schema);
+                                                setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
 
-                                    // Fetch files for this selected schema
-                                    const yamlFiles = await ApiService.getCortexSearchDetails({
-                                        database_nm: dbDetails.database_nm,
-                                        schema_nm: schema,
-                                        aplctn_cd: selectedAppId.toLowerCase(),
-                                        session_id: sessionId,
-                                    });
+                                                const yamlFiles = await ApiService.getCortexSearchDetails({
+                                                    database_nm: dbDetails.database_nm,
+                                                    schema_nm: schema,
+                                                    aplctn_cd: selectedAppId.toLowerCase(),
+                                                    session_id: sessionId,
+                                                });
 
-                                    const searchFiles = await ApiService.getCortexAnalystDetails({
-                                        database_nm: dbDetails.database_nm,
-                                        schema_nm: schema,
-                                        aplctn_cd: selectedAppId.toLowerCase(),
-                                        session_id: sessionId,
-                                    });
+                                                const searchFiles = await ApiService.getCortexAnalystDetails({
+                                                    database_nm: dbDetails.database_nm,
+                                                    schema_nm: schema,
+                                                    aplctn_cd: selectedAppId.toLowerCase(),
+                                                    session_id: sessionId,
+                                                });
 
-                                    setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
-                                }}
-                            >
-                                {availableSchemas.map((schema) => (
-                                    <MenuItem key={schema} value={schema}>
-                                        {schema}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                                                setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
+                                                handleMenuClose();
+                                            }}
+                                        >
+                                            {schema}
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Box>
                         )}
+
 
                         {selectedSchema && (
                             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
