@@ -386,13 +386,13 @@ const MainContent = ({
                 <Button
                   variant="contained"
                   sx={{
+                    px: 2.5,
+                      py: 1,
                     backgroundColor: "#373535",
                     textTransform: "none",
                     fontWeight: 600,
                     fontSize: 14,
-                    px: 2.5,
-                    py: 0.75,
-                    borderRadius: "30px",
+                   borderRadius: "30px",
                     "&:hover": {
                       backgroundColor: "#131313",
                     },
@@ -406,7 +406,13 @@ const MainContent = ({
             <Dialog open={openLoginDialog} onClose={() => setOpenLoginDialog(false)}>
               <DialogTitle>
                 <Box
-                  sx={{ display: "flex", justifyContent: "left", alignItems: "baseline", gap: 1, padding: "0px" }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "baseline",
+                    gap: 1,
+                    padding: "0px",
+                  }}
                 >
                   {/* <LockIcon
                     sx={{ fontSize: 20, color: "#000", position: "relative", top: "2px" }}
@@ -465,6 +471,8 @@ const MainContent = ({
                   <Button
                     variant="outlined"
                     sx={{
+                      px: 2,
+                      py: 1,
                       color: "#fff",
                       borderColor: "#000",
                       borderRadius: "30px",
@@ -485,6 +493,8 @@ const MainContent = ({
                     onClick={handleFinalLogin}
                     disabled={!selectedAppId}
                     sx={{
+                      px: 2,
+                      py: 1,
                       textTransform: "none",
                       borderRadius: "30px",
                       backgroundColor: "#373535",
@@ -500,6 +510,8 @@ const MainContent = ({
                 <Button
                   variant="outlined"
                   sx={{
+                    px: 2,
+                    py: 1,
                     color: "#000",
                     borderColor: "#000",
                     borderRadius: "30px",
