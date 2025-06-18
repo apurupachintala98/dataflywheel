@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 export const ChatContainer = styled.div``;
 export const ChatHeading = styled.div`
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 20px;
+  line-height: 30px;
   margin-bottom: 10px;
+  color: #373535;
 `;
 export const ChatItem = styled.div`
   border: 1px solid #d9d9d9;
