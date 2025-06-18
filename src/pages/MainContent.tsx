@@ -387,12 +387,12 @@ const MainContent = ({
                   variant="contained"
                   sx={{
                     px: 2.5,
-                      py: 1,
+                    py: 1,
                     backgroundColor: "#373535",
                     textTransform: "none",
                     fontWeight: 600,
                     fontSize: 14,
-                   borderRadius: "30px",
+                    borderRadius: "30px",
                     "&:hover": {
                       backgroundColor: "#131313",
                     },
@@ -466,7 +466,7 @@ const MainContent = ({
                   </Typography>
                 )}
               </DialogContent>
-              <DialogActions sx={{ px: 5, pb: 3 }}>
+              <DialogActions sx={{ px: 3, pb: 3 }}>
                 {!showLoginButton && (
                   <Button
                     variant="outlined"
