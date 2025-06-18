@@ -55,7 +55,8 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
   const [sessionId] = useState(() => uuidv4());
   const { selectedAppId, setSelectedAppId } = useSelectedApp();
   const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
-
+  const [user_nm, setUserNm] = useState("");
+  const [user_pwd, setUserPwd] = useState("");
   const { APP_CONFIG } = config;
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 
@@ -300,6 +301,11 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
       sessionId,
       minimal: true,
       selectedAppId,
+      user_nm,
+      user_pwd,
+      database_nm: dbDetails.database_nm,
+      schema_nm: dbDetails.schema_nm,
+
     });
     const { data, error } = await sendRequest(
       `${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`,
@@ -539,6 +545,10 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
       open={open}
       dbDetails={dbDetails}
       setDbDetails={setDbDetails}
+      user_nm={user_nm}
+      user_pwd={user_pwd}
+      setUserNm={setUserNm}
+      setUserPwd={setUserPwd}
     />
   );
 };
