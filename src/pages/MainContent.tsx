@@ -220,181 +220,123 @@ const MainContent = ({
                 }}
             >
                 <Box sx={{ flexShrink: 0, px: 3, py: 2 }}>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        {availableSchemas.length > 0 && (
-                            <Box sx={{ display: "inline-block" }}>
-                                <Box
-                                    onClick={(e) => handleMenuClick(e, "schema")}
-                                    sx={{
-                                        color: "#000",
-                                        px: 2,
-                                        py: 1,
-                                        borderRadius: "6px",
-                                        cursor: "pointer",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: 1,
-                                        justifyContent: "space-between",
-                                    }}
-                                >
-                                    {selectedSchema || "Select Schema"} <FaAngleDown />
-                                </Box>
-                                <Menu
-                                    anchorEl={anchorEls["schema"]}
-                                    open={Boolean(anchorEls["schema"])}
-                                    onClose={handleMenuClose}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "left" }}
-                                >
-                                    {availableSchemas.map((schema) => (
-                                        <MenuItem
-                                            key={schema}
-                                            onClick={async () => {
-                                                setSelectedSchema(schema);
-                                                setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
-
-                                                const yamlFiles = await ApiService.getCortexSearchDetails({
-                                                    database_nm: dbDetails.database_nm,
-                                                    schema_nm: schema,
-                                                    aplctn_cd: selectedAppId.toLowerCase(),
-                                                    session_id: sessionId,
-                                                });
-
-                                                const searchFiles = await ApiService.getCortexAnalystDetails({
-                                                    database_nm: dbDetails.database_nm,
-                                                    schema_nm: schema,
-                                                    aplctn_cd: selectedAppId.toLowerCase(),
-                                                    session_id: sessionId,
-                                                });
-
-                                                setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
-                                                handleMenuClose();
-                                            }}
-                                        >
-                                            {schema}
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                            </Box>
-                        )}
-
-
-                        {selectedSchema && (
-                            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                                {(["chat", "search"] as const).map((type) => (
-                                    <Box key={type} sx={{ display: "inline-block" }}>
-                                        <Box
-                                            onClick={(e) => handleMenuClick(e, type)}
-                                            sx={{
-                                                // backgroundColor: '#2761BB',
-                                                color: "#000",
-                                                px: 2,
-                                                py: 1,
-                                                borderRadius: "6px",
-                                                cursor: "pointer",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: 1,
-                                                // minWidth: 150,
-                                                justifyContent: "space-between",
-                                            }}
-                                        >
-                                            {type === "chat" ? "Semantic Model" : "Search"} <FaAngleDown />
-                                        </Box>
-                                        <Menu
-                                            anchorEl={anchorEls[type]}
-                                            open={Boolean(anchorEls[type])}
-                                            onClose={handleMenuClose}
-                                            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                                            transformOrigin={{ vertical: "top", horizontal: "left" }}
-                                        >
-                                            {fileLists[type === "chat" ? "yaml" : "search"].length ? (
-                                                fileLists[type === "chat" ? "yaml" : "search"].map((file) => (
-                                                    <MenuItem
-                                                        key={file}
-                                                        onClick={() =>
-                                                            handleModelSelect(file, type === "chat" ? "yaml" : "search")
-                                                        }
-                                                    >
-                                                        {file}{" "}
-                                                        {selectedModels[type === "chat" ? "yaml" : "search"].includes(file) &&
-                                                            "✓"}
-                                                    </MenuItem>
-                                                ))
-                                            ) : (
-                                                <MenuItem disabled>No Files</MenuItem>
-                                            )}
-                                        </Menu>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                        {/* LEFT: Schema + Semantic Model + Search */}
+                        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                            {availableSchemas.length > 0 && (
+                                <Box sx={{ display: "inline-block" }}>
+                                    <Box
+                                        onClick={(e) => handleMenuClick(e, "schema")}
+                                        sx={{
+                                            color: "#000",
+                                            px: 2,
+                                            py: 1,
+                                            borderRadius: "6px",
+                                            cursor: "pointer",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1,
+                                            justifyContent: "space-between",
+                                            border: "1px solid #ccc",
+                                        }}
+                                    >
+                                        {selectedSchema || "Select Schema"} <FaAngleDown />
                                     </Box>
-                                ))}
-                            </Box>
-                        )}
-                        {/* <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
-                  {loginInfo ? (
-                    `Logged in as ${loginInfo}`
-                  ) : (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: "You are in read-only mode. <br/> Login to know more details.",
-                      }}
-                    />
-                  )}
-                </Typography>
-                {loginInfo ? (
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      color: "#000",
-                      borderColor: "#000",
-                      textTransform: "none",
-                      fontSize: 14,
-                      px: 2,
-                      py: 0.5,
-                      borderRadius: "30px",
-                    }}
-                    onClick={() => {
-                      setLoginInfo(null);
-                      setCredentials({ anthemId: "", password: "" });
-                      setAppIds([]);
-                      setSelectedAppId("");
-                      setShowLoginButton(false);
-                    }}
-                  >
-                    Logout
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: "#373535",
-                      textTransform: "none",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      px: 2.5,
-                      py: 0.75,
-                      borderRadius: "30px",
-                      "&:hover": {
-                        backgroundColor: "#131313",
-                      },
-                    }}
-                    onClick={() => setOpenLoginDialog(true)}
-                  >
-                    Login
-                  </Button>
-                )}
-              </Box>
-            </Box> */}
+                                    <Menu
+                                        anchorEl={anchorEls["schema"]}
+                                        open={Boolean(anchorEls["schema"])}
+                                        onClose={handleMenuClose}
+                                        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                                        transformOrigin={{ vertical: "top", horizontal: "left" }}
+                                    >
+                                        {availableSchemas.map((schema) => (
+                                            <MenuItem
+                                                key={schema}
+                                                onClick={async () => {
+                                                    setSelectedSchema(schema);
+                                                    setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
+
+                                                    const yamlFiles = await ApiService.getCortexSearchDetails({
+                                                        database_nm: dbDetails.database_nm,
+                                                        schema_nm: schema,
+                                                        aplctn_cd: selectedAppId.toLowerCase(),
+                                                        session_id: sessionId,
+                                                    });
+
+                                                    const searchFiles = await ApiService.getCortexAnalystDetails({
+                                                        database_nm: dbDetails.database_nm,
+                                                        schema_nm: schema,
+                                                        aplctn_cd: selectedAppId.toLowerCase(),
+                                                        session_id: sessionId,
+                                                    });
+
+                                                    setFileLists({ yaml: yamlFiles || [], search: searchFiles || [] });
+                                                    handleMenuClose();
+                                                }}
+                                            >
+                                                {schema}
+                                            </MenuItem>
+                                        ))}
+                                    </Menu>
+                                </Box>
+                            )}
+
+                            {selectedSchema && (
+                                <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                                    {(["chat", "search"] as const).map((type) => (
+                                        <Box key={type} sx={{ display: "inline-block" }}>
+                                            <Box
+                                                onClick={(e) => handleMenuClick(e, type)}
+                                                sx={{
+                                                    color: "#000",
+                                                    px: 2,
+                                                    py: 1,
+                                                    borderRadius: "6px",
+                                                    cursor: "pointer",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: 1,
+                                                    justifyContent: "space-between",
+                                                    border: "1px solid #ccc",
+                                                }}
+                                            >
+                                                {type === "chat" ? "Semantic Model" : "Search"} <FaAngleDown />
+                                            </Box>
+                                            <Menu
+                                                anchorEl={anchorEls[type]}
+                                                open={Boolean(anchorEls[type])}
+                                                onClose={handleMenuClose}
+                                                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                                                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                                            >
+                                                {fileLists[type === "chat" ? "yaml" : "search"].length ? (
+                                                    fileLists[type === "chat" ? "yaml" : "search"].map((file) => (
+                                                        <MenuItem
+                                                            key={file}
+                                                            onClick={() =>
+                                                                handleModelSelect(file, type === "chat" ? "yaml" : "search")
+                                                            }
+                                                        >
+                                                            {file}{" "}
+                                                            {selectedModels[type === "chat" ? "yaml" : "search"].includes(file) && "✓"}
+                                                        </MenuItem>
+                                                    ))
+                                                ) : (
+                                                    <MenuItem disabled>No Files</MenuItem>
+                                                )}
+                                            </Menu>
+                                        </Box>
+                                    ))}
+                                </Box>
+                            )}
+                        </Box>
+
+                        {/* RIGHT: Login Info */}
                         <Box
                             sx={{
-                                position: "absolute",
-                                top: 16,
-                                right: 24,
                                 display: "flex",
                                 alignItems: "center",
                                 gap: 1,
-                                zIndex: 10,
                             }}
                         >
                             <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
@@ -451,8 +393,6 @@ const MainContent = ({
                                 </Button>
                             )}
                         </Box>
-
-
                         <Dialog open={openLoginDialog} onClose={() => setOpenLoginDialog(false)}>
                             <DialogTitle>
                                 <Box
@@ -566,6 +506,7 @@ const MainContent = ({
                         </Dialog>
                     </Box>
                 </Box>
+
 
                 <Box
                     sx={{
