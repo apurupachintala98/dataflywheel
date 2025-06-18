@@ -144,7 +144,6 @@ function Home() {
                   <img src={newChat} /> New Chat
                 </Button>
               </List>
-              {/* <History />     */}
               <RecentHistory
                 title={"Prompt"}
                 isDotVisible={false}
@@ -161,7 +160,7 @@ function Home() {
                   },
                 ]}
               />
-              <RecentHistory
+              {/* <RecentHistory
                 title={"Recent"}
                 isDotVisible={true}
                 list={[
@@ -176,7 +175,7 @@ function Home() {
                     onTitleClick: setRecentValue,
                   },
                 ]}
-              />
+              /> */}
             </SideBarContainer>
           </>
         )}

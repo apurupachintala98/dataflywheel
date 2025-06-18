@@ -1,4 +1,14 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+`;
+
 
 export const MainContainer = styled.div<{ height: number }>`
   margin: 0;
@@ -175,3 +185,8 @@ export const ChatDateTime = styled.div`
   font-size: 12px;
   line-height: 18px;
 `;
+
+export const Loader = styled.img`
+    animation: ${rotate} 2s linear infinite;
+    width: 40px;
+`

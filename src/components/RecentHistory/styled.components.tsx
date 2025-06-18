@@ -14,14 +14,14 @@ export const ChatItem = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   &.active {
-    background-color: #2761bb;
+    background-color: #131313;
     color: #fff;
     button#long-button {
       padding: 4px;
       &:hover {
         background-color: #fff;
         svg {
-          fill: #2761bb;
+          fill: #131313;
         }
       }
       svg {
