@@ -430,7 +430,7 @@ const MainContent = ({
                                 />
 
                                 {appIds.length > 0 && (
-                                    <TextField
+                                    <CssTextField
                                         select
                                         label="Select App ID"
                                         fullWidth
@@ -446,7 +446,7 @@ const MainContent = ({
                                                 {id}
                                             </MenuItem>
                                         ))}
-                                    </TextField>
+                                    </CssTextField>
                                 )}
 
                                 {error && (
