@@ -51,6 +51,10 @@ interface MainContentProps {
         type: keyof MainContentProps["anchorEls"],
     ) => void;
     handleMenuClose: () => void;
+    user_nm: string;
+    user_pwd: string;
+    setUserNm: (value: string) => void;
+    setUserPwd: (value: string) => void;
     handleModelSelect: (file: string, type: "yaml" | "search") => void;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: () => void;
@@ -103,6 +107,10 @@ const MainContent = ({
     apiCortex,
     open,
     data,
+    user_nm,
+    user_pwd,
+    setUserNm,
+    setUserPwd,
 }: MainContentProps) => {
     const [openLoginDialog, setOpenLoginDialog] = useState(false);
     const [error, setError] = useState("");
@@ -157,6 +165,8 @@ const MainContent = ({
             console.log("result", result);
             if (response.ok && result?.app_cd?.length) {
                 setAppIds(result.app_cd); // Store app_cd list
+                setUserNm(credentials.anthemId);
+                setUserPwd(credentials.password);
             } else {
                 setError("Validation failed or no apps found.");
             }
@@ -221,7 +231,6 @@ const MainContent = ({
             >
                 <Box sx={{ flexShrink: 0, px: 3, py: 2 }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-                        {/* LEFT: Schema + Semantic Model + Search */}
                         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                             {availableSchemas.length > 0 && (
                                 <Box sx={{ display: "inline-block" }}>
@@ -231,13 +240,11 @@ const MainContent = ({
                                             color: "#000",
                                             px: 2,
                                             py: 1,
-                                            borderRadius: "6px",
                                             cursor: "pointer",
                                             display: "flex",
                                             alignItems: "center",
                                             gap: 1,
                                             justifyContent: "space-between",
-                                            border: "1px solid #ccc",
                                         }}
                                     >
                                         {selectedSchema || "Select Schema"} <FaAngleDown />
