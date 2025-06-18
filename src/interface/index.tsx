@@ -62,5 +62,7 @@ export interface RecentHistoryProps {
 export interface HomeContentProps {
   isReset: boolean,
   promptValue: string,
-  recentValue: string
+  recentValue: string,
+  isLogOut: boolean,
+  setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>
 }

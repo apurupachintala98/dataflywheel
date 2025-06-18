@@ -39,7 +39,7 @@ interface AnchorElState {
   schema: HTMLElement | null;
 }
 
-const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) => {
+const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLogin }: HomeContentProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleSidebar = () => setCollapsed((prev) => !prev);
   const [inputValue, setInputValue] = useState("");
@@ -549,6 +549,8 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
       user_pwd={user_pwd}
       setUserNm={setUserNm}
       setUserPwd={setUserPwd}
+      setCheckIsLogin={setCheckIsLogin}
+      isLogOut={isLogOut}
     />
   );
 };

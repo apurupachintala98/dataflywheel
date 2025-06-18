@@ -71,6 +71,8 @@ function Home() {
   const [isReset, setIsReset] = useState(false);
   const [promptValue, setPromptValue] = useState("");
   const [recentValue, setRecentValue] = useState("");
+  const [checkIsLogin, setCheckIsLogin] = useState(false);
+  const [isLogOut, setIsLogOut] = useState(false);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -179,7 +181,7 @@ function Home() {
             </SideBarContainer>
           </>
         )}
-        {!collapsed && (
+        {!collapsed && checkIsLogin && (
           <NotificationFooter>
             <List sx={{ color: "#5d5d5d" }}>
               <ListItem>
@@ -191,7 +193,7 @@ function Home() {
               <ListItem>
                 <SettingsIcon /> Settings
               </ListItem>
-              <ListItem>
+              <ListItem onClick={() => setIsLogOut(!isLogOut)}>
                 <LogoutIcon /> Log out
               </ListItem>
             </List>
@@ -208,7 +210,13 @@ function Home() {
           marginTop: 0,
         }}
       >
-        <HomeContent isReset={isReset} promptValue={promptValue} recentValue={recentValue} />
+        <HomeContent
+          isReset={isReset}
+          promptValue={promptValue}
+          recentValue={recentValue}
+          isLogOut={isLogOut}
+          setCheckIsLogin={setCheckIsLogin}
+        />
       </Box>
     </Box>
   );
