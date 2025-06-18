@@ -298,13 +298,11 @@ const MainContent = ({
                                                     color: "#000",
                                                     px: 2,
                                                     py: 1,
-                                                    borderRadius: "6px",
                                                     cursor: "pointer",
                                                     display: "flex",
                                                     alignItems: "center",
                                                     gap: 1,
                                                     justifyContent: "space-between",
-                                                    border: "1px solid #ccc",
                                                 }}
                                             >
                                                 {type === "chat" ? "Semantic Model" : "Search"} <FaAngleDown />
