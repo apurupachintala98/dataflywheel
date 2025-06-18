@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const ChatContainer = styled.div``;
 export const ChatHeading = styled.div`
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 18px;
   margin-bottom: 10px;
-  color: #373535;
+  color: #131313;
 `;
 export const ChatItem = styled.div`
   border: 1px solid #d9d9d9;
@@ -15,14 +15,14 @@ export const ChatItem = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   &.active {
-    background-color: #373535;
+    background-color: #131313;
     color: #fff;
     button#long-button {
       padding: 4px;
       &:hover {
         background-color: #fff;
         svg {
-          fill: #373535;
+          fill: #131313;
         }
       }
       svg {
