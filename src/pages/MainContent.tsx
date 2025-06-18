@@ -323,7 +323,7 @@ const MainContent = ({
                   <Button
                     variant="contained"
                     sx={{
-                      backgroundColor: "#131313",
+                      backgroundColor: "#373535",
                       textTransform: "none",
                       fontWeight: 600,
                       fontSize: 14,
@@ -331,7 +331,7 @@ const MainContent = ({
                       py: 0.75,
                       borderRadius: "30px",
                       "&:hover": {
-                        backgroundColor: "#333333",
+                        backgroundColor: "#131313",
                       },
                     }}
                     onClick={() => setOpenLoginDialog(true)}
@@ -408,9 +408,9 @@ const MainContent = ({
                       borderColor: "#000",
                       borderRadius: "30px",
                       textTransform: "none",
-                      backgroundColor: "#131313",
+                      backgroundColor: "#373535",
                       "&:hover": {
-                        backgroundColor: "#333333",
+                        backgroundColor: "#131313",
                       },
                     }}
                     onClick={handleValidateLogin}
@@ -426,9 +426,9 @@ const MainContent = ({
                   sx={{
                     textTransform: "none",
                     borderRadius: "30px",
-                    backgroundColor: "#131313",
+                    backgroundColor: "#373535",
                     "&:hover": {
-                      backgroundColor: "#333333",
+                      backgroundColor: "#131313",
                     },
                   }}
                 >
@@ -539,7 +539,7 @@ const MainContent = ({
             >
               {messages.length === 0 && (
                 <Typography
-                  className="gradientText"
+                  /*className="gradientText"*/
                   variant="h5"
                   sx={{
                     marginBottom: "30px",
