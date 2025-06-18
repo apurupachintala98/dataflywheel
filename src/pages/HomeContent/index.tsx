@@ -23,7 +23,7 @@ import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
 import { MessageType } from "../../types/message.types";
 import { v4 as uuidv4 } from "uuid";
-import { useSelectedApp } from "../../components/ SelectedAppContext";
+import { useSelectedApp } from "../../components/SelectedAppContext";
 import { HomeContentProps } from "interface";
 
 interface SelectedModelState {
@@ -36,6 +36,7 @@ interface AnchorElState {
   chat: HTMLElement | null;
   search: HTMLElement | null;
   upload: HTMLElement | null;
+  schema: HTMLElement | null;
 }
 
 const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) => {
@@ -63,6 +64,7 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
     chat: null,
     search: null,
     upload: null,
+    schema: null,
   });
   const open = Boolean(anchorEls.upload);
   const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({
@@ -88,7 +90,7 @@ const HomeContent = ({ isReset, promptValue, recentValue }: HomeContentProps) =>
     }
   };
   const handleMenuClose = () =>
-    setAnchorEls({ account: null, chat: null, search: null, upload: null });
+    setAnchorEls({ account: null, chat: null, search: null, upload: null, schema: null });
   // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
     setSelectedModels((prev) => ({
