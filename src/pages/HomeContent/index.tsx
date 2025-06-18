@@ -23,7 +23,7 @@ import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
 import config from "../../utils/config.json";
 import { MessageType } from "../../types/message.types";
 import { v4 as uuidv4 } from "uuid";
-import { useSelectedApp } from "../../components/ SelectedAppContext";
+import { useSelectedApp } from "../../components/SelectedAppContext";
 import { HomeContentProps } from "interface";
 
 interface SelectedModelState {

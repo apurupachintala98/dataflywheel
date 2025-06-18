@@ -5,7 +5,7 @@ import ReactDOM from "react-dom/client";
 
 import renderProfiler from "./utils/renderProfiler";
 import reportWebVitals from "./utils/reportWebVitals";
-import { SelectedAppProvider } from './components/ SelectedAppContext';
+import { SelectedAppProvider } from './components/SelectedAppContext';
 
 import "./locales/i18n";
 import App from "./App";
