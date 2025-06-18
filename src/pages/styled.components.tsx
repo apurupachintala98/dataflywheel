@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 
 const rotate = keyframes`
@@ -190,3 +191,23 @@ export const Loader = styled.img`
     animation: ${rotate} 2s linear infinite;
     width: 40px;
 `
+
+export const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: '#373535',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: '#373535',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#373535',
+    },
+    '&:hover fieldset': {
+      borderColor: '#373535',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#373535',
+    },
+  },
+});

@@ -28,7 +28,7 @@ import config from "../utils/config.json";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "components/ SelectedAppContext";
 import ApiService from "../services/index";
-import { Loader } from "./styled.components";
+import { CssTextField, Loader } from "./styled.components";
 import loding from "assests/images/loding.png";
 
 interface MainContentProps {
@@ -357,14 +357,14 @@ const MainContent = ({
               </DialogTitle>
 
               <DialogContent sx={{ px: 5, pb: 3 }}>
-                <TextField
+                <CssTextField
                   label="AnthemID *"
                   fullWidth
                   margin="normal"
                   value={credentials.anthemId}
                   onChange={(e) => setCredentials({ ...credentials, anthemId: e.target.value })}
                 />
-                <TextField
+                <CssTextField
                   label="Password *"
                   type="password"
                   fullWidth
