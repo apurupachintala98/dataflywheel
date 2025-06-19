@@ -564,7 +564,7 @@ const MainContent = ({
           <Box
             sx={{
               width: "100%",
-              maxWidth: "900px",
+              maxWidth: "75%",
               display: "flex",
               flexDirection: "column",
               flexGrow: 1,
