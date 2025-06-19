@@ -22,6 +22,7 @@ import {
   ChatTitle,
   Input,
   InputSearchContainer,
+  Loader,
   NotificationFooter,
   SideBarContainer,
   TagLine,
@@ -51,6 +52,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import LogoImg from "assests/images/Logo.svg";
+import DataFlyWheelLogo from "assests/images/loding.png";
+
 import { TypeProps } from "interface";
 import HomeContent from "pages/HomeContent";
 import RecentHistory from "components/RecentHistory";
@@ -108,7 +111,7 @@ function Home() {
                 style={{ display: "flex", alignItems: "center", textDecoration: "none" }}
               >
                 <img src={LogoImg} alt="Logo" style={{ height: "40px", width: "auto" }} />
-                <TagLine style={{ color: "#000", marginLeft: "10px" }}>
+                <TagLine style={{ color: "#373535", marginLeft: "10px" }}>
                   Data Intelligence Platform
                 </TagLine>
               </Link>
@@ -129,10 +132,11 @@ function Home() {
               <List
                 sx={{
                   margin: "0",
-                  padding: "0",
+                  padding: "15px 0 0",
                 }}
               >
-                <img src={dfwLogo} alt="" style={{ width: "60%", height: "auto" }} />
+                <Loader src={DataFlyWheelLogo} style={{width: "45px"}} />
+                <img src={dfwLogo} alt="" style={{ width: "60%", height: "auto", padding:"8px 10px" }} />
               </List>
               <List>
                 <Button

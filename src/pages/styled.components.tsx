@@ -10,7 +10,6 @@ const rotate = keyframes`
   }
 `;
 
-
 export const MainContainer = styled.div<{ height: number }>`
   margin: 0;
   padding: 0;
@@ -69,7 +68,7 @@ export const TagLine = styled.span`
   align-items: end;
   border-left: 1px solid #d2d2d2;
   color: #002d9c;
-  font-weight: ${(props) => props.theme.fontWeight["medium"]};
+  font-weight: ${(props) => props.theme.fontWeight["bold"]};
 `;
 
 export const ToggleContainer = styled.div`
@@ -84,8 +83,8 @@ export const ToggleContainer = styled.div`
   right: -20px;
   top: 50px;
   cursor: pointer;
-  border-image-source: linear-gradient(90deg, #FFFFFF 51.25%, #B2B2B2 52.5%);
-  border-image-slice: 1; 
+  border-image-source: linear-gradient(90deg, #ffffff 51.25%, #b2b2b2 52.5%);
+  border-image-slice: 1;
   border-image-repeat: stretch;
 `;
 
@@ -188,26 +187,42 @@ export const ChatDateTime = styled.div`
 `;
 
 export const Loader = styled.img`
-    animation: ${rotate} 2s linear infinite;
-    width: 40px;
-`
+  animation: ${rotate} 3s linear infinite;
+  width: 40px;
+`;
 
 export const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#373535',
+  "& label.Mui-focused": {
+    color: "#373535",
   },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#373535',
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#373535",
   },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#373535',
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#373535",
     },
-    '&:hover fieldset': {
-      borderColor: '#373535',
+    "&:hover fieldset": {
+      borderColor: "#373535",
     },
-    '&.Mui-focused fieldset': {
-      borderColor: '#373535',
+    "&.Mui-focused fieldset": {
+      borderColor: "#373535",
     },
   },
 });
+
+export const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap:2;
+  width: 100%;
+`;
+
+export const FirstMessageCon = styled.div`
+  width: 8%;
+  padding: 8px;
+`;
+
+export const SecondMessageCon = styled.div`
+  width: 92%;
+`;

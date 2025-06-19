@@ -13,6 +13,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Tooltip,
+  tooltipClasses,
+  styled,
+  TooltipProps,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import { FaArrowUp, FaUserCircle, FaAngleDown } from "react-icons/fa";
@@ -30,6 +34,7 @@ import { useSelectedApp } from "../components/SelectedAppContext";
 import ApiService from "../services/index";
 import { CssTextField, Loader } from "./styled.components";
 import loding from "assests/images/loding.png";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 interface MainContentProps {
   messages: MessageType[];
@@ -84,6 +89,18 @@ interface MainContentProps {
   setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
   isLogOut: boolean;
 }
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "hsla(0, 0%, 91%, .5)",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 300,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 const MainContent = ({
   inputValue,
@@ -369,15 +386,21 @@ const MainContent = ({
                 gap: 1,
               }}
             >
-              <Typography sx={{ fontSize: 14, color: "#5d5d5d" }}>
+              <Typography sx={{ fontSize: 15, color: "#5d5d5d" }}>
                 {loginInfo ? (
                   `Logged in as ${loginInfo}`
                 ) : (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: "You are in read-only mode. <br/> Login to know more details.",
-                    }}
-                  />
+                  <HtmlTooltip
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">You are in read-only mode. <br/><b>Login</b> to know more details.</Typography>  
+                      </React.Fragment>
+                    }
+                  >
+                    <IconButton>
+                      <InfoOutlinedIcon  sx={{ fontSize: 25 }} />
+                    </IconButton>
+                  </HtmlTooltip>
                 )}
               </Typography>
               {loginInfo ? (
@@ -571,10 +594,10 @@ const MainContent = ({
                     {message.fromUser ? (
                       <Box
                         sx={{
-                          padding: "10px",
+                          padding: "12px",
                           backgroundColor: "hsla(0, 0%, 91%, .5)",
                           color: "#000",
-                          borderRadius: "10px",
+                          borderRadius: "24px 4px 24px 24px",
                           maxWidth: "75%",
                         }}
                       >
@@ -591,7 +614,6 @@ const MainContent = ({
                   </Box>
                 </Box>
               ))}
-
               {isLoading && (
                 <Box sx={{ display: "flex", justifyContent: "start", mt: 2 }}>
                   {/* <HashLoader color="#000000" size={20} /> */}
@@ -640,10 +662,10 @@ const MainContent = ({
                   boxSizing: "border-box",
                   boxShadow: "0px 4px 12px 0px rgba(39, 97, 187, 0.20)",
                   width: "100%",
-                  maxWidth: "45%",
+                  maxWidth: "73%",
                   position: "absolute",
                   flexShrink: 0,
-                  bottom: submitted ? "20px" : "50%",
+                  bottom: submitted ? "40px" : "50%",
                   transform: submitted ? "translateY(0)" : "translateY(50%)",
                   transition: "all 0.5s ease-in-out",
                 }}
