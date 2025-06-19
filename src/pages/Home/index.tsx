@@ -191,7 +191,7 @@ function Home() {
           </>
         )}
         {!collapsed && (
-          <NotificationFooter>
+          <NotificationFooter isLogin={checkIsLogin}>
             {checkIsLogin && (
               <List sx={{ color: "#5d5d5d" }}>
                 <ListItem>

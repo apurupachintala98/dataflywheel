@@ -124,13 +124,15 @@ export const Button = styled.button`
   }
 `;
 
-export const NotificationFooter = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+export const NotificationFooter = styled.div<{
+  isLogin: boolean;
+}>`
+  border-top: ${(props) => (props.isLogin ? "1px solid rgba(0, 0, 0, 0.12)" : "0 none")};
   margin-top: auto;
   font-size: 14px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   margin-bottom: 10px;
-  ul{
+  ul {
     padding: ${(props) => props.theme.space["8"]} ${(props) => props.theme.space["16"]};
   }
   svg {
@@ -216,7 +218,7 @@ export const CssTextField = styled(TextField)({
 export const MessageContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap:2;
+  gap: 2;
   width: 100%;
 `;
 
