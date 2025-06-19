@@ -125,12 +125,14 @@ export const Button = styled.button`
 `;
 
 export const NotificationFooter = styled.div`
-  padding: 0 ${(props) => props.theme.space["16"]};
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   margin-top: auto;
   font-size: 14px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  ul{
+    padding: ${(props) => props.theme.space["8"]} ${(props) => props.theme.space["16"]};
+  }
   svg {
     width: 18px;
     margin-right: 5px;
@@ -225,4 +227,11 @@ export const FirstMessageCon = styled.div`
 
 export const SecondMessageCon = styled.div`
   width: 92%;
+`;
+
+export const CopyrightFooter = styled.div`
+  padding: ${(props) => props.theme.space["10"]} ${(props) => props.theme.space["16"]};
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  color: #5d5d5d;
 `;

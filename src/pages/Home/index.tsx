@@ -20,6 +20,7 @@ import {
   ChatLeftItem,
   ChatRightItem,
   ChatTitle,
+  CopyrightFooter,
   Input,
   InputSearchContainer,
   Loader,
@@ -135,8 +136,12 @@ function Home() {
                   padding: "15px 0 0",
                 }}
               >
-                <Loader src={DataFlyWheelLogo} style={{width: "45px"}} />
-                <img src={dfwLogo} alt="" style={{ width: "60%", height: "auto", padding:"8px 10px" }} />
+                <Loader src={DataFlyWheelLogo} style={{ width: "45px" }} />
+                <img
+                  src={dfwLogo}
+                  alt=""
+                  style={{ width: "60%", height: "auto", padding: "8px 10px" }}
+                />
               </List>
               <List>
                 <Button
@@ -185,22 +190,27 @@ function Home() {
             </SideBarContainer>
           </>
         )}
-        {!collapsed && checkIsLogin && (
+        {!collapsed && (
           <NotificationFooter>
-            <List sx={{ color: "#5d5d5d" }}>
-              <ListItem>
-                <NotificationsIcon /> Notifications
-              </ListItem>
-              <ListItem>
-                <HelpOutlineIcon /> Help
-              </ListItem>
-              <ListItem>
-                <SettingsIcon /> Settings
-              </ListItem>
-              <ListItem onClick={() => setIsLogOut(!isLogOut)}>
-                <LogoutIcon /> Log out
-              </ListItem>
-            </List>
+            {checkIsLogin && (
+              <List sx={{ color: "#5d5d5d" }}>
+                <ListItem>
+                  <NotificationsIcon /> Notifications
+                </ListItem>
+                <ListItem>
+                  <HelpOutlineIcon /> Help
+                </ListItem>
+                <ListItem>
+                  <SettingsIcon /> Settings
+                </ListItem>
+                <ListItem onClick={() => setIsLogOut(!isLogOut)}>
+                  <LogoutIcon /> Log out
+                </ListItem>
+              </List>
+            )}
+            <CopyrightFooter>
+              Copyright &copy; 2025 DataFlyWheel, All Rights Reserved.
+            </CopyrightFooter>
           </NotificationFooter>
         )}
       </Drawer>
