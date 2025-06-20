@@ -46,6 +46,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { CssTextField } from "pages/styled.components";
 
 const ITEM_HEIGHT = 48;
+const maxLength = 45;
 
 function RecentHistory({ isAddButtonEnable, title, isDotVisible, list }: RecentHistoryProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -94,7 +95,17 @@ function RecentHistory({ isAddButtonEnable, title, isDotVisible, list }: RecentH
             >
               <ChatLeftItem>
                 <ChatTitle className={listItem.isActive ? "active" : "notActive"}>
-                  {cropString(listItem.title)}
+                  {/* {cropString(listItem.title)} */}
+                  {listItem.title.length > maxLength ? (
+                    <>
+                      {listItem.title.substring(0, maxLength)}
+                      <LightTooltip title={listItem.title} placement="right-end">
+                        <IconButton className="iconBtn" size="small" sx={{ ml: 1 }}>...</IconButton>
+                      </LightTooltip>
+                    </>
+                  ) : (
+                    <>{listItem.title}</>
+                  )}
                 </ChatTitle>
               </ChatLeftItem>
               {isDotVisible && (

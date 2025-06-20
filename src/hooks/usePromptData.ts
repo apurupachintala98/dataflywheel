@@ -26,8 +26,8 @@ export function usePromptData() {
       }
       //const data = await response.json();
       const data = [
-        { id: 1, prompt_title: "Prompt I" },
-        { id: 2, prompt_title: "Prompt II" },
+        { id: 1, prompt_title: "What is considered continuous enrollment for FMC in HEDIS?" },
+        { id: 2, prompt_title: "How should I handle direct transfers for PCR in HEDIS?" },
         { id: 3, prompt_title: "Prompt III" }
       ];
       setPrompts(data);

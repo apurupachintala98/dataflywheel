@@ -18,10 +18,20 @@ export const ChatItem = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   cursor: pointer;
+  button.iconBtn {
+    margin: 0;
+    padding: 0;
+    &:hover, &:active, &:focus {
+      background-color: transparent;
+    }
+  }
   &.active {
     background-color: #131313ba;
     color: #fff;
     cursor: auto;
+    button.iconBtn {
+      color: #fff;
+    }
     button#long-button {
       padding: 4px;
       &:hover {
