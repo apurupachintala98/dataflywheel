@@ -50,19 +50,23 @@ export interface AuthProviderProps {
 }
 
 export interface RecentHistoryProps {
+  isAddButtonEnable: boolean;
   title: string;
   isDotVisible: boolean;
-  list: {
-    title: string,
-    isActive: boolean,
-    onTitleClick: Dispatch<SetStateAction<string>>
-  }[]
+  list: listProps[];
+}
+
+export interface listProps {
+  id: number | string,
+  title: string;
+  isActive: boolean;
+  onTitleClick: Dispatch<SetStateAction<string>>;
 }
 
 export interface HomeContentProps {
-  isReset: boolean,
-  promptValue: string,
-  recentValue: string,
-  isLogOut: boolean,
-  setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>
+  isReset: boolean;
+  promptValue: string;
+  recentValue: string;
+  isLogOut: boolean;
+  setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }

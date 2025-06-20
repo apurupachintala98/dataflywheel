@@ -136,8 +136,8 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     const { stream, error } = await sendRequest(endpoint, payload, undefined, true);
 
     if (!stream || error) {
-      toast.error("Something went wrong.");
-      setMessages((prev) => [...prev, { text: "An error occurred.", fromUser: false }]);
+     //toast.error("Something went wrong.");
+      setMessages((prev) => [...prev, { text: "Something went wrong. Please try again later.", fromUser: false }]);
       setIsLoading(false);
       return;
     }

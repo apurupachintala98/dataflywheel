@@ -2,10 +2,13 @@ import styled from "styled-components";
 
 export const ChatContainer = styled.div``;
 export const ChatHeading = styled.div`
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 18px;
+  line-height: 36px;
   margin-bottom: 10px;
   color: #131313;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 export const ChatItem = styled.div`
   border: 1px solid #d9d9d9;
@@ -14,9 +17,11 @@ export const ChatItem = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  cursor: pointer;
   &.active {
     background-color: #131313ba;
     color: #fff;
+    cursor: auto;
     button#long-button {
       padding: 4px;
       &:hover {

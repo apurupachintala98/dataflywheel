@@ -6,7 +6,7 @@ import {
   SidePanelClose,
   SidePanelOpenFilled,
 } from "@carbon/react/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, Link } from "react-router-dom";
 import newChat from "assests/images/newChat.svg";
@@ -25,6 +25,7 @@ import {
   InputSearchContainer,
   Loader,
   NotificationFooter,
+  SideBar,
   SideBarContainer,
   TagLine,
   ToggleContainer,
@@ -55,9 +56,10 @@ import {
 import LogoImg from "assests/images/Logo.svg";
 import DataFlyWheelLogo from "assests/images/loding.png";
 
-import { TypeProps } from "interface";
+import { listProps, TypeProps } from "interface";
 import HomeContent from "pages/HomeContent";
 import RecentHistory from "components/RecentHistory";
+import { usePromptData } from "hooks/usePromptData";
 
 const drawerWidth = {
   full: 400,
@@ -74,9 +76,24 @@ function Home() {
   const collapsed = sidebarType === "mini";
   const [isReset, setIsReset] = useState(false);
   const [promptValue, setPromptValue] = useState("");
+  const [promptData, setPromptData] = useState<listProps[]>([]);
   const [recentValue, setRecentValue] = useState("");
-  const [checkIsLogin, setCheckIsLogin] = useState(false);
+  const [checkIsLogin, setCheckIsLogin] = useState(true);
   const [isLogOut, setIsLogOut] = useState(false);
+  const { prompts } = usePromptData();
+
+  useEffect(() => {
+    if (prompts.length > 0) {
+      const data = prompts.map((item) => ({
+        id: item.id,
+        title: item.prompt_title,
+        isActive: promptValue === item.prompt_title,
+        onTitleClick: setPromptValue,
+      }));
+      setPromptData(data);
+      console.log("data::", data);
+    }
+  }, [prompts, promptValue]);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -129,7 +146,7 @@ function Home() {
         {!collapsed && (
           <>
             <Divider />
-            <SideBarContainer>
+            <SideBar>
               <List
                 sx={{
                   margin: "0",
@@ -155,21 +172,15 @@ function Home() {
                   <img src={newChat} /> New Chat
                 </Button>
               </List>
+            </SideBar>
+            <Divider />
+
+            <SideBarContainer>
               <RecentHistory
+                isAddButtonEnable={true}
                 title={"Prompt"}
                 isDotVisible={false}
-                list={[
-                  {
-                    title: "Prompt I",
-                    isActive: promptValue === "Prompt I" ? true : false,
-                    onTitleClick: setPromptValue,
-                  },
-                  {
-                    title: "Prompt II",
-                    isActive: promptValue === "Prompt II" ? true : false,
-                    onTitleClick: setPromptValue,
-                  },
-                ]}
+                list={promptData}
               />
               {/* <RecentHistory
                 title={"Recent"}

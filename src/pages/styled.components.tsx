@@ -105,6 +105,10 @@ export const Input = styled.input`
   }
 `;
 
+export const SideBar = styled.div`
+  padding: 5px 16px;
+`;
+
 export const SideBarContainer = styled.div`
   padding: 5px 16px;
   overflow-y: auto;
@@ -130,8 +134,6 @@ export const NotificationFooter = styled.div<{
   border-top: ${(props) => (props.isLogin ? "1px solid rgba(0, 0, 0, 0.12)" : "0 none")};
   margin-top: auto;
   font-size: 14px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  margin-bottom: 10px;
   ul {
     padding: ${(props) => props.theme.space["8"]} ${(props) => props.theme.space["16"]};
   }
@@ -223,16 +225,16 @@ export const MessageContainer = styled.div`
 `;
 
 export const FirstMessageCon = styled.div`
-  width: 8%;
-  padding: 8px;
+  width: 6%;
+  padding: 8px 8px 0 0;
 `;
 
 export const SecondMessageCon = styled.div`
-  width: 92%;
+  width: 94%;
 `;
 
 export const CopyrightFooter = styled.div`
-  padding: ${(props) => props.theme.space["10"]} ${(props) => props.theme.space["16"]};
+  padding: ${(props) => props.theme.space["12"]} ${(props) => props.theme.space["16"]};
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   font-size: 14px;
   color: #5d5d5d;

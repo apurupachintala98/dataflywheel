@@ -94,7 +94,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "hsla(0, 0%, 91%, .5)",
+    backgroundColor: "hsla(0, 0%, 91%, 1)",
     color: "rgba(0, 0, 0, 0.87)",
     maxWidth: 300,
     fontSize: theme.typography.pxToRem(12),
@@ -393,13 +393,14 @@ const MainContent = ({
                   <HtmlTooltip
                     title={
                       <React.Fragment>
-                        <Typography color="inherit">You are in read-only mode. <br/><b>Login</b> to know more details.</Typography>  
+                        <Typography color="inherit">
+                          You are in read-only mode. <br />
+                          <b>Login</b> to know more details.
+                        </Typography>
                       </React.Fragment>
                     }
                   >
-                    <IconButton>
-                      <InfoOutlinedIcon  sx={{ fontSize: 25 }} />
-                    </IconButton>
+                    <InfoOutlinedIcon sx={{ fontSize: 25, cursor: "pointer", margin: "10px" }} />
                   </HtmlTooltip>
                 )}
               </Typography>
@@ -564,7 +565,7 @@ const MainContent = ({
           <Box
             sx={{
               width: "100%",
-              maxWidth: "75%",
+              maxWidth: "73%",
               display: "flex",
               flexDirection: "column",
               flexGrow: 1,
@@ -575,8 +576,8 @@ const MainContent = ({
               sx={{
                 flexGrow: 1,
                 overflowY: "auto",
-                px: 2,
-                py: 1,
+                //px: 2,
+                //py: 1,
                 marginBottom: "50px",
                 scrollBehavior: "smooth",
                 "&::-webkit-scrollbar": { width: "6px" },
