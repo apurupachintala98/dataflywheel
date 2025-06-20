@@ -78,7 +78,7 @@ function Home() {
   const [promptValue, setPromptValue] = useState("");
   const [promptData, setPromptData] = useState<listProps[]>([]);
   const [recentValue, setRecentValue] = useState("");
-  const [checkIsLogin, setCheckIsLogin] = useState(true);
+  const [checkIsLogin, setCheckIsLogin] = useState(false);
   const [isLogOut, setIsLogOut] = useState(false);
   const { prompts } = usePromptData();
 
