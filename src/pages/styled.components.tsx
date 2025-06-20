@@ -1,15 +1,6 @@
 import { TextField } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-`;
-
 export const MainContainer = styled.div<{ height: number }>`
   margin: 0;
   padding: 0;
@@ -193,8 +184,16 @@ export const ChatDateTime = styled.div`
 `;
 
 export const Loader = styled.img`
-  animation: ${rotate} 3s linear infinite;
+  animation: spin 3s linear infinite;
   width: 40px;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
 `;
 
 export const CssTextField = styled(TextField)({

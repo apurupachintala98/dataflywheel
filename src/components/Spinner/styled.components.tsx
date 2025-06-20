@@ -14,10 +14,7 @@ export const Container = styled.div<{ zIndex?: string }>`
   ${(p) => p.zIndex && `z-index: ${p.zIndex}`};
 `;
 
-export const StyledSpinner = styled.div`
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
+export const StyledSpinner = styled.img`
   width: 50px;
   height: 50px;
   animation: spin 2s linear infinite;
