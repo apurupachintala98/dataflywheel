@@ -63,10 +63,11 @@ function RecentHistory({ isAddButtonEnable, title, isDotVisible, list }: RecentH
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "hsla(0, 0%, 91%, 1)",
+      backgroundColor: "#f9f9f9",
       color: "rgba(0, 0, 0, 0.87)",
       fontSize: 15,
       border: "1px solid #dadde9",
+      boxShadow: "0px 4px 12px 0px rgba(39, 97, 187, 0.20)"
     },
   }));
 
@@ -77,7 +78,7 @@ function RecentHistory({ isAddButtonEnable, title, isDotVisible, list }: RecentH
           <ChatHeading>
             {title}{" "}
             {isAddButtonEnable && (
-              <LightTooltip title={"Add New Prompt"} placement="top-start">
+              <LightTooltip title={"Add New Prompt"} placement="right-end">
                 <AddCircleOutlineOutlinedIcon
                   onClick={() => setOpenAddNewDialog(true)}
                   sx={{ fontSize: 25, cursor: "pointer" }}

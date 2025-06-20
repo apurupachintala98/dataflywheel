@@ -94,7 +94,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "hsla(0, 0%, 91%, 1)",
+    backgroundColor: "#f9f9f9",
     color: "rgba(0, 0, 0, 0.87)",
     maxWidth: 300,
     fontSize: theme.typography.pxToRem(12),
