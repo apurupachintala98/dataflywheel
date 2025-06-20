@@ -184,7 +184,7 @@ export const ChatDateTime = styled.div`
 `;
 
 export const Loader = styled.img`
-  animation: spin 3s linear infinite;
+  animation: spin 1s linear infinite;
   width: 40px;
   @keyframes spin {
     from {
@@ -229,7 +229,7 @@ export const FirstMessageCon = styled.div`
 `;
 
 export const SecondMessageCon = styled.div`
-  width: 94%;
+  width: 100%;
 `;
 
 export const CopyrightFooter = styled.div`

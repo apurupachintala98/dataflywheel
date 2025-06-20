@@ -246,7 +246,6 @@ const MessageWithFeedback = ({ message, executeSQL, apiCortex, handleGraphClick 
 
   return (
     <MessageContainer>
-      <FirstMessageCon><img src={DataFlyWheelLogo} width={"40"} height={"40"} className="p-2" /></FirstMessageCon>
       <SecondMessageCon className="mb-4">
         <div
           className={`p-2 rounded-lg ${

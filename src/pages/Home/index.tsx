@@ -177,7 +177,7 @@ function Home() {
 
             <SideBarContainer>
               <RecentHistory
-                isAddButtonEnable={true}
+                isAddButtonEnable={false}
                 title={"Prompt"}
                 isDotVisible={false}
                 list={promptData}
