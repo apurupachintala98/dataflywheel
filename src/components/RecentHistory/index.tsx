@@ -46,7 +46,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { CssTextField } from "pages/styled.components";
 
 const ITEM_HEIGHT = 48;
-const maxLength = 45;
+const maxLength = 43;
 
 function RecentHistory({ isAddButtonEnable, title, isDotVisible, list }: RecentHistoryProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

@@ -28,7 +28,7 @@ export function usePromptData() {
       const data = [
         { id: 1, prompt_title: "What is considered continuous enrollment for FMC in HEDIS?" },
         { id: 2, prompt_title: "How should I handle direct transfers for PCR in HEDIS?" },
-        { id: 3, prompt_title: "Prompt III" }
+        { id: 3, prompt_title: "What is the FMC denominator based on in HEDIS?" }
       ];
       setPrompts(data);
     } catch (error) {
