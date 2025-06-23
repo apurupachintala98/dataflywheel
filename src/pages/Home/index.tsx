@@ -54,7 +54,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import LogoImg from "assests/images/Logo.svg";
-import DataFlyWheelLogo from "assests/images/loding.png";
+import DataFlyWheelLogo from "assests/images/loading.png";
 
 import { listProps, TypeProps } from "interface";
 import HomeContent from "pages/HomeContent";

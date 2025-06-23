@@ -14,7 +14,7 @@ import axios from "axios";
 import config from "../utils/config.json";
 import { toast } from "react-toastify";
 import { FirstMessageCon, SecondMessageCon, MessageContainer } from "./styled.components";
-import DataFlyWheelLogo from "assests/images/loding.png";
+import DataFlyWheelLogo from "assests/images/loadingBlack.png";
 
 const Feedback = ({ message }) => {
   console.log(message);

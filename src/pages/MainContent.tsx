@@ -33,7 +33,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../components/SelectedAppContext";
 import ApiService from "../services/index";
 import { CssTextField, Loader } from "./styled.components";
-import loding from "assests/images/loding.png";
+import loading from "assests/images/loadingBlack.png";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 interface MainContentProps {
@@ -618,7 +618,7 @@ const MainContent = ({
               {isLoading && (
                 <Box sx={{ display: "flex", justifyContent: "start", mt: 2 }}>
                   {/* <HashLoader color="#000000" size={20} /> */}
-                  <Loader src={loding} alt="Loading..." />
+                  <Loader src={loading} alt="Loading..." />
                 </Box>
               )}
               <div id="scroll-anchor" style={{ height: 1 }} />
