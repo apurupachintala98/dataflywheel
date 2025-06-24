@@ -20,7 +20,8 @@
       "CORTEX_COMPLETE": "complete",
       "UPLOAD_URL": "upload_file/",
       "FEEDBACK": "update_feedback/",
-      "DB_SCHEMA_LIST": "get_app_db_schm_lst"
+      "DB_SCHEMA_LIST": "get_app_db_schm_lst",
+      "GET_PROMPTS": "prompts" 
     }
   }
   

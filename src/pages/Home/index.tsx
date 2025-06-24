@@ -84,10 +84,10 @@ function Home() {
 
   useEffect(() => {
     if (prompts.length > 0) {
-      const data = prompts.map((item) => ({
-        id: item.id,
-        title: item.prompt_title,
-        isActive: promptValue === item.prompt_title,
+      const data = prompts.map((item, index) => ({
+        id: index,
+        title: item.content,
+        isActive: promptValue === item.content,
         onTitleClick: setPromptValue,
       }));
       setPromptData(data);
@@ -176,12 +176,14 @@ function Home() {
             <Divider />
 
             <SideBarContainer>
-              <RecentHistory
-                isAddButtonEnable={false}
-                title={"Prompt"}
-                isDotVisible={false}
-                list={promptData}
-              />
+              {promptData.length > 0 && (
+                <RecentHistory
+                  isAddButtonEnable={false}
+                  title={"Prompt"}
+                  isDotVisible={false}
+                  list={promptData}
+                />
+              )}
               {/* <RecentHistory
                 title={"Recent"}
                 isDotVisible={true}

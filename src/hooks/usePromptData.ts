@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import config from "../utils/config.json";
+import { useSelectedApp } from "components/SelectedAppContext";
 
 export interface promptProps {
-  id: string | number;
-  prompt_title: string;
+  prompt_name: string;
+  description: string;
+  content: string;
 }
 export function usePromptData() {
+  const { selectedAppId } = useSelectedApp();
+
   const [prompts, setPrompts] = useState<promptProps[]>([]);
   const [loading, setLoading] = useState(true);
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
@@ -20,17 +25,16 @@ export function usePromptData() {
   const fetchPrompts = async () => {
     setLoading(true);
     try {
-      const response = await fetch("YOUR_API_ENDPOINT_URL");
+      console.log('selectedAppId::', selectedAppId);
+      const aplctn_cd = selectedAppId.toLowerCase();
+      const endPoint = `${config.API_BASE_URL}${config.ENDPOINTS.GET_PROMPTS}/${aplctn_cd}`;
+      const response = await fetch(endPoint);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      //const data = await response.json();
-      const data = [
-        { id: 1, prompt_title: "What is considered continuous enrollment for FMC in HEDIS?" },
-        { id: 2, prompt_title: "How should I handle direct transfers for PCR in HEDIS?" },
-        { id: 3, prompt_title: "What is the FMC denominator based on in HEDIS?" }
-      ];
-      setPrompts(data);
+      const data = await response.json();
+      const finalData = data?.contents[0]?.text;
+      setPrompts(finalData);
     } catch (error) {
       console.error("Failed to fetch prompts:", error);
     } finally {
