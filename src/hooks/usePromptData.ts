@@ -7,7 +7,11 @@ export interface promptProps {
   description: string;
   content: string;
 }
-export function usePromptData() {
+
+interface promptDataProps {
+  checkIsLogin: boolean;
+}
+export function usePromptData({ checkIsLogin }: promptDataProps) {
   const { selectedAppId } = useSelectedApp();
 
   const [prompts, setPrompts] = useState<promptProps[]>([]);
@@ -15,12 +19,14 @@ export function usePromptData() {
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
 
   useEffect(() => {
-    if (hasFetchedAllPromptDetails.current) {
-      return;
-    } else {
-      fetchPrompts();
+    if (checkIsLogin) {
+      if (hasFetchedAllPromptDetails.current) {
+        return;
+      } else {
+        fetchPrompts();
+      }
     }
-  }, []);
+  }, [checkIsLogin]);
 
   const fetchPrompts = async () => {
     setLoading(true);
@@ -34,7 +40,7 @@ export function usePromptData() {
       }
       const data = await response.json();
       const finalData = data?.contents[0]?.text;
-      setPrompts(finalData);
+      setPrompts(JSON.parse(finalData));
     } catch (error) {
       console.error("Failed to fetch prompts:", error);
     } finally {

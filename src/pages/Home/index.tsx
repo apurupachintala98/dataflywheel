@@ -80,7 +80,7 @@ function Home() {
   const [recentValue, setRecentValue] = useState("");
   const [checkIsLogin, setCheckIsLogin] = useState(false);
   const [isLogOut, setIsLogOut] = useState(false);
-  const { prompts } = usePromptData();
+  const { prompts } = usePromptData({ checkIsLogin });
 
   useEffect(() => {
     if (prompts.length > 0) {
@@ -91,7 +91,6 @@ function Home() {
         onTitleClick: setPromptValue,
       }));
       setPromptData(data);
-      console.log("data::", data);
     }
   }, [prompts, promptValue]);
 
@@ -176,7 +175,7 @@ function Home() {
             <Divider />
 
             <SideBarContainer>
-              {promptData.length > 0 && (
+              {checkIsLogin && promptData.length > 0 && (
                 <RecentHistory
                   isAddButtonEnable={false}
                   title={"Prompt"}
