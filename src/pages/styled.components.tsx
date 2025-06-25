@@ -184,8 +184,8 @@ export const ChatDateTime = styled.div`
 `;
 
 export const Loader = styled.img`
-  animation: spin 1s linear infinite;
-  width: 40px;
+  animation: spin 0.8s linear infinite;
+  width: 25px;
   @keyframes spin {
     from {
       transform: rotate(0deg);

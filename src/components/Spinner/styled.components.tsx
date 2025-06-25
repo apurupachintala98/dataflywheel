@@ -15,9 +15,9 @@ export const Container = styled.div<{ zIndex?: string }>`
 `;
 
 export const StyledSpinner = styled.img`
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
+  width: 45px;
+  height: 45px;
+  animation: spin 0.8s linear infinite;
 
   @keyframes spin {
     0% {
