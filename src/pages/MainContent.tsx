@@ -304,14 +304,14 @@ const MainContent = ({
                           setSelectedSchema(schema);
                           setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
 
-                          const yamlFiles = await ApiService.getCortexSearchDetails({
+                          const yamlFiles = await ApiService.getCortexAnalystDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
                             aplctn_cd: selectedAppId.toLowerCase(),
                             session_id: sessionId,
                           });
 
-                          const searchFiles = await ApiService.getCortexAnalystDetails({
+                          const searchFiles = await ApiService.getCortexSearchDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
                             aplctn_cd: selectedAppId.toLowerCase(),
