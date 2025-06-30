@@ -460,28 +460,28 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const yaml = await ApiService.getCortexAnalystDetails({
-          aplctn_cd: selectedAppId.toLowerCase(),
-          database_nm: dbDetails.database_nm,
-          schema_nm: dbDetails.schema_nm,
-        });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const yaml = await ApiService.getCortexAnalystDetails({
+  //         aplctn_cd: selectedAppId.toLowerCase(),
+  //         database_nm: dbDetails.database_nm,
+  //         schema_nm: dbDetails.schema_nm,
+  //       });
 
-        const search = await ApiService.getCortexSearchDetails({
-          aplctn_cd: selectedAppId.toLowerCase(),
-          database_nm: dbDetails.database_nm,
-          schema_nm: dbDetails.schema_nm,
-        });
+  //       const search = await ApiService.getCortexSearchDetails({
+  //         aplctn_cd: selectedAppId.toLowerCase(),
+  //         database_nm: dbDetails.database_nm,
+  //         schema_nm: dbDetails.schema_nm,
+  //       });
 
-        setFileLists({ yaml: yaml || [], search: search || [] });
-      } catch {
-        setFileLists({ yaml: [], search: [] });
-      }
-    };
-    fetchData();
-  }, []);
+  //       setFileLists({ yaml: yaml || [], search: search || [] });
+  //     } catch {
+  //       setFileLists({ yaml: [], search: [] });
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
