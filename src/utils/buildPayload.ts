@@ -59,7 +59,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
         prompt: {
           messages: [{ role: "user", content: prompt }],
         },
-        app_lvl_prefix: "",
+        app_lvl_prefix: "supportcbt_dml",
         session_id: sessionId,
         exec_sql: execSQL,
         user_nm,
@@ -94,7 +94,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
       prompt: {
         messages: [{ role: "user", content: prompt }],
       },
-      app_lvl_prefix: "",
+      app_lvl_prefix: "supportcbt_dml",
       session_id: sessionId,
       exec_sql: execSQL,
       sys_msg: sysMsg ? `${sysMsg}${JSON.stringify(responseData)}` : undefined,

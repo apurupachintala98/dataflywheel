@@ -53,8 +53,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   const [isLoading, setIsLoading] = useState(false);
   const [storedPrompt, setStoredPrompt] = useState<string>("");
   const [sessionId] = useState(() => uuidv4());
-  const { selectedAppId, setSelectedAppId } = useSelectedApp();
-  const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+  const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const [user_nm, setUserNm] = useState("");
   const [user_pwd, setUserPwd] = useState("");
   const { APP_CONFIG } = config;

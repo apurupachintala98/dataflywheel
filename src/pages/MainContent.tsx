@@ -145,8 +145,8 @@ const MainContent = ({
   const [showLoginButton, setShowLoginButton] = useState(false);
   const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [sessionId] = useState(() => uuidv4());
-  const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
-  const { selectedAppId, setSelectedAppId } = useSelectedApp();
+  // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
+  const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const { APP_CONFIG } = config;
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
@@ -204,7 +204,7 @@ const MainContent = ({
         aplctn_cd: selectedAppId.toLowerCase(),
         app_id: APP_ID,
         api_key: API_KEY,
-        app_lvl_prefix: "",
+        app_lvl_prefix: "supportcbt_dml",
         session_id: sessionId,
       },
     };
@@ -302,8 +302,7 @@ const MainContent = ({
                         key={schema}
                         onClick={async () => {
                           setSelectedSchema(schema);
-                          setDbDetails((prev) => ({ ...prev, schema_nm: schema }));
-
+                          setDbDetails({ database_nm: dbDetails.database_nm, schema_nm: schema });
                           const yamlFiles = await ApiService.getCortexAnalystDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,

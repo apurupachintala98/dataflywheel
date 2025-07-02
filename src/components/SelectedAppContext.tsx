@@ -1,14 +1,23 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+interface DbDetails {
+  database_nm: string;
+  schema_nm: string;
+}
+
 interface SelectedAppContextType {
   selectedAppId: string;
   setSelectedAppId: (id: string) => void;
+  dbDetails: DbDetails;
+   setDbDetails: React.Dispatch<React.SetStateAction<DbDetails>>;
 }
+
 
 const SelectedAppContext = createContext<SelectedAppContextType | undefined>(undefined);
 
 export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
   const [selectedAppId, _setSelectedAppId] = useState("");
+const [dbDetails, setDbDetails] = useState<DbDetails>({ database_nm: "", schema_nm: "" });
 
   const setSelectedAppId = (id: string) => {
     // const lowercaseId = id?.trim().toLowerCase(); 
@@ -17,7 +26,7 @@ export const SelectedAppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SelectedAppContext.Provider value={{ selectedAppId, setSelectedAppId }}>
+    <SelectedAppContext.Provider value={{ selectedAppId, setSelectedAppId, dbDetails, setDbDetails }}>
       {children}
     </SelectedAppContext.Provider>
   );
