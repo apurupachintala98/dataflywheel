@@ -5,7 +5,7 @@ interface QueryOverrides {
   database_nm?: string;
   schema_nm?: string;
   session_id?: string;
-  [key: string]: any; // allows for future overrides without error
+  [key: string]: any;
 }
 
 const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config;
@@ -22,8 +22,6 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-
 
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const params = {

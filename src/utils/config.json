@@ -21,7 +21,8 @@
       "UPLOAD_URL": "upload_file/",
       "FEEDBACK": "update_feedback/",
       "DB_SCHEMA_LIST": "get_app_db_schm_lst",
-      "GET_PROMPTS": "prompts" 
+      "GET_PROMPTS": "prompts",
+      "GET_VEGALITE_JSON": "txt2sql/generate_vega_lite_json" 
     }
   }
   

@@ -48,6 +48,8 @@ interface MainContentProps {
     upload: HTMLElement | null;
     schema: HTMLElement | null;
   };
+  vegaChartData: any;
+setVegaChartData: React.Dispatch<React.SetStateAction<any>>;
   fileLists: { yaml: string[]; search: string[] };
   setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
   selectedModels: { yaml: string[]; search: string[] };
@@ -132,6 +134,8 @@ const MainContent = ({
   setUserPwd,
   setCheckIsLogin,
   isLogOut,
+  vegaChartData,
+  setVegaChartData,
 }: MainContentProps) => {
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const [error, setError] = useState("");
@@ -250,6 +254,7 @@ const MainContent = ({
       setShowLoginButton(false);
     }
   }, [isLogOut]);
+
 
   return (
     <>
@@ -875,7 +880,9 @@ const MainContent = ({
             </Box>
           </Box>
         </Box>
-        <Chart open={chartOpen} onClose={() => setChartOpen(false)} chartData={data || []} />
+        <Dialog open={chartOpen} onClose={() => setChartOpen(false)} maxWidth="lg" fullWidth>
+          <Chart chartData={vegaChartData} onClose={() => setChartOpen(false)} />
+        </Dialog>
       </Box>
     </>
   );

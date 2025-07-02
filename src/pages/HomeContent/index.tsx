@@ -76,6 +76,8 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     search: [],
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [vegaChartData, setVegaChartData] = useState<any>(null);
+
 
   const handleMenuClick = (e: React.MouseEvent<HTMLElement>, type: keyof AnchorElState) => {
     const target = e.currentTarget as HTMLElement;
@@ -459,6 +461,39 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     });
   };
 
+  const handleVegaLiteRequest = async (promptText: string, sqlQuery: string) => {
+    const payload = buildPayload({
+      selectedAppId,
+      sessionId,
+      prompt: promptText,
+      execSQL: sqlQuery,
+      minimal: true,
+      user_nm,
+      user_pwd,
+      database_nm: dbDetails.database_nm,
+      schema_nm: dbDetails.schema_nm,
+    });
+
+    try {
+      const response = await axios.post(
+        `${config.API_BASE_URL}${config.ENDPOINTS.GET_VEGALITE_JSON}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200 && response.data) {
+        setVegaChartData(response.data);
+      } else {
+        console.error("Failed to generate Vega-Lite chart.");
+      }
+    } catch (err) {
+      console.error("VegaLite API error:", err);
+    }
+  };
+
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
     if (anchor) anchor.scrollIntoView({ behavior: "smooth" });
@@ -529,6 +564,8 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
       setUserPwd={setUserPwd}
       setCheckIsLogin={setCheckIsLogin}
       isLogOut={isLogOut}
+      vegaChartData={vegaChartData}
+      setVegaChartData={setVegaChartData}
     />
   );
 };
