@@ -809,9 +809,9 @@ const MainContent = ({
                             transformOrigin={{ vertical: "top", horizontal: "left" }}
                           >
                             <MenuItem onClick={() => handleUpload("yaml")}>Upload YAML</MenuItem>
-                            <MenuItem onClick={() => handleUpload("data", true)}>
+                            {/* <MenuItem onClick={() => handleUpload("data", true)}>
                               Upload Data
-                            </MenuItem>
+                            </MenuItem> */}
                           </Menu>
                         </Box>
                         <Button
