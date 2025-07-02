@@ -135,7 +135,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     const { stream, error } = await sendRequest(endpoint, payload, undefined, true);
 
     if (!stream || error) {
-     //toast.error("Something went wrong.");
+      //toast.error("Something went wrong.");
       setMessages((prev) => [...prev, { text: "Something went wrong. Please try again later.", fromUser: false }]);
       setIsLoading(false);
       return;
@@ -459,29 +459,6 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     });
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const yaml = await ApiService.getCortexAnalystDetails({
-  //         aplctn_cd: selectedAppId.toLowerCase(),
-  //         database_nm: dbDetails.database_nm,
-  //         schema_nm: dbDetails.schema_nm,
-  //       });
-
-  //       const search = await ApiService.getCortexSearchDetails({
-  //         aplctn_cd: selectedAppId.toLowerCase(),
-  //         database_nm: dbDetails.database_nm,
-  //         schema_nm: dbDetails.schema_nm,
-  //       });
-
-  //       setFileLists({ yaml: yaml || [], search: search || [] });
-  //     } catch {
-  //       setFileLists({ yaml: [], search: [] });
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
     if (anchor) anchor.scrollIntoView({ behavior: "smooth" });
@@ -496,7 +473,9 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     setIsUploading(false);
     setIsLoading(false);
     setStoredPrompt("");
-    setDbDetails({ database_nm: "", schema_nm: "" });
+    if (isReset) {
+      setDbDetails({ database_nm: "", schema_nm: "" });
+    }
   };
 
   useEffect(() => {

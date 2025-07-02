@@ -42,9 +42,9 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
   const {
     selectedAppId,
     sessionId,
-    database_nm = DATABASE_NAME,
-    schema_nm = SCHEMA_NAME,
-    stage_nm = STAGE_NAME,
+    database_nm,
+    schema_nm,
+    stage_nm,
     user_nm,
     user_pwd,
   } = params;
