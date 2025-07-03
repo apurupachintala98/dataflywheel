@@ -479,11 +479,11 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
       const response = await axios.post(
         `${config.API_BASE_URL}${config.ENDPOINTS.GET_VEGALITE_JSON}`,
         payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // }
       );
       if (response.status === 200 && response.data) {
         setVegaChartData(response.data);
