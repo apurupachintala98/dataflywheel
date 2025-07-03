@@ -340,7 +340,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     let modelReply: string | React.ReactNode = "";
     modelReply = typeof data === "string" ? data : convertToString(data);
     setData(data);
-    handleVegaLiteRequest(sqlQuery.prompt, data)
+    handleVegaLiteRequest(sqlQuery.prompt, sqlQuery.sqlQuery)
     console.log(data);
     setMessages((prev) => [
       ...prev,
