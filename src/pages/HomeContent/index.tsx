@@ -340,6 +340,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     let modelReply: string | React.ReactNode = "";
     modelReply = typeof data === "string" ? data : convertToString(data);
     setData(data);
+    handleVegaLiteRequest(sqlQuery.prompt, data)
     console.log(data);
     setMessages((prev) => [
       ...prev,
@@ -461,7 +462,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     });
   };
 
-  const handleVegaLiteRequest = async (promptText: string, sqlQuery: string) => {
+  const handleVegaLiteRequest = async (promptText: any, sqlQuery: any) => {
     const payload = buildPayload({
       selectedAppId,
       sessionId,
