@@ -8,16 +8,19 @@ interface QueryOverrides {
   [key: string]: any;
 }
 
-const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
-const {
-  APP_ID,
-  API_KEY,
-  DATABASE_NAME,
-  SCHEMA_NAME
-} = APP_CONFIG;
+// const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
+// const {
+//   APP_ID,
+//   API_KEY,
+//   DATABASE_NAME,
+//   SCHEMA_NAME
+// } = APP_CONFIG;
 
 
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
+  const { APP_CONFIG } = config();
+  const { APP_ID, API_KEY, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
+
   const params = {
     aplctn_cd: overrides.aplctn_cd, // now passed explicitly
     app_id: APP_ID,
