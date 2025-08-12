@@ -28,7 +28,7 @@ import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from "../types/message.types";
 import Chart from "../components/Chart";
 import axios from "axios";
-import { config } from "../utils/config";
+import { config } from "../hooks/config";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../components/SelectedAppContext";
 import ApiService from "../services/index";
