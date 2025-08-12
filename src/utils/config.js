@@ -1,6 +1,7 @@
 import { useSelectedApp } from "components/SelectedAppContext";
 
 export const config = (selectedAppId) => {
+  console.log(selectedAppId);
   return {
     API_BASE_URL: selectedAppId === "POCGENAI"
       ? "https://sfassist.edagenaipreprod.awsdns.internal.das/api/cortex/"
