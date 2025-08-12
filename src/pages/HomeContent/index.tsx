@@ -20,7 +20,7 @@ import { useApiRequest } from "../../hooks/useApiRequest";
 import { useStreamHandler } from "../../hooks/useStreamHandler";
 import { buildPayload } from "../../utils/buildPayload";
 import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
-import config from "../../utils/config.json";
+import config from "../../utils/config";
 import { MessageType } from "../../types/message.types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../../components/SelectedAppContext";

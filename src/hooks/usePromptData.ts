@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import config from "../utils/config.json";
+import config from "../utils/config";
 import { useSelectedApp } from "components/SelectedAppContext";
 
 export interface promptProps {

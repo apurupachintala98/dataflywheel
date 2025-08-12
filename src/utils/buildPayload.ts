@@ -1,4 +1,4 @@
-import config from '../utils/config.json';
+import config from './config';
 const { APP_CONFIG } = config;
 
 type BasePayloadParams = {
@@ -37,6 +37,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
     DATABASE_NAME,
     SCHEMA_NAME,
     STAGE_NAME,
+    APP_LVL_PREFIX,
   } = APP_CONFIG;
 
   const {
@@ -59,7 +60,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
         prompt: {
           messages: [{ role: "user", content: prompt }],
         },
-        app_lvl_prefix: "supportcbt_dml",
+        app_lvl_prefix: APP_LVL_PREFIX,
         session_id: sessionId,
         exec_sql: execSQL,
         user_nm,
@@ -94,7 +95,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
       prompt: {
         messages: [{ role: "user", content: prompt }],
       },
-      app_lvl_prefix: "supportcbt_dml",
+      app_lvl_prefix: APP_LVL_PREFIX,
       session_id: sessionId,
       exec_sql: execSQL,
       sys_msg: sysMsg ? `${sysMsg}${JSON.stringify(responseData)}` : undefined,

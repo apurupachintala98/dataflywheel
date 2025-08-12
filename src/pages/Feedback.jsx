@@ -11,7 +11,7 @@ import PaginatedTable from "../components/PaginatedTable";
 import SendIcon from "@mui/icons-material/Send";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import axios from "axios";
-import config from "../utils/config.json";
+import config from "../utils/config";
 import { toast } from "react-toastify";
 import { FirstMessageCon, SecondMessageCon, MessageContainer } from "./styled.components";
 import DataFlyWheelLogo from "assests/images/loadingBlack.png";

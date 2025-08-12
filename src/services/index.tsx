@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../utils/config.json";
+import config from "../utils/config";
 
 interface QueryOverrides {
   database_nm?: string;
