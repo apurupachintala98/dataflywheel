@@ -26,7 +26,7 @@ const buildQueryParams = (overrides: QueryOverrides = {}) => {
     app_id: APP_ID,
     api_key: API_KEY,
     session_id: overrides.session_id || "default-session-id",
-    database_nm: overrides.database_nm || DATABASE_NAME,
+    database_nm: overrides.database_nm ?? DATABASE_NAME,
     schema_nm: overrides.schema_nm || SCHEMA_NAME,
     ...overrides,
   };
