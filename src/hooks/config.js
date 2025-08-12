@@ -1,5 +1,5 @@
 
-import { getCurrentAppId } from "../../ envStore";
+import { getCurrentAppId } from "../store/envStore";
 
 export const config = () => {
   const selectedAppId = getCurrentAppId();
@@ -17,7 +17,7 @@ export const config = () => {
       DATABASE_NAME: "database_nm",
       SCHEMA_NAME: "schema_nm",
       STAGE_NAME: "",
-      APP_LVL_PREFIX: upperId === "POCGENAI" ? "edadip" : "supportcbt_dml",
+      APP_LVL_PREFIX: selectedAppId === "POCGENAI" ? "edadip" : "supportcbt_dml",
     },
 
     ENDPOINTS: {
