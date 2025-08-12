@@ -16,12 +16,6 @@ const {
   SCHEMA_NAME
 } = APP_CONFIG;
 
-const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const params = {
@@ -50,7 +44,7 @@ getCortexSearchDetails: async ({
   }: QueryOverrides) => {
     try {
       const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
-      const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
+      const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching cortex search details:", error);
@@ -66,15 +60,13 @@ getCortexSearchDetails: async ({
   }: QueryOverrides) => {
     try {
       const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
-      const response = await axiosInstance.post(`${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
+      const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching cortex analyst details:", error);
       throw error;
     }
   },
-
-
 };
 
 export default ApiService;
