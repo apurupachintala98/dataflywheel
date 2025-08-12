@@ -1,9 +1,11 @@
 
-export const config = (selectedAppId) => {
-  const upperId = selectedAppId?.toUpperCase();
-  console.log(upperId);
+import { getCurrentAppId } from "../../ envStore";
+
+export const config = () => {
+  const selectedAppId = getCurrentAppId();
+  console.log(selectedAppId);
   return {
-    API_BASE_URL: upperId === "POCGENAI"
+    API_BASE_URL: selectedAppId === "POCGENAI"
       ? "https://sfassist.edagenaipreprod.awsdns.internal.das/api/cortex/"
       : "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/",
 

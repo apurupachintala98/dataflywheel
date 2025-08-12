@@ -32,7 +32,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
   const { selectedAppId, sessionId, database_nm, schema_nm, stage_nm, user_nm, user_pwd } = params;
 
   // Pass selectedAppId to config so it returns the correct APP_CONFIG
-  const { APP_CONFIG } = config(selectedAppId);
+  const { APP_CONFIG } = config();
   const aplctnCdValue =
     selectedAppId === "POCGENAI"
       ? "edagnai"

@@ -56,7 +56,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const [user_nm, setUserNm] = useState("");
   const [user_pwd, setUserPwd] = useState("");
-  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config(selectedAppId);
+  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
 
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 

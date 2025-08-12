@@ -151,7 +151,7 @@ const MainContent = ({
   const [sessionId] = useState(() => uuidv4());
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config(selectedAppId);
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
