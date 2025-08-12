@@ -45,6 +45,7 @@ getCortexSearchDetails: async ({
     try {
       const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
       const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
+      console.log(API_BASE_URL);
       return response.data;
     } catch (error) {
       console.error("Error fetching cortex search details:", error);
