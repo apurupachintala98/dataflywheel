@@ -17,18 +17,40 @@ interface QueryOverrides {
 // } = APP_CONFIG;
 
 
+// const buildQueryParams = (overrides: QueryOverrides = {}) => {
+//   const { APP_CONFIG } = config();
+//   const { APP_ID, API_KEY, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
+
+//   const params = {
+//     aplctn_cd: overrides.aplctn_cd, // now passed explicitly
+//     app_id: APP_ID,
+//     api_key: API_KEY,
+//     session_id: overrides.session_id || "default-session-id",
+//     database_nm: overrides.database_nm ?? DATABASE_NAME,
+//     schema_nm: overrides.schema_nm || SCHEMA_NAME,
+//     ...overrides,
+//   };
+
+//   return Object.entries(params)
+//     .filter(([, val]) => val !== undefined) // remove undefined keys
+//     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
+//     .join("&");
+// };
+
 const buildQueryParams = (overrides: QueryOverrides = {}) => {
   const { APP_CONFIG } = config();
   const { APP_ID, API_KEY, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 
   const params = {
-    aplctn_cd: overrides.aplctn_cd, // now passed explicitly
+    ...Object.fromEntries(
+      Object.entries(overrides).filter(([, val]) => val !== undefined) // only keep defined overrides
+    ),
+    aplctn_cd: overrides.aplctn_cd, // explicitly passed
     app_id: APP_ID,
     api_key: API_KEY,
     session_id: overrides.session_id || "default-session-id",
     database_nm: overrides.database_nm ?? DATABASE_NAME,
-    schema_nm: overrides.schema_nm || SCHEMA_NAME,
-    ...overrides,
+    schema_nm: overrides.schema_nm ?? SCHEMA_NAME,
   };
 
   return Object.entries(params)
@@ -36,6 +58,7 @@ const buildQueryParams = (overrides: QueryOverrides = {}) => {
     .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
     .join("&");
 };
+
 
 const ApiService = {
 
