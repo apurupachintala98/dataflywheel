@@ -1,3 +1,4 @@
+
 export const config = (selectedAppId) => {
   const upperId = selectedAppId?.toUpperCase();
   console.log(upperId);

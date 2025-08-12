@@ -35,7 +35,7 @@ const Feedback = ({ message }) => {
   };
 
   const sendFeedback = async ({ action = null, commentText = null }) => {
-    const { APP_CONFIG,API_BASE_URL, ENDPOINTS } = config();
+    const { APP_CONFIG,API_BASE_URL, ENDPOINTS } = config(selectedAppId);
 
     const fdbck_id = message.fdbck_id || "";
     const session_id = message.session_id || "";
