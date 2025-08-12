@@ -28,7 +28,7 @@ import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from "../types/message.types";
 import Chart from "../components/Chart";
 import axios from "axios";
-import config from "../utils/config";
+import { config } from "../utils/config";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../components/SelectedAppContext";
 import ApiService from "../services/index";
@@ -49,7 +49,7 @@ interface MainContentProps {
     schema: HTMLElement | null;
   };
   vegaChartData: any;
-setVegaChartData: React.Dispatch<React.SetStateAction<any>>;
+  setVegaChartData: React.Dispatch<React.SetStateAction<any>>;
   fileLists: { yaml: string[]; search: string[] };
   setFileLists: React.Dispatch<React.SetStateAction<{ yaml: string[]; search: string[] }>>;
   selectedModels: { yaml: string[]; search: string[] };
@@ -151,7 +151,7 @@ const MainContent = ({
   const [sessionId] = useState(() => uuidv4());
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
-  const { APP_CONFIG } = config;
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
@@ -215,7 +215,7 @@ const MainContent = ({
 
     try {
       const response = await axios.post(
-        `${config.API_BASE_URL}${config.ENDPOINTS.DB_SCHEMA_LIST}`,
+        `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
         payload,
         {
           headers: {

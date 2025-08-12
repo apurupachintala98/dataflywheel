@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../utils/config";
+import { config } from "../utils/config";
 
 interface QueryOverrides {
   database_nm?: string;
@@ -8,7 +8,7 @@ interface QueryOverrides {
   [key: string]: any;
 }
 
-const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config;
+const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
 const {
   APP_ID,
   API_KEY,

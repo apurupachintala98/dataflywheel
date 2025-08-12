@@ -11,13 +11,12 @@ import PaginatedTable from "../components/PaginatedTable";
 import SendIcon from "@mui/icons-material/Send";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import axios from "axios";
-import config from "../utils/config";
+import { config } from "../utils/config";
 import { toast } from "react-toastify";
 import { FirstMessageCon, SecondMessageCon, MessageContainer } from "./styled.components";
 import DataFlyWheelLogo from "assests/images/loadingBlack.png";
 
 const Feedback = ({ message }) => {
-  console.log(message);
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [comment, setComment] = useState("");
   const [thumb, setThumb] = useState(null);
@@ -36,12 +35,14 @@ const Feedback = ({ message }) => {
   };
 
   const sendFeedback = async ({ action = null, commentText = null }) => {
+    const { APP_CONFIG,API_BASE_URL, ENDPOINTS } = config();
+
     const fdbck_id = message.fdbck_id || "";
     const session_id = message.session_id || "";
     const feedbk_actn_txt = typeof action === "boolean" ? (action ? "True" : "False") : action;
     const feedbk_cmnt_txt = commentText !== undefined ? commentText : lastSubmittedComment;
     const url =
-      `${config.API_BASE_URL}${config.ENDPOINTS.FEEDBACK}?` +
+      `${API_BASE_URL}${ENDPOINTS.FEEDBACK}?` +
       `fdbck_id=${encodeURIComponent(fdbck_id)}&` +
       `session_id=${encodeURIComponent(session_id)}&` +
       `feedbk_actn_txt=${encodeURIComponent(feedbk_actn_txt)}&` +

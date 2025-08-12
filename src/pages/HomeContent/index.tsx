@@ -20,7 +20,7 @@ import { useApiRequest } from "../../hooks/useApiRequest";
 import { useStreamHandler } from "../../hooks/useStreamHandler";
 import { buildPayload } from "../../utils/buildPayload";
 import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
-import config from "../../utils/config";
+import { config } from "../../utils/config";
 import { MessageType } from "../../types/message.types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../../components/SelectedAppContext";
@@ -56,7 +56,8 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const [user_nm, setUserNm] = useState("");
   const [user_pwd, setUserPwd] = useState("");
-  const { APP_CONFIG } = config;
+  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
+
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 
   const [anchorEls, setAnchorEls] = useState<AnchorElState>({
@@ -130,9 +131,9 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
       schema_nm: dbDetails.schema_nm,
     });
 
-    const endpoint = config.ENDPOINTS.AGENT
-      ? `${config.API_BASE_URL}${config.ENDPOINTS.AGENT}`
-      : `${config.API_BASE_URL}${config.ENDPOINTS.TEXT_TO_SQL}`;
+    const endpoint = ENDPOINTS.AGENT
+      ? `${API_BASE_URL}${ENDPOINTS.AGENT}`
+      : `${API_BASE_URL}${ENDPOINTS.TEXT_TO_SQL}`;
 
     const { stream, error } = await sendRequest(endpoint, payload, undefined, true);
 
@@ -260,7 +261,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
 
       try {
         const response = await axios.post(
-          `${config.API_BASE_URL}${config.ENDPOINTS.UPLOAD_URL}`,
+          `${API_BASE_URL}${ENDPOINTS.UPLOAD_URL}`,
           formData,
           {
             headers: {
@@ -309,7 +310,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
 
     });
     const { data, error } = await sendRequest(
-      `${config.API_BASE_URL}${config.ENDPOINTS.RUN_SQL_QUERY}`,
+      `${API_BASE_URL}${ENDPOINTS.RUN_SQL_QUERY}`,
       payload,
     );
     if (error || !data) {
@@ -384,7 +385,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     });
 
     const { stream, error } = await sendRequest(
-      `${config.API_BASE_URL}${config.ENDPOINTS.CORTEX_COMPLETE}`,
+      `${API_BASE_URL}${ENDPOINTS.CORTEX_COMPLETE}`,
       payload,
       undefined,
       true,
@@ -477,7 +478,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
 
     try {
       const response = await axios.post(
-        `${config.API_BASE_URL}${config.ENDPOINTS.GET_VEGALITE_JSON}`,
+        `${API_BASE_URL}${ENDPOINTS.GET_VEGALITE_JSON}`,
         payload,
         // {
         //   headers: {

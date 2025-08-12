@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import config from "../utils/config";
+import { config } from "../utils/config";
 import { useSelectedApp } from "components/SelectedAppContext";
 
 export interface promptProps {
@@ -17,6 +17,7 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
   const [prompts, setPrompts] = useState<promptProps[]>([]);
   const [loading, setLoading] = useState(true);
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
 
   useEffect(() => {
     if (checkIsLogin) {
@@ -33,7 +34,7 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
     try {
       console.log('selectedAppId::', selectedAppId);
       const aplctn_cd = selectedAppId.toLowerCase();
-      const endPoint = `${config.API_BASE_URL}${config.ENDPOINTS.GET_PROMPTS}/${aplctn_cd}`;
+      const endPoint = `${API_BASE_URL}${ENDPOINTS.GET_PROMPTS}/${aplctn_cd}`;
       const response = await fetch(endPoint);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
