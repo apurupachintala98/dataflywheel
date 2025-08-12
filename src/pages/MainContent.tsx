@@ -152,7 +152,7 @@ const MainContent = ({
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
-  const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
+  const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const aplctnCdValue =
@@ -212,7 +212,7 @@ const MainContent = ({
         aplctn_cd: aplctnCdValue,
         app_id: APP_ID,
         api_key: API_KEY,
-        app_lvl_prefix: "supportcbt_dml",
+        app_lvl_prefix: APP_LVL_PREFIX,
         session_id: sessionId,
       },
     };

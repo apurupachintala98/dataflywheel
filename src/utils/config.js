@@ -1,6 +1,7 @@
 import { useSelectedApp } from "components/SelectedAppContext";
 
-export const config = (selectedAppId) => ({
+export const config = (selectedAppId) => {
+  return {
     API_BASE_URL: selectedAppId === "POCGENAI"
       ? "https://sfassist.edagenaipreprod.awsdns.internal.das/api/cortex/"
       : "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/",
@@ -31,5 +32,6 @@ export const config = (selectedAppId) => ({
       GET_PROMPTS: "prompts",
       GET_VEGALITE_JSON: "txt2sql/generate_vega_lite_json"
     }
-});
+  }
+};
 
