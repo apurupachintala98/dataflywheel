@@ -155,6 +155,10 @@ const MainContent = ({
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
+  const aplctnCdValue =
+  selectedAppId === "POCGENAI"
+    ? "edagnai"
+    : selectedAppId.toLowerCase();
 
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
@@ -205,7 +209,7 @@ const MainContent = ({
   const handleFinalLogin = async () => {
     const payload = {
       query: {
-        aplctn_cd: selectedAppId.toLowerCase(),
+        aplctn_cd: aplctnCdValue,
         app_id: APP_ID,
         api_key: API_KEY,
         app_lvl_prefix: "supportcbt_dml",
@@ -311,14 +315,14 @@ const MainContent = ({
                           const yamlFiles = await ApiService.getCortexAnalystDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
-                            aplctn_cd: selectedAppId.toLowerCase(),
+                            aplctn_cd: aplctnCdValue,
                             session_id: sessionId,
                           });
 
                           const searchFiles = await ApiService.getCortexSearchDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
-                            aplctn_cd: selectedAppId.toLowerCase(),
+                            aplctn_cd: aplctnCdValue,
                             session_id: sessionId,
                           });
 

@@ -78,7 +78,10 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [vegaChartData, setVegaChartData] = useState<any>(null);
-
+   const aplctnCdValue =
+  selectedAppId === "POCGENAI"
+    ? "edagnai"
+    : selectedAppId.toLowerCase();
 
   const handleMenuClick = (e: React.MouseEvent<HTMLElement>, type: keyof AnchorElState) => {
     const target = e.currentTarget as HTMLElement;
@@ -248,7 +251,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
       const formData = new FormData();
 
       const query = {
-        aplctn_cd: selectedAppId.toLowerCase(),
+        aplctn_cd: aplctnCdValue,
         app_id: APP_ID,
         api_key: API_KEY,
         app_nm: APP_NM,

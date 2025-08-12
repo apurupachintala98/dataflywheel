@@ -18,7 +18,10 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
   const [loading, setLoading] = useState(true);
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
-
+    const aplctnCdValue =
+  selectedAppId === "POCGENAI"
+    ? "edagnai"
+    : selectedAppId.toLowerCase();
   useEffect(() => {
     if (checkIsLogin) {
       if (hasFetchedAllPromptDetails.current) {
@@ -33,7 +36,7 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
     setLoading(true);
     try {
       console.log('selectedAppId::', selectedAppId);
-      const aplctn_cd = selectedAppId.toLowerCase();
+      const aplctn_cd = aplctnCdValue;
       const endPoint = `${API_BASE_URL}${ENDPOINTS.GET_PROMPTS}/${aplctn_cd}`;
       const response = await fetch(endPoint);
       if (!response.ok) {
