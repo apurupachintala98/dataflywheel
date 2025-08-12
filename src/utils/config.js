@@ -1,9 +1,8 @@
-import { useSelectedApp } from "components/SelectedAppContext";
-
 export const config = (selectedAppId) => {
-  console.log(selectedAppId);
+  const upperId = selectedAppId?.toUpperCase();
+  console.log(upperId);
   return {
-    API_BASE_URL: selectedAppId === "POCGENAI"
+    API_BASE_URL: upperId === "POCGENAI"
       ? "https://sfassist.edagenaipreprod.awsdns.internal.das/api/cortex/"
       : "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/",
 
@@ -15,7 +14,7 @@ export const config = (selectedAppId) => {
       DATABASE_NAME: "database_nm",
       SCHEMA_NAME: "schema_nm",
       STAGE_NAME: "",
-      APP_LVL_PREFIX: selectedAppId === "POCGENAI" ? "edadip" : "supportcbt_dml",
+      APP_LVL_PREFIX: upperId === "POCGENAI" ? "edadip" : "supportcbt_dml",
     },
 
     ENDPOINTS: {
