@@ -43,6 +43,7 @@ getCortexSearchDetails: async ({
     session_id,
   }: QueryOverrides) => {
     try {
+      const { API_BASE_URL, ENDPOINTS } = config();
       const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
       const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.CORTEX_SEARCH}/?${queryParams}`);
       console.log(API_BASE_URL);
@@ -60,6 +61,7 @@ getCortexSearchDetails: async ({
     session_id,
   }: QueryOverrides) => {
     try {
+      const { API_BASE_URL, ENDPOINTS } = config();
       const queryParams = buildQueryParams({ aplctn_cd, database_nm, schema_nm, session_id });
       const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.CORTEX_ANALYST}/?${queryParams}`);
       return response.data;
