@@ -87,12 +87,12 @@ const buildPayload = (overrides: QueryOverrides = {}) => {
 
   const query = {
     ...safeOverrides,
-    aplctn_cd: safeOverrides.aplctn_cd,
+    // aplctn_cd: safeOverrides.aplctn_cd,
     app_id: APP_ID,
     api_key: API_KEY,
-    session_id: safeOverrides.session_id || "default-session-id",
-    database_nm: safeOverrides.database_nm ?? DATABASE_NAME,
-    schema_nm: safeOverrides.schema_nm ?? SCHEMA_NAME,
+    // session_id: safeOverrides.session_id || "default-session-id",
+    // database_nm: safeOverrides.database_nm ?? DATABASE_NAME,
+    // schema_nm: safeOverrides.schema_nm ?? SCHEMA_NAME,
     app_lvl_prefix: APP_LVL_PREFIX,
   };
 
