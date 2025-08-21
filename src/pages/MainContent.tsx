@@ -231,10 +231,10 @@ const MainContent = ({
       console.log("API Response:", response.data);
 
       if (response.status === 200) {
-        const { database_nm, schema_nm } = response.data;
+        const { database, schema_nm } = response.data;
 
-        const selectedDatabase = database_nm;
-        setAvailableSchemas(schema_nm);
+        const selectedDatabase = database?.[0] || "";
+        setAvailableSchemas(schema_nm || []);
         setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
         console.log(setDbDetails);
          console.log(selectedDatabase);
