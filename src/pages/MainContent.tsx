@@ -236,6 +236,8 @@ const MainContent = ({
         const selectedDatabase = database_nm;
         setAvailableSchemas(schema_nm);
         setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
+        console.log(setDbDetails);
+         console.log(selectedDatabase);
         setOpenLoginDialog(false);
         setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
         setCheckIsLogin(true);
