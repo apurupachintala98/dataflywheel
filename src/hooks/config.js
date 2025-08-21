@@ -14,7 +14,7 @@ export const config = () => {
       API_KEY: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
       DEFAULT_MODEL: "llama3.1-70b",
       APP_NM: "app_nm",
-      DATABASE_NAME: "database_nm",
+      DATABASE_NAME: "",
       SCHEMA_NAME: "schema_nm",
       STAGE_NAME: "",
       APP_LVL_PREFIX: selectedAppId === "POCGENAI" ? "edadip" : "supportcbt_dml",
