@@ -154,11 +154,13 @@ const MainContent = ({
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
+  const [environment, setEnvironment] = useState("DEV");
+  const [appLvlPrefix, setAppLvlPrefix] = useState("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const aplctnCdValue =
-  selectedAppId === "POCGENAI"
-    ? "edagnai"
-    : selectedAppId.toLowerCase();
+    selectedAppId === "POCGENAI"
+      ? "edagnai"
+      : selectedAppId.toLowerCase();
 
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
@@ -237,7 +239,7 @@ const MainContent = ({
         setAvailableSchemas(schema_nm || []);
         setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
         console.log(setDbDetails);
-         console.log(selectedDatabase);
+        console.log(selectedDatabase);
         setOpenLoginDialog(false);
         setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
         setCheckIsLogin(true);
@@ -284,6 +286,40 @@ const MainContent = ({
             }}
           >
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+              {loginInfo && (
+                <>
+                  {/* Environment Dropdown */}
+                  <Box  sx={{
+                      color: "#000",
+                      px: 2,
+                      py: 1,
+                      cursor: "pointer",
+                      display: "inline-block",
+                      alignItems: "center",
+                      gap: 1,
+                      justifyContent: "space-between",
+                    }}>
+                    <CssTextField
+                      select
+                      label="Environment"
+                      value={environment}
+                      onChange={(e) => setEnvironment(e.target.value)}
+                      sx={{ minWidth: 140 }}
+                    >
+                      <MenuItem value="DEV">DEV</MenuItem>
+                      <MenuItem value="PREPROD">PREPROD</MenuItem>
+                    </CssTextField>
+                  </Box>
+
+                  {/* App_Lvl_Prefix Input */}
+                  <CssTextField
+                    label="App_Lvl_Prefix"
+                    value={appLvlPrefix}
+                    onChange={(e) => setAppLvlPrefix(e.target.value)}
+                    sx={{ minWidth: 180 }}
+                  />
+                </>
+              )}
               {availableSchemas.length > 0 && (
                 <Box sx={{ display: "inline-block" }}>
                   <Box
