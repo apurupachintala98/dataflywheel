@@ -37,6 +37,7 @@ interface AnchorElState {
   search: HTMLElement | null;
   upload: HTMLElement | null;
   schema: HTMLElement | null;
+  environment: HTMLElement | null;
 }
 
 const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLogin }: HomeContentProps) => {
@@ -66,6 +67,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     search: null,
     upload: null,
     schema: null,
+     environment: null,
   });
   const open = Boolean(anchorEls.upload);
   const [fileLists, setFileLists] = useState<{ yaml: string[]; search: string[] }>({
@@ -78,10 +80,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [vegaChartData, setVegaChartData] = useState<any>(null);
-   const aplctnCdValue =
-  selectedAppId === "POCGENAI"
-    ? "edagnai"
-    : selectedAppId.toLowerCase();
+   const aplctnCdValue = selectedAppId.toLowerCase();
 
   const handleMenuClick = (e: React.MouseEvent<HTMLElement>, type: keyof AnchorElState) => {
     const target = e.currentTarget as HTMLElement;
@@ -96,7 +95,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
     }
   };
   const handleMenuClose = () =>
-    setAnchorEls({ account: null, chat: null, search: null, upload: null, schema: null });
+    setAnchorEls({ account: null, chat: null, search: null, upload: null, schema: null, environment: null });
   // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => { const file = e.target.files?.[0]; if (file) setSelectedFile(file); };
   const handleModelSelect = (file: string, type: keyof SelectedModelState) => {
     setSelectedModels((prev) => ({

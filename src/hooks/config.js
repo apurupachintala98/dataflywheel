@@ -1,14 +1,18 @@
+export interface ConfigOverrides {
+  environment?: "DEV" | "PREPROD";
+  appLvlPrefix?: string;
+  selectedAppId?: string;
+}
 
-import { getCurrentAppId } from "../store/envStore";
+export const config = (overrides: ConfigOverrides = {}) => {
+  const { environment, appLvlPrefix, selectedAppId } = overrides;
 
-export const config = () => {
-  const selectedAppId = getCurrentAppId();
-  console.log(selectedAppId);
-  return {
-    API_BASE_URL: selectedAppId === "POCGENAI"
+  const apiBaseUrl =
+    environment === "PREPROD"
       ? "https://sfassist.edagenaipreprod.awsdns.internal.das/api/cortex/"
-      : "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/",
-
+      : "https://sfassist.edagenaidev.awsdns.internal.das/api/cortex/";
+  return {
+    API_BASE_URL: apiBaseUrl,
     APP_CONFIG: {
       APP_ID: "edadip",
       API_KEY: "78a799ea-a0f6-11ef-a0ce-15a449f7a8b0",
@@ -17,7 +21,7 @@ export const config = () => {
       DATABASE_NAME: "",
       SCHEMA_NAME: "schema_nm",
       STAGE_NAME: "",
-      APP_LVL_PREFIX: selectedAppId === "POCGENAI" ? "edadip" : "supportcbt_dml",
+      APP_LVL_PREFIX:  appLvlPrefix,
     },
 
     ENDPOINTS: {

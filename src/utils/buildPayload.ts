@@ -33,10 +33,7 @@ export const buildPayload = (params: MinimalPayloadParams | FullPayloadParams) =
 
   // Pass selectedAppId to config so it returns the correct APP_CONFIG
   const { APP_CONFIG } = config();
-  const aplctnCdValue =
-    selectedAppId === "POCGENAI"
-      ? "edagnai"
-      : selectedAppId.toLowerCase();
+  const aplctnCdValue = selectedAppId.toLowerCase();
 
   const {
     APP_ID,

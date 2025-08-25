@@ -47,6 +47,7 @@ interface MainContentProps {
     search: HTMLElement | null;
     upload: HTMLElement | null;
     schema: HTMLElement | null;
+    environment: HTMLElement | null;
   };
   vegaChartData: any;
   setVegaChartData: React.Dispatch<React.SetStateAction<any>>;
@@ -151,16 +152,18 @@ const MainContent = ({
   const [sessionId] = useState(() => uuidv4());
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
-  const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } = APP_CONFIG;
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
-  const [environment, setEnvironment] = useState("DEV");
-  const [appLvlPrefix, setAppLvlPrefix] = useState("");
+  const [environment, setEnvironment] = useState<"DEV" | "PREPROD" | undefined>(undefined);
+  const [appLvlPrefix, setAppLvlPrefix] = useState<string>("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
-  const aplctnCdValue =
-    selectedAppId === "POCGENAI"
-      ? "edagnai"
-      : selectedAppId.toLowerCase();
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
+    environment,
+    appLvlPrefix,
+    selectedAppId,
+  });
+  const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
+    APP_CONFIG;
+  const aplctnCdValue = selectedAppId.toLowerCase();
 
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
@@ -195,7 +198,7 @@ const MainContent = ({
       const result = await response.json();
       console.log("result", result);
       if (response.ok && result?.app_cd?.length) {
-        setAppIds(result.app_cd); // Store app_cd list
+        setAppIds(result.app_cd);
         setUserNm(credentials.anthemId);
         setUserPwd(credentials.password);
       } else {
@@ -286,40 +289,72 @@ const MainContent = ({
             }}
           >
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              {loginInfo && (
-                <>
-                  {/* Environment Dropdown */}
-                  <Box  sx={{
-                      color: "#000",
-                      px: 2,
-                      py: 1,
-                      cursor: "pointer",
-                      display: "inline-block",
-                      alignItems: "center",
-                      gap: 1,
-                      justifyContent: "space-between",
-                    }}>
-                    <CssTextField
-                      select
-                      label="Environment"
-                      value={environment}
-                      onChange={(e) => setEnvironment(e.target.value)}
-                      sx={{ minWidth: 140 }}
-                    >
-                      <MenuItem value="DEV">DEV</MenuItem>
-                      <MenuItem value="PREPROD">PREPROD</MenuItem>
-                    </CssTextField>
-                  </Box>
+              {/* {loginInfo && (
+                <> */}
+              <Box
+                onClick={(e) => handleMenuClick(e, "environment")}
+                sx={{
+                  color: "#000",
+                  px: 2,
+                  py: 1,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  justifyContent: "space-between",
+                }}
+              >
+                {environment || "Select Environment"} <FaAngleDown />
+              </Box>
 
-                  {/* App_Lvl_Prefix Input */}
-                  <CssTextField
-                    label="App_Lvl_Prefix"
-                    value={appLvlPrefix}
-                    onChange={(e) => setAppLvlPrefix(e.target.value)}
-                    sx={{ minWidth: 180 }}
-                  />
-                </>
-              )}
+              <Menu
+                anchorEl={anchorEls["environment"]}
+                open={Boolean(anchorEls["environment"])}
+                onClose={handleMenuClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+              >
+                {(["DEV", "PREPROD"] as const).map((env) => (
+                  <MenuItem
+                    key={env}
+                    onClick={() => {
+                      setEnvironment(env);
+                      handleMenuClose();
+                    }}
+                  >
+                    {env}
+                  </MenuItem>
+                ))}
+
+              </Menu>
+
+
+              {/* App_Lvl_Prefix Input */}
+              <CssTextField
+                label="App_Lvl_Prefix"
+                value={appLvlPrefix}
+                size="small"
+                onChange={(e) => setAppLvlPrefix(e.target.value)}
+                sx={{ minWidth: 180 }}
+              />
+
+              <Box
+                onClick={(e) => handleMenuClick(e, "schema")}
+                sx={{
+                  color: "#000",
+                  px: 2,
+                  py: 1,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  justifyContent: "space-between",
+                }}
+              >
+                {selectedSchema || "Select Schema"} <FaAngleDown />
+              </Box>
+              {/* </>
+              )} */}
               {availableSchemas.length > 0 && (
                 <Box sx={{ display: "inline-block" }}>
                   <Box
