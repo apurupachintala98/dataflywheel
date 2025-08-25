@@ -391,22 +391,6 @@ const MainContent = ({
                     }}
                     sx={{ minWidth: 200 }}
                   />
-
-                  <Box
-                    onClick={(e) => handleMenuClick(e, "schema")}
-                    sx={{
-                      color: "#000",
-                      px: 2,
-                      py: 1,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    {selectedSchema || "Select Schema"} <FaAngleDown />
-                  </Box>
                 </>
               )}
               {availableSchemas.length > 0 && (
