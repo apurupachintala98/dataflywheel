@@ -258,46 +258,46 @@ const MainContent = ({
   // };
 
   const handleFinalLogin = async () => {
-    if (!environment || !appLvlPrefix || checkIsLogin) return;
+  if (!environment || !appLvlPrefix || checkIsLogin) return;
 
-    try {
-      const payload = {
-        query: {
-          aplctn_cd: aplctnCdValue,
-          app_id: APP_ID,
-          api_key: API_KEY,
-          app_lvl_prefix: appLvlPrefix,
-          session_id: sessionId,
-        },
-      };
+  try {
+    const payload = {
+      query: {
+        aplctn_cd: aplctnCdValue,
+        app_id: APP_ID,
+        api_key: API_KEY,
+        app_lvl_prefix: appLvlPrefix,
+        session_id: sessionId,
+      },
+    };
 
-      const response = await axios.post(
-        `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
+    const response = await axios.post(
+      `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
+      payload,
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-      if (response.status === 200) {
-        const { database, schema_nm } = response.data;
-        const selectedDatabase = database?.[0] || "";
+    if (response.status === 200) {
+      const { database, schema_nm } = response.data;
+      const selectedDatabase = database?.[0] || "";
 
-        setAvailableSchemas(schema_nm || []);
-        setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
-        setCheckIsLogin(true);
-      } else {
-        setError(response.data?.message || "Login failed.");
-      }
-    } catch (error: any) {
-      console.error("Final login API error:", error);
-      setError("Final login API error.");
+      setAvailableSchemas(schema_nm || []);
+      setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
+      setCheckIsLogin(true);
+    } else {
+      setError(response.data?.message || "Login failed.");
     }
-  };
+  } catch (error: any) {
+    console.error("Final login API error:", error);
+    setError("Final login API error.");
+  }
+};
 
   useEffect(() => {
-    if (loginInfo && environment && appLvlPrefix) {
-      handleFinalLogin();
-    }
-  }, [loginInfo, environment, appLvlPrefix]);
+  if (loginInfo && environment && appLvlPrefix) {
+    handleFinalLogin();
+  }
+}, [loginInfo, environment, appLvlPrefix]);
 
   useEffect(() => {
     if (isLogOut) {
@@ -335,69 +335,69 @@ const MainContent = ({
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
               {loginInfo && (
                 <>
-                  <Box
-                    onClick={(e) => handleMenuClick(e, "environment")}
-                    sx={{
-                      color: "#000",
-                      px: 2,
-                      py: 1,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      justifyContent: "space-between",
+              <Box
+                onClick={(e) => handleMenuClick(e, "environment")}
+                sx={{
+                  color: "#000",
+                  px: 2,
+                  py: 1,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  justifyContent: "space-between",
+                }}
+              >
+                {environment || "Select Environment"} <FaAngleDown />
+              </Box>
+
+              <Menu
+                anchorEl={anchorEls["environment"]}
+                open={Boolean(anchorEls["environment"])}
+                onClose={handleMenuClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+              >
+                {(["DEV", "PREPROD"] as const).map((env) => (
+                  <MenuItem
+                    key={env}
+                    onClick={() => {
+                      setEnvironment(env);
+                      handleMenuClose();
                     }}
                   >
-                    {environment || "Select Environment"} <FaAngleDown />
-                  </Box>
+                    {env}
+                  </MenuItem>
+                ))}
 
-                  <Menu
-                    anchorEl={anchorEls["environment"]}
-                    open={Boolean(anchorEls["environment"])}
-                    onClose={handleMenuClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                    transformOrigin={{ vertical: "top", horizontal: "left" }}
-                  >
-                    {(["DEV", "PREPROD"] as const).map((env) => (
-                      <MenuItem
-                        key={env}
-                        onClick={() => {
-                          setEnvironment(env);
-                          handleMenuClose();
-                        }}
-                      >
-                        {env}
-                      </MenuItem>
-                    ))}
-
-                  </Menu>
+              </Menu>
 
 
-                  {/* App_Lvl_Prefix Input */}
-                  <CssTextField
-                    label="App_Lvl_Prefix"
-                    value={appLvlPrefix}
-                    size="small"
-                    onChange={(e) => setAppLvlPrefix(e.target.value)}
-                    sx={{ minWidth: 180 }}
-                  />
+              {/* App_Lvl_Prefix Input */}
+              <CssTextField
+                label="App_Lvl_Prefix"
+                value={appLvlPrefix}
+                size="small"
+                onChange={(e) => setAppLvlPrefix(e.target.value)}
+                sx={{ minWidth: 180 }}
+              />
 
-                  <Box
-                    onClick={(e) => handleMenuClick(e, "schema")}
-                    sx={{
-                      color: "#000",
-                      px: 2,
-                      py: 1,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    {selectedSchema || "Select Schema"} <FaAngleDown />
-                  </Box>
-                </>
+              <Box
+                onClick={(e) => handleMenuClick(e, "schema")}
+                sx={{
+                  color: "#000",
+                  px: 2,
+                  py: 1,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  justifyContent: "space-between",
+                }}
+              >
+                {selectedSchema || "Select Schema"} <FaAngleDown />
+              </Box>
+              </>
               )}
               {availableSchemas.length > 0 && (
                 <Box sx={{ display: "inline-block" }}>
@@ -504,7 +504,7 @@ const MainContent = ({
             </Box>
 
             {/* RIGHT: Login Info */}
-            {/* <Box
+            <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -551,61 +551,7 @@ const MainContent = ({
                   Login
                 </Button>
               )}
-            </Box> */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              <Typography sx={{ fontSize: 15, color: "#5d5d5d" }}>
-                {loginInfo ? (
-                  `Logged in as ${loginInfo}`
-                ) : (
-                  <HtmlTooltip
-                    title={
-                      <React.Fragment>
-                        <Typography color="inherit">
-                          You are in read-only mode. <br />
-                          <b>Login</b> to know more details.
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  >
-                    <InfoOutlinedIcon
-                      sx={{ fontSize: 25, cursor: "pointer", margin: "10px" }}
-                    />
-                  </HtmlTooltip>
-                )}
-              </Typography>
-
-              {/* If loginInfo not set, show the Login button */}
-              {!loginInfo && (
-                <Button
-                  variant="contained"
-                  sx={{
-                    px: 2.5,
-                    py: 1,
-                    backgroundColor: "#373535",
-                    textTransform: "none",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    borderRadius: "30px",
-                    "&:hover": {
-                      backgroundColor: "#131313",
-                    },
-                  }}
-                  onClick={() => {
-                    setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
-                    setCheckIsLogin(true);
-                  }}
-                >
-                  Login
-                </Button>
-              )}
             </Box>
-
             <Dialog open={openLoginDialog} onClose={() => setOpenLoginDialog(false)}>
               <DialogTitle>
                 <Box
