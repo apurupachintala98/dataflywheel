@@ -165,11 +165,11 @@ const MainContent = ({
   } = useSelectedApp();
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
-   const { getCortexAnalystDetails, getCortexSearchDetails } = ApiService();
+ const { getCortexAnalystDetails, getCortexSearchDetails } = ApiService;
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
-    environment,
-    appLvlPrefix,
-  });
+  environment,
+  appLvlPrefix,
+});
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;
   const aplctnCdValue = selectedAppId === "POCGENAI"
@@ -456,14 +456,14 @@ const MainContent = ({
                         onClick={async () => {
                           setSelectedSchema(schema);
                           setDbDetails({ database_nm: dbDetails.database_nm, schema_nm: schema });
-                          const yamlFiles = await ApiService.getCortexAnalystDetails({
+                          const yamlFiles = await getCortexAnalystDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
                             aplctn_cd: aplctnCdValue,
                             session_id: sessionId,
                           });
 
-                          const searchFiles = await ApiService.getCortexSearchDetails({
+                          const searchFiles = await getCortexSearchDetails({
                             database_nm: dbDetails.database_nm,
                             schema_nm: schema,
                             aplctn_cd: aplctnCdValue,

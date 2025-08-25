@@ -1,9 +1,10 @@
 interface ConfigParams {
-  environment: string;
-  appLvlPrefix: string;
+  environment?: string;
+  appLvlPrefix?: string;
+  selectedAppId?: string;
 }
 
-export const config = ({ environment, appLvlPrefix }: ConfigParams) => {
+export const config = ({ environment, appLvlPrefix, selectedAppId }: ConfigParams = {}) => {
 
   const apiBaseUrl =
     environment === "PREPROD"
