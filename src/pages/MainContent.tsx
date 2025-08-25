@@ -168,17 +168,26 @@ const MainContent = ({
   const aplctnCdValue = selectedAppId.toLowerCase();
 
 useEffect(() => {
-  if (!environment || !appLvlPrefix.trim()) return;
+  console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
 
-  console.log("env", environment);
-  console.log("prefix", appLvlPrefix);
+  const canTrigger =
+    environment &&
+    appLvlPrefix.trim() !== "" &&
+    selectedAppId &&
+    !checkIsLogin;
+
+  console.log("Can Trigger Final Login?", canTrigger);
+
+  if (!canTrigger) return;
 
   const timeout = setTimeout(() => {
+    console.log(" Triggering Final Login...");
     handleFinalLogin();
-  }, 100); // wait 600ms after typing stops
+  }, 600);
 
   return () => clearTimeout(timeout);
-}, [appLvlPrefix, environment]);
+}, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
+
 
 
 
