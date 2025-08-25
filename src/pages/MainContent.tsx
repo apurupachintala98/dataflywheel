@@ -167,48 +167,46 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
-// useEffect(() => {
-//   console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
+  // useEffect(() => {
+  //   console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
 
-//   const canTrigger =
-//     environment &&
-//     appLvlPrefix &&
-//     selectedAppId &&
-//     checkIsLogin;
+  //   const canTrigger =
+  //     environment &&
+  //     appLvlPrefix &&
+  //     selectedAppId &&
+  //     checkIsLogin;
 
-//   console.log("Can Trigger Final Login?", canTrigger);
+  //   console.log("Can Trigger Final Login?", canTrigger);
 
-//   if (!canTrigger) return;
+  //   if (!canTrigger) return;
 
-//   const timeout = setTimeout(() => {
-//     console.log(" Triggering Final Login...");
-//     handleFinalLogin();
-//   }, 600);
+  //   const timeout = setTimeout(() => {
+  //     console.log(" Triggering Final Login...");
+  //     handleFinalLogin();
+  //   }, 600);
 
-//   return () => clearTimeout(timeout);
-// }, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
+  //   return () => clearTimeout(timeout);
+  // }, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
 
-useEffect(() => {
-  const canTrigger =
-    environment?.trim() !== "" &&
-    appLvlPrefix?.trim() !== "" &&
-    selectedAppId?.trim() !== ""
+  useEffect(() => {
+    const canTrigger =
+      environment?.trim() !== "" &&
+      appLvlPrefix?.trim() !== "" &&
+      selectedAppId?.trim() !== ""
 
-  console.log("Can Trigger Final Login?", canTrigger, {
-    environment,
-    appLvlPrefix,
-    selectedAppId,
-  });
+    console.log("Can Trigger Final Login?", canTrigger, {
+      environment,
+      appLvlPrefix,
+      selectedAppId,
+    });
 
-  if (!canTrigger) return;
+    if (!canTrigger) return;
+    if (canTrigger) {
+      console.log("Triggering Final Login...");
+      handleFinalLogin();
+    }
 
-  const timeout = setTimeout(() => {
-    console.log("Triggering Final Login...");
-    handleFinalLogin();
-  }, 600);
-
-  return () => clearTimeout(timeout);
-}, [environment, appLvlPrefix, selectedAppId]);
+  }, [environment, appLvlPrefix, selectedAppId]);
 
 
 
@@ -304,8 +302,6 @@ useEffect(() => {
   // };
 
   const handleFinalLogin = async () => {
-    if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
-
     try {
       const payload = {
         query: {
