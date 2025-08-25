@@ -80,7 +80,9 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [vegaChartData, setVegaChartData] = useState<any>(null);
-   const aplctnCdValue = selectedAppId.toLowerCase();
+  const aplctnCdValue = selectedAppId === "POCGENAI"
+      ? "edagnai"
+      : selectedAppId.toLowerCase();
 
   const handleMenuClick = (e: React.MouseEvent<HTMLElement>, type: keyof AnchorElState) => {
     const target = e.currentTarget as HTMLElement;

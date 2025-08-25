@@ -18,7 +18,9 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
   const [loading, setLoading] = useState(true);
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
-    const aplctnCdValue = selectedAppId.toLowerCase();
+    const aplctnCdValue = selectedAppId === "POCGENAI"
+      ? "edagnai"
+      : selectedAppId.toLowerCase();
   useEffect(() => {
     if (checkIsLogin) {
       if (hasFetchedAllPromptDetails.current) {

@@ -160,7 +160,9 @@ const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails, environment, s
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;
-  const aplctnCdValue = selectedAppId.toLowerCase();
+  const aplctnCdValue = selectedAppId === "POCGENAI"
+      ? "edagnai"
+      : selectedAppId.toLowerCase();
 
  
   // useEffect(() => {
