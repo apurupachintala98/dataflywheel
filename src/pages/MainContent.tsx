@@ -167,12 +167,15 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
-  useEffect(() => {
-    if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
-      handleFinalLogin();
-    }
-  }, [environment, selectedAppId]);
+ useEffect(() => {
+  if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
 
+  const timeout = setTimeout(() => {
+    handleFinalLogin();
+  }, 600); 
+
+  return () => clearTimeout(timeout);
+}, [appLvlPrefix, environment, selectedAppId]);
 
 
   useEffect(() => {
@@ -384,11 +387,6 @@ const MainContent = ({
                     size="small"
                     value={appLvlPrefix}
                     onChange={(e) => setAppLvlPrefix(e.target.value)}
-                    onBlur={() => {
-                      if (environment && appLvlPrefix.trim() !== "") {
-                        handleFinalLogin();
-                      }
-                    }}
                     sx={{ minWidth: 200 }}
                   />
                 </>
