@@ -168,6 +168,12 @@ const MainContent = ({
   const aplctnCdValue = selectedAppId.toLowerCase();
 
   useEffect(() => {
+  if (environment && appLvlPrefix && !checkIsLogin) {
+    handleFinalLogin();
+  }
+}, [environment, appLvlPrefix]); 
+
+  useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
     if (anchor) {
       anchor.scrollIntoView({ behavior: "smooth" });
@@ -257,47 +263,43 @@ const MainContent = ({
   //   }
   // };
 
-  const handleFinalLogin = async () => {
-    if (!environment || !appLvlPrefix || checkIsLogin) return;
+ const handleFinalLogin = async () => {
+  if (!environment || !appLvlPrefix || checkIsLogin) return;
 
-    try {
-      const payload = {
-        query: {
-          aplctn_cd: aplctnCdValue,
-          app_id: APP_ID,
-          api_key: API_KEY,
-          app_lvl_prefix: appLvlPrefix,
-          session_id: sessionId,
-        },
-      };
+  try {
+    const payload = {
+      query: {
+        aplctn_cd: aplctnCdValue,
+        app_id: APP_ID,
+        api_key: API_KEY,
+        app_lvl_prefix: appLvlPrefix,
+        session_id: sessionId,
+      },
+    };
 
-      const response = await axios.post(
-        `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
-        payload,
-        { headers: { "Content-Type": "application/json" } }
-      );
+    const response = await axios.post(
+      `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
+      payload,
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-      if (response.status === 200) {
-        const { database, schema_nm } = response.data;
-        const selectedDatabase = database?.[0] || "";
+    if (response.status === 200) {
+      const { database, schema_nm } = response.data;
+      const selectedDatabase = database?.[0] || "";
 
-        setAvailableSchemas(schema_nm || []);
-        setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
-        setCheckIsLogin(true);
-      } else {
-        setError(response.data?.message || "Login failed.");
-      }
-    } catch (error: any) {
-      console.error("Final login API error:", error);
-      setError("Final login API error.");
+      setAvailableSchemas(schema_nm || []);
+      setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
+
+      setCheckIsLogin(true);
+    } else {
+      setError(response.data?.message || "Login failed.");
     }
-  };
-
-  useEffect(() => {
-  if (loginInfo && environment && appLvlPrefix) {
-    handleFinalLogin();
+  } catch (error: any) {
+    console.error("Final login API error:", error);
+    setError("Final login API error.");
   }
-}, [environment, appLvlPrefix]);
+};
+
 
   useEffect(() => {
     if (isLogOut) {
