@@ -158,11 +158,7 @@ const MainContent = ({
   const [environment, setEnvironment] = useState<"DEV" | "PREPROD" | undefined>(undefined);
   const [appLvlPrefix, setAppLvlPrefix] = useState<string>("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
-    environment,
-    appLvlPrefix,
-    selectedAppId,
-  });
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
