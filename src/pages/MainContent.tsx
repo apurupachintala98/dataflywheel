@@ -167,11 +167,12 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
-useEffect(() => {
-  if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
-    handleFinalLogin();
-  }
-}, [environment, appLvlPrefix, selectedAppId]); 
+  useEffect(() => {
+    if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
+      handleFinalLogin();
+    }
+  }, [environment, selectedAppId]);
+
 
 
   useEffect(() => {
@@ -264,42 +265,42 @@ useEffect(() => {
   //   }
   // };
 
-const handleFinalLogin = async () => {
-  if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
+  const handleFinalLogin = async () => {
+    if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
 
-  try {
-    const payload = {
-      query: {
-        aplctn_cd: aplctnCdValue,
-        app_id: APP_ID,
-        api_key: API_KEY,
-        app_lvl_prefix: appLvlPrefix.trim(),
-        session_id: sessionId,
-      },
-    };
+    try {
+      const payload = {
+        query: {
+          aplctn_cd: aplctnCdValue,
+          app_id: APP_ID,
+          api_key: API_KEY,
+          app_lvl_prefix: appLvlPrefix.trim(),
+          session_id: sessionId,
+        },
+      };
 
-    const response = await axios.post(
-      `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
-      payload,
-      { headers: { "Content-Type": "application/json" } }
-    );
+      const response = await axios.post(
+        `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
+        payload,
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-    if (response.status === 200) {
-      const { database, schema_nm } = response.data;
-      const selectedDatabase = database?.[0] || "";
+      if (response.status === 200) {
+        const { database, schema_nm } = response.data;
+        const selectedDatabase = database?.[0] || "";
 
-      setAvailableSchemas(schema_nm || []);
-      setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
+        setAvailableSchemas(schema_nm || []);
+        setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
 
-      setCheckIsLogin(true);
-    } else {
-      setError(response.data?.message || "Login failed.");
+        setCheckIsLogin(true);
+      } else {
+        setError(response.data?.message || "Login failed.");
+      }
+    } catch (error: any) {
+      console.error("Final login API error:", error);
+      setError("Final login API error.");
     }
-  } catch (error: any) {
-    console.error("Final login API error:", error);
-    setError("Final login API error.");
-  }
-};
+  };
 
 
   useEffect(() => {
@@ -377,12 +378,18 @@ const handleFinalLogin = async () => {
 
 
                   {/* App_Lvl_Prefix Input */}
-                  <CssTextField
+                  <TextField
                     label="App_Lvl_Prefix"
-                    value={appLvlPrefix}
+                    variant="outlined"
                     size="small"
+                    value={appLvlPrefix}
                     onChange={(e) => setAppLvlPrefix(e.target.value)}
-                    sx={{ minWidth: 180 }}
+                    onBlur={() => {
+                      if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
+                        handleFinalLogin();
+                      }
+                    }}
+                    sx={{ minWidth: 200 }}
                   />
 
                   <Box
