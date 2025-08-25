@@ -294,10 +294,10 @@ const MainContent = ({
   };
 
   useEffect(() => {
-    if (loginInfo && environment && appLvlPrefix) {
-      handleFinalLogin();
-    }
-  }, [loginInfo, environment, appLvlPrefix]);
+  if (loginInfo && environment && appLvlPrefix) {
+    handleFinalLogin();
+  }
+}, [environment, appLvlPrefix]);
 
   useEffect(() => {
     if (isLogOut) {
