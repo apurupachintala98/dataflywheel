@@ -167,21 +167,45 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
-useEffect(() => {
-  console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
+// useEffect(() => {
+//   console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
 
+//   const canTrigger =
+//     environment &&
+//     appLvlPrefix &&
+//     selectedAppId &&
+//     checkIsLogin;
+
+//   console.log("Can Trigger Final Login?", canTrigger);
+
+//   if (!canTrigger) return;
+
+//   const timeout = setTimeout(() => {
+//     console.log(" Triggering Final Login...");
+//     handleFinalLogin();
+//   }, 600);
+
+//   return () => clearTimeout(timeout);
+// }, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
+
+useEffect(() => {
   const canTrigger =
-    environment &&
-    appLvlPrefix.trim() !== "" &&
-    selectedAppId &&
+    environment?.trim() !== "" &&
+    appLvlPrefix?.trim() !== "" &&
+    selectedAppId?.trim() !== "" &&
     !checkIsLogin;
 
-  console.log("Can Trigger Final Login?", canTrigger);
+  console.log("Can Trigger Final Login?", canTrigger, {
+    environment,
+    appLvlPrefix,
+    selectedAppId,
+    checkIsLogin,
+  });
 
   if (!canTrigger) return;
 
   const timeout = setTimeout(() => {
-    console.log(" Triggering Final Login...");
+    console.log("Triggering Final Login...");
     handleFinalLogin();
   }, 600);
 
