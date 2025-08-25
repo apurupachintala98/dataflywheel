@@ -1,11 +1,7 @@
-export interface ConfigOverrides {
-  environment?: "DEV" | "PREPROD";
-  appLvlPrefix?: string;
-  selectedAppId?: string;
-}
+import { useSelectedApp } from "components/SelectedAppContext";
 
-export const config = (overrides: ConfigOverrides = {}) => {
-  const { environment, appLvlPrefix, selectedAppId } = overrides;
+export const config = () => {
+  const { environment, appLvlPrefix } = useSelectedApp();
 
   const apiBaseUrl =
     environment === "PREPROD"
