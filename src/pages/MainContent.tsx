@@ -168,8 +168,10 @@ const MainContent = ({
   const aplctnCdValue = selectedAppId.toLowerCase();
 
  useEffect(() => {
-  if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
-
+  if (!environment || !appLvlPrefix.trim() || !selectedAppId) return;
+console.log("env",!environment);
+console.log("prefix",!appLvlPrefix);
+console.log("selected",!selectedAppId);
   const timeout = setTimeout(() => {
     handleFinalLogin();
   }, 600); 
