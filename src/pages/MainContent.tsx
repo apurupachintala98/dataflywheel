@@ -31,7 +31,7 @@ import axios from "axios";
 import { config } from "../hooks/config";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../components/SelectedAppContext";
-import ApiService from "../services/index";
+import ApiService from "../services/index"
 import { CssTextField, Loader } from "./styled.components";
 import loading from "assests/images/loadingBlack.png";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -165,6 +165,7 @@ const MainContent = ({
   } = useSelectedApp();
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
+   const { getCortexAnalystDetails, getCortexSearchDetails } = ApiService();
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
     environment,
     appLvlPrefix,
