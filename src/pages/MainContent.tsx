@@ -192,14 +192,12 @@ useEffect(() => {
   const canTrigger =
     environment?.trim() !== "" &&
     appLvlPrefix?.trim() !== "" &&
-    selectedAppId?.trim() !== "" &&
-    !checkIsLogin;
+    selectedAppId?.trim() !== ""
 
   console.log("Can Trigger Final Login?", canTrigger, {
     environment,
     appLvlPrefix,
     selectedAppId,
-    checkIsLogin,
   });
 
   if (!canTrigger) return;
@@ -210,7 +208,7 @@ useEffect(() => {
   }, 600);
 
   return () => clearTimeout(timeout);
-}, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
+}, [environment, appLvlPrefix, selectedAppId]);
 
 
 
