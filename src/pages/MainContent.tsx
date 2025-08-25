@@ -289,8 +289,8 @@ const MainContent = ({
             }}
           >
             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              {/* {loginInfo && (
-                <> */}
+              {loginInfo && (
+                <>
               <Box
                 onClick={(e) => handleMenuClick(e, "environment")}
                 sx={{
@@ -353,8 +353,8 @@ const MainContent = ({
               >
                 {selectedSchema || "Select Schema"} <FaAngleDown />
               </Box>
-              {/* </>
-              )} */}
+              </>
+              )}
               {availableSchemas.length > 0 && (
                 <Box sx={{ display: "inline-block" }}>
                   <Box
