@@ -167,17 +167,20 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
- useEffect(() => {
-  if (environment || appLvlPrefix.trim() || selectedAppId) return;
-console.log("env",environment);
-console.log("prefix",appLvlPrefix);
-console.log("selected",selectedAppId);
+useEffect(() => {
+  if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
+
+  console.log("env", environment);
+  console.log("prefix", appLvlPrefix);
+  console.log("selected", selectedAppId);
+
   const timeout = setTimeout(() => {
     handleFinalLogin();
-  }, 600); 
+  }, 100); // wait 600ms after typing stops
 
   return () => clearTimeout(timeout);
-}, [appLvlPrefix, environment, selectedAppId]);
+}, [appLvlPrefix, environment, selectedAppId, checkIsLogin]);
+
 
 
   useEffect(() => {
