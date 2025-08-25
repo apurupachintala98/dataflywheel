@@ -409,7 +409,7 @@ const MainContent = ({
                   </Box>
                 </>
               )}
-              {checkIsLogin && availableSchemas.length > 0 && (
+              {availableSchemas.length > 0 && (
                 <Box sx={{ display: "inline-block" }}>
                   <Box
                     onClick={(e) => handleMenuClick(e, "schema")}
