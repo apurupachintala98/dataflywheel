@@ -167,11 +167,12 @@ const MainContent = ({
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
-  useEffect(() => {
-  if (environment && appLvlPrefix && !checkIsLogin) {
+useEffect(() => {
+  if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
     handleFinalLogin();
   }
-}, [environment, appLvlPrefix]); 
+}, [environment, appLvlPrefix, selectedAppId]); 
+
 
   useEffect(() => {
     const anchor = document.getElementById("scroll-anchor");
@@ -263,8 +264,8 @@ const MainContent = ({
   //   }
   // };
 
- const handleFinalLogin = async () => {
-  if (!environment || !appLvlPrefix || checkIsLogin) return;
+const handleFinalLogin = async () => {
+  if (!environment || !appLvlPrefix.trim() || !selectedAppId || checkIsLogin) return;
 
   try {
     const payload = {
@@ -272,7 +273,7 @@ const MainContent = ({
         aplctn_cd: aplctnCdValue,
         app_id: APP_ID,
         api_key: API_KEY,
-        app_lvl_prefix: appLvlPrefix,
+        app_lvl_prefix: appLvlPrefix.trim(),
         session_id: sessionId,
       },
     };
