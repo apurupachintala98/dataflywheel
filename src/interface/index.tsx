@@ -68,5 +68,6 @@ export interface HomeContentProps {
   promptValue: string;
   recentValue: string;
   isLogOut: boolean;
+checkIsLogin: boolean;
   setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -89,6 +89,7 @@ interface MainContentProps {
       schema_nm: string;
     }>
   >;
+  checkIsLogin: boolean;
   setCheckIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
   isLogOut: boolean;
 }
@@ -133,6 +134,7 @@ const MainContent = ({
   user_pwd,
   setUserNm,
   setUserPwd,
+  checkIsLogin,
   setCheckIsLogin,
   isLogOut,
   vegaChartData,
@@ -211,49 +213,93 @@ const MainContent = ({
     }
   };
 
+  // const handleFinalLogin = async () => {
+  //   const payload = {
+  //     query: {
+  //       aplctn_cd: aplctnCdValue,
+  //       app_id: APP_ID,
+  //       api_key: API_KEY,
+  //       app_lvl_prefix: APP_LVL_PREFIX,
+  //       session_id: sessionId,
+  //     },
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       },
+  //     );
+
+  //     console.log("API Response:", response.data);
+
+  //     if (response.status === 200) {
+  //       const { database, schema_nm } = response.data;
+
+  //       const selectedDatabase = database?.[0] || "";
+  //       setAvailableSchemas(schema_nm || []);
+  //       setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
+  //       console.log(setDbDetails);
+  //       console.log(selectedDatabase);
+  //       setOpenLoginDialog(false);
+  //       setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+  //       setCheckIsLogin(true);
+  //     } else {
+  //       setError(response.data?.message || "Login failed.");
+  //     }
+  //   } catch (error: any) {
+  //     console.error("Final login API error:", error);
+  //     setError("Final login API error.");
+  //   }
+  // };
+
   const handleFinalLogin = async () => {
+  if (!environment || !appLvlPrefix || checkIsLogin) return;
+
+  try {
     const payload = {
       query: {
         aplctn_cd: aplctnCdValue,
         app_id: APP_ID,
         api_key: API_KEY,
-        app_lvl_prefix: APP_LVL_PREFIX,
+        app_lvl_prefix: appLvlPrefix,
         session_id: sessionId,
       },
     };
 
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+    const response = await axios.post(
+      `${API_BASE_URL}${ENDPOINTS.DB_SCHEMA_LIST}`,
+      payload,
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-      console.log("API Response:", response.data);
+    if (response.status === 200) {
+      const { database, schema_nm } = response.data;
+      const selectedDatabase = database?.[0] || "";
 
-      if (response.status === 200) {
-        const { database, schema_nm } = response.data;
+      setAvailableSchemas(schema_nm || []);
+      setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
 
-        const selectedDatabase = database?.[0] || "";
-        setAvailableSchemas(schema_nm || []);
-        setDbDetails({ database_nm: selectedDatabase, schema_nm: "" });
-        console.log(setDbDetails);
-        console.log(selectedDatabase);
-        setOpenLoginDialog(false);
-        setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
-        setCheckIsLogin(true);
-      } else {
-        setError(response.data?.message || "Login failed.");
-      }
-    } catch (error: any) {
-      console.error("Final login API error:", error);
-      setError("Final login API error.");
+      setLoginInfo(`${credentials.anthemId} (${selectedAppId})`);
+      setCheckIsLogin(true);
+    } else {
+      setError(response.data?.message || "Login failed.");
     }
-  };
+  } catch (error: any) {
+    console.error("Final login API error:", error);
+    setError("Final login API error.");
+  }
+};
+
+  useEffect(() => {
+  if (loginInfo && environment && appLvlPrefix) {
+    handleFinalLogin();
+  }
+}, [loginInfo, environment, appLvlPrefix]);
 
   useEffect(() => {
     if (isLogOut) {
@@ -595,7 +641,7 @@ const MainContent = ({
                 {showLoginButton && (
                   <Button
                     variant="contained"
-                    onClick={handleFinalLogin}
+                    onClick={() => setOpenLoginDialog(false)}
                     disabled={!selectedAppId}
                     sx={{
                       px: 2,

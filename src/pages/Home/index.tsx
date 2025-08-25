@@ -241,6 +241,7 @@ function Home() {
           promptValue={promptValue}
           recentValue={recentValue}
           isLogOut={isLogOut}
+          checkIsLogin={checkIsLogin}
           setCheckIsLogin={setCheckIsLogin}
         />
       </Box>

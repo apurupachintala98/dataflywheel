@@ -40,7 +40,7 @@ interface AnchorElState {
   environment: HTMLElement | null;
 }
 
-const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLogin }: HomeContentProps) => {
+const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLogin, checkIsLogin }: HomeContentProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleSidebar = () => setCollapsed((prev) => !prev);
   const [inputValue, setInputValue] = useState("");
@@ -566,6 +566,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
       user_pwd={user_pwd}
       setUserNm={setUserNm}
       setUserPwd={setUserPwd}
+      checkIsLogin={checkIsLogin}
       setCheckIsLogin={setCheckIsLogin}
       isLogOut={isLogOut}
       vegaChartData={vegaChartData}
