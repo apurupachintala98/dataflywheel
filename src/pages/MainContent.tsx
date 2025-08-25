@@ -153,18 +153,29 @@ const MainContent = ({
   const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [sessionId] = useState(() => uuidv4());
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
-// MainContent.tsx
-const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails, environment, setEnvironment, appLvlPrefix, setAppLvlPrefix } = useSelectedApp();
+  const {
+    selectedAppId,
+    setSelectedAppId,
+    dbDetails,
+    setDbDetails,
+    environment,
+    setEnvironment,
+    appLvlPrefix,
+    setAppLvlPrefix,
+  } = useSelectedApp();
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
+    environment,
+    appLvlPrefix,
+  });
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;
   const aplctnCdValue = selectedAppId === "POCGENAI"
-      ? "edagnai"
-      : selectedAppId.toLowerCase();
+    ? "edagnai"
+    : selectedAppId.toLowerCase();
 
- 
+
   // useEffect(() => {
   //   const canTrigger =
   //     environment?.trim() !== "" &&
@@ -186,21 +197,21 @@ const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails, environment, s
   // }, [environment, appLvlPrefix, selectedAppId]);
 
 
-useEffect(() => {
-  const canTrigger =
-    environment?.trim() !== "" &&
-    appLvlPrefix?.trim() !== "" &&
-    selectedAppId?.trim() !== "";
+  useEffect(() => {
+    const canTrigger =
+      environment?.trim() !== "" &&
+      appLvlPrefix?.trim() !== "" &&
+      selectedAppId?.trim() !== "";
 
-  if (!canTrigger) return;
+    if (!canTrigger) return;
 
-  const timeout = setTimeout(() => {
-    console.log("Triggering Final Login...");
-    handleFinalLogin();
-  }, 600); // wait 600ms after user stops typing
+    const timeout = setTimeout(() => {
+      console.log("Triggering Final Login...");
+      handleFinalLogin();
+    }, 600); // wait 600ms after user stops typing
 
-  return () => clearTimeout(timeout);
-}, [environment, appLvlPrefix, selectedAppId]);
+    return () => clearTimeout(timeout);
+  }, [environment, appLvlPrefix, selectedAppId]);
 
 
   useEffect(() => {

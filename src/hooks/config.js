@@ -1,7 +1,9 @@
-import { useSelectedApp } from "components/SelectedAppContext";
+interface ConfigParams {
+  environment: string;
+  appLvlPrefix: string;
+}
 
-export const config = () => {
-  const { environment, appLvlPrefix } = useSelectedApp();
+export const config = ({ environment, appLvlPrefix }: ConfigParams) => {
 
   const apiBaseUrl =
     environment === "PREPROD"
