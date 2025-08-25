@@ -153,58 +153,52 @@ const MainContent = ({
   const [loginInfo, setLoginInfo] = useState<string | null>(null);
   const [sessionId] = useState(() => uuidv4());
   // const [dbDetails, setDbDetails] = useState({ database_nm: "", schema_nm: "" });
-  const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
+// MainContent.tsx
+const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails, environment, setEnvironment, appLvlPrefix, setAppLvlPrefix } = useSelectedApp();
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
-  const [environment, setEnvironment] = useState<"DEV" | "PREPROD" | undefined>(undefined);
-  const [appLvlPrefix, setAppLvlPrefix] = useState<string>("");
   const [selectedSchema, setSelectedSchema] = useState<string>("");
   const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;
   const aplctnCdValue = selectedAppId.toLowerCase();
 
+ 
   // useEffect(() => {
-  //   console.log("Effect deps", { environment, appLvlPrefix, selectedAppId, checkIsLogin });
-
   //   const canTrigger =
-  //     environment &&
-  //     appLvlPrefix &&
-  //     selectedAppId &&
-  //     checkIsLogin;
+  //     environment?.trim() !== "" &&
+  //     appLvlPrefix?.trim() !== "" &&
+  //     selectedAppId?.trim() !== ""
 
-  //   console.log("Can Trigger Final Login?", canTrigger);
+  //   console.log("Can Trigger Final Login?", canTrigger, {
+  //     environment,
+  //     appLvlPrefix,
+  //     selectedAppId,
+  //   });
 
   //   if (!canTrigger) return;
-
-  //   const timeout = setTimeout(() => {
-  //     console.log(" Triggering Final Login...");
+  //   if (canTrigger) {
+  //     console.log("Triggering Final Login...");
   //     handleFinalLogin();
-  //   }, 600);
+  //   }
 
-  //   return () => clearTimeout(timeout);
-  // }, [environment, appLvlPrefix, selectedAppId, checkIsLogin]);
-
-  useEffect(() => {
-    const canTrigger =
-      environment?.trim() !== "" &&
-      appLvlPrefix?.trim() !== "" &&
-      selectedAppId?.trim() !== ""
-
-    console.log("Can Trigger Final Login?", canTrigger, {
-      environment,
-      appLvlPrefix,
-      selectedAppId,
-    });
-
-    if (!canTrigger) return;
-    if (canTrigger) {
-      console.log("Triggering Final Login...");
-      handleFinalLogin();
-    }
-
-  }, [environment, appLvlPrefix, selectedAppId]);
+  // }, [environment, appLvlPrefix, selectedAppId]);
 
 
+useEffect(() => {
+  const canTrigger =
+    environment?.trim() !== "" &&
+    appLvlPrefix?.trim() !== "" &&
+    selectedAppId?.trim() !== "";
+
+  if (!canTrigger) return;
+
+  const timeout = setTimeout(() => {
+    console.log("Triggering Final Login...");
+    handleFinalLogin();
+  }, 600); // wait 600ms after user stops typing
+
+  return () => clearTimeout(timeout);
+}, [environment, appLvlPrefix, selectedAppId]);
 
 
   useEffect(() => {
