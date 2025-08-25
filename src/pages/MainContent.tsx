@@ -385,7 +385,7 @@ const MainContent = ({
                     value={appLvlPrefix}
                     onChange={(e) => setAppLvlPrefix(e.target.value)}
                     onBlur={() => {
-                      if (environment && appLvlPrefix.trim() !== "" && selectedAppId && !checkIsLogin) {
+                      if (environment && appLvlPrefix.trim() !== "") {
                         handleFinalLogin();
                       }
                     }}
