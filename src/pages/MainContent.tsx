@@ -28,7 +28,7 @@ import MessageWithFeedback from "../pages/Feedback";
 import { MessageType } from "../types/message.types";
 import Chart from "../components/Chart";
 import axios from "axios";
-import { config } from "../hooks/config";
+import { getConfig } from "../hooks/config";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../components/SelectedAppContext";
 import ApiService from "../services/index"
@@ -166,9 +166,10 @@ const MainContent = ({
   const [availableSchemas, setAvailableSchemas] = useState<string[]>([]);
   const [selectedSchema, setSelectedSchema] = useState<string>("");
  const { getCortexAnalystDetails, getCortexSearchDetails } = ApiService;
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config({
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = getConfig({
   environment,
   appLvlPrefix,
+  selectedAppId,
 });
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME, APP_LVL_PREFIX } =
     APP_CONFIG;

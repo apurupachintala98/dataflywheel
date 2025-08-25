@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { config } from "./config";
+import { getConfig } from "./config";
 import { useSelectedApp } from "components/SelectedAppContext";
 
 export interface promptProps {
@@ -17,7 +17,7 @@ export function usePromptData({ checkIsLogin }: promptDataProps) {
   const [prompts, setPrompts] = useState<promptProps[]>([]);
   const [loading, setLoading] = useState(true);
   const hasFetchedAllPromptDetails = useRef<boolean>(false);
-  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config();
+  const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = getConfig();
     const aplctnCdValue = selectedAppId === "POCGENAI"
       ? "edagnai"
       : selectedAppId.toLowerCase();

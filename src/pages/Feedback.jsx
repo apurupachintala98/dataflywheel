@@ -11,7 +11,7 @@ import PaginatedTable from "../components/PaginatedTable";
 import SendIcon from "@mui/icons-material/Send";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import axios from "axios";
-import { config } from "../hooks/config";
+import { getConfig } from "../hooks/config";
 import { toast } from "react-toastify";
 import { FirstMessageCon, SecondMessageCon, MessageContainer } from "./styled.components";
 import DataFlyWheelLogo from "assests/images/loadingBlack.png";
@@ -37,7 +37,7 @@ const Feedback = ({ message }) => {
   };
 
   const sendFeedback = async ({ action = null, commentText = null }) => {
- const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = config(selectedAppId);
+ const { APP_CONFIG, API_BASE_URL, ENDPOINTS } = getConfig(selectedAppId);
     const fdbck_id = message.fdbck_id || "";
     const session_id = message.session_id || "";
     const feedbk_actn_txt = typeof action === "boolean" ? (action ? "True" : "False") : action;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../hooks/config";
+import { getConfig } from "../hooks/config";
 import { useSelectedApp } from "components/SelectedAppContext";
 
 interface QueryOverrides {
@@ -37,7 +37,7 @@ interface QueryOverrides {
 
 const buildPayload = (overrides: QueryOverrides = {}) => {
   const { environment, appLvlPrefix } = useSelectedApp();
-  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config({
+  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = getConfig({
     environment,
     appLvlPrefix,
   });
@@ -64,7 +64,7 @@ const ApiService = {
     aplctn_cd, database_nm, schema_nm, session_id
   }: QueryOverrides) {
     try {
-      const { API_BASE_URL, ENDPOINTS } = config();
+      const { API_BASE_URL, ENDPOINTS } = getConfig();
       const payload = buildPayload({ aplctn_cd, database_nm, schema_nm, session_id });
 
       const response = await axios.post(
@@ -83,7 +83,7 @@ const ApiService = {
     aplctn_cd, database_nm, schema_nm, session_id
   }: QueryOverrides) {
     try {
-      const { API_BASE_URL, ENDPOINTS } = config();
+      const { API_BASE_URL, ENDPOINTS } = getConfig();
       const payload = buildPayload({ aplctn_cd, database_nm, schema_nm, session_id });
 
       const response = await axios.post(

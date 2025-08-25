@@ -20,7 +20,7 @@ import { useApiRequest } from "../../hooks/useApiRequest";
 import { useStreamHandler } from "../../hooks/useStreamHandler";
 import { buildPayload } from "../../utils/buildPayload";
 import { renderTextWithCitations } from "../../utils/renderTextWithCitations";
-import { config } from "../../hooks/config";
+import { getConfig } from "../../hooks/config";
 import { MessageType } from "../../types/message.types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelectedApp } from "../../components/SelectedAppContext";
@@ -57,7 +57,7 @@ const HomeContent = ({ isReset, promptValue, recentValue, isLogOut, setCheckIsLo
   const { selectedAppId, setSelectedAppId, dbDetails, setDbDetails } = useSelectedApp();
   const [user_nm, setUserNm] = useState("");
   const [user_pwd, setUserPwd] = useState("");
-  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = config();
+  const { API_BASE_URL, ENDPOINTS, APP_CONFIG } = getConfig();
 
   const { APP_ID, API_KEY, DEFAULT_MODEL, APP_NM, DATABASE_NAME, SCHEMA_NAME } = APP_CONFIG;
 
